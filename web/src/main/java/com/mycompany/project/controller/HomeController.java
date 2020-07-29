@@ -21,6 +21,30 @@ public class HomeController {
 		LOGGER.info("실행");
 		return "home/cameraTest";
 	}
+	
+	@RequestMapping("/control_center.do")
+	public String control_center() {
+		LOGGER.info("실행");
+		return "home/control_center";
+	}
+	
+	@RequestMapping("/signup.do")
+	public String signup() {
+		LOGGER.info("실행");
+		return "redirect:/home/main.do";
+	}
+	
+	@RequestMapping("/main2.do")
+	public String main2() {
+		LOGGER.info("실행");
+		return "home/main2";
+	}
+	
+	@RequestMapping("/move.do")
+	public String move() {
+		LOGGER.info("실행");
+		return "home/move";
+	}
 }
 
 
