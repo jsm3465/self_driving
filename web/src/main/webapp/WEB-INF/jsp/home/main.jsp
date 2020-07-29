@@ -18,7 +18,6 @@
 		<h5 class="alert alert-info">/home/main.jsp</h5>
 		<ul>
 			<li><a href="cameraTest.do">cameraTest.do</a></li>
-			<p>git test</p>
 		</ul>
 	</body>
 </html>
