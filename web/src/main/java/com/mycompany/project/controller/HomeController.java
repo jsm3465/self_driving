@@ -3,6 +3,7 @@ package com.mycompany.project.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -22,29 +23,13 @@ public class HomeController {
 		return "home/cameraTest";
 	}
 	
-	@RequestMapping("/control_center.do")
-	public String control_center() {
-		LOGGER.info("실행");
-		return "home/control_center";
-	}
-	
 	@RequestMapping("/signup.do")
 	public String signup() {
 		LOGGER.info("실행");
-		return "redirect:/home/main.do";
+		return "member/sign_up";
 	}
-	
-	@RequestMapping("/main2.do")
-	public String main2() {
-		LOGGER.info("실행");
-		return "home/main2";
-	}
-	
-	@RequestMapping("/move.do")
-	public String move() {
-		LOGGER.info("실행");
-		return "home/move";
-	}
+
+
 }
 
 

@@ -1,8 +1,27 @@
-@charset "UTF-8";
+/* @charset "UTF-8"; */
 body {
-	background-image: url("../img/futureCar.jpg");
+	font-family: 'Do Hyeon', sans-serif;
+}
+
+body:after {
+	background-image: url("../img/background.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
+	opacity: 0.65px; 
+}
+
+.signup{
+	margin: 5%; 
+	font-size:medium;
+	color: #aaa; 
+	float: right;
+}
+
+.signin{
+	margin: 5%; 
+	font-size:medium;
+	color: #aaa; 
+	float: right;
 }
 
 /* signin */

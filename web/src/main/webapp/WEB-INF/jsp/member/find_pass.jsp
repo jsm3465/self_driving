@@ -13,9 +13,9 @@
 		<script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
 		<script src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
 	</head>
 	<body>
-		<h5 class="alert alert-info">/xxx.jsp</h5>
-		<a href="move.do">move.do</a>
+		<h5 class="alert alert-info">/xxx.jsp</h5>	
 	</body>
 </html>
