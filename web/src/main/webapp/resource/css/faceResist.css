@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+*{
+	font-family:'Do Hyeon', sans-serif;	
+}
+
+header {
+	height: 15%;
+}
+
+section {
+	height: 75%;
+}
+
+footer {
+	height: 15%;
+}
+
+#angle{
+	border : dashed 1px;
+	
+}
+
+#notice{
+	display: flex;
+	justify-content: center;
+	align-items : center;
+	font-size: 64px;
+}
+
+#resiterButtonDiv{
+	display: flex;
+	justify-content: center;
+	align-items : center;
+}
