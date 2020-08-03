@@ -16,10 +16,22 @@ public class HomeController {
 		return "home/main";
 	}
 	
-	@RequestMapping("/cameraTest.do")
-	public String cameraTest() {
+	@RequestMapping("/redirectToMain.do")
+	public String redirectToMain() {
 		LOGGER.info("실행");
-		return "home/cameraTest";
+		return "redirect:main.do";
+	}
+	
+	@RequestMapping("/drivingMode.do")
+	public String drivingMode() {
+		LOGGER.info("실행");
+		return "home/drivingMode";
+	}
+	
+	@RequestMapping("/manualDriving.do")
+	public String manualDriving() {	
+		LOGGER.info("실행");
+		return "home/manualDriving";
 	}
 	
 	@RequestMapping("/carInfo.do")

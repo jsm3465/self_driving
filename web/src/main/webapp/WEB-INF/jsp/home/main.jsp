@@ -5,21 +5,20 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+		<title>Autonomous driving</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
 		
 	</head>
+	
 	<body>
-		<h5 class="alert alert-info">/home/main.jsp</h5>
-		<ul>
-			<li><a href="cameraTest.do">cameraTest.do</a></li>
-			<li><a href="carInfo.do">carInfo.do</a></li>
-			아 왜안돼ㅠㅠ
-		</ul>
+	<ul>
+		<li><a href="manualDriving.do">Manual Driving</a></li>
 		
-		
+	</ul>
 		
 		<script src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>

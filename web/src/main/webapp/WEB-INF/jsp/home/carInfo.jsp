@@ -5,18 +5,34 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initaial-scale=1"/>
 		<title>RCcar Information</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
+		<style>
 		
+			
+		</style>
 	</head>
 	<body>
-		<div class="container">
-			<header>
-				<h5>car1</h5>
+		<div class="container-fluid" style="border:solid;">
+			<header style="border-style:ridge;">
+				<nav style="border-style:ridge;">
+					<h5>carName</h5>	
+				</nav>
 			</header>
+			<div class="row" style="border-style:ridge;">
+			
+				<div class="col-md-6" style="border-style:ridge;">
+				
+				</div>
 		
+				<div class="col-md-6" style="border-style:ridge;">
+				사진이들어갈 자리
+				</div>
+			</div>
+			
 		</div>
 		
 
