@@ -17,6 +17,8 @@
 	<body>
 	<ul>
 		<li><a href="manualDriving.do">Manual Driving</a></li>
+		<li><a href="carInfo.do">Car Info</a></li>
+		<li><a href="navi.do">navi</a></li>
 		
 	</ul>
 		

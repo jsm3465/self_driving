@@ -22,16 +22,16 @@ public class HomeController {
 		return "redirect:main.do";
 	}
 	
-	@RequestMapping("/drivingMode.do")
-	public String drivingMode() {
-		LOGGER.info("실행");
-		return "home/drivingMode";
-	}
-	
 	@RequestMapping("/manualDriving.do")
 	public String manualDriving() {	
 		LOGGER.info("실행");
 		return "home/manualDriving";
+	}
+	
+	@RequestMapping("/navi.do")
+	public String navi() {	
+		LOGGER.info("실행");
+		return "home/navi";
 	}
 	
 	@RequestMapping("/carInfo.do")

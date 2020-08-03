@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+
+*{
+	border: solid 1px;
+}
+
+#wrap {
+	width: 100%;
+}
+
+header {
+	height: 10%;
+	font-family:'Do Hyeon', sans-serif;
+}
+
+section {
+	height: 70%;
+}
+
+footer {
+	height: 20%;
+}
+
+#inputForm{
+}
+#logo {
+	bottom:0px;
+	text-align: left;
+	font-size: 32px;
+	font-family:'Do Hyeon', sans-serif;	
+}
+#modeName {
+	display: flex;
+	justify-content: center;
+	align-items : center;
+	font-size: 64px;
+}
+
+#userName{
+	display: flex;
+	justify-content: flex-end;
+	align-items : flex-end;
+	font-size: 32px;	
+}
+
+#aiModeButton {
+	margin-left: 20px;
+	margin-bottom: 5px;
+}
+
+#upButton {
+	font-size: 36px;
+	width:80px;
+	height:80px;
+	display: flex;
+	justify-content: center;
+	align-items : center;
+	margin:20px 5px 5px 0px;
+}
+
+#downButton{
+	font-size: 36px;
+	width:80px;
+	height:80px;
+	margin:0px 5px 5px 0px;
+}
+#leftButton{
+	font-size: 36px;
+	width:80px;
+	height:80px;
+	margin:0px 5px 5px 0px;
+}
+#lightButton{
+	font-size: 36px;
+	width:80px;
+	height:80px;
+	margin:0px 5px 5px 0px;
+}
+#directionUpButtonDiv{
+	display: flex;
+	align-items : center;
+	justify-content: center;
+}
+#directionButtonDiv{
+	align-items : center;
+	justify-content: center;
+}
+
