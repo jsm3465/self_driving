@@ -1,0 +1,11 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gitignore
+.idea/.gitignore
+.idea/deployment.xml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/self_driving.iml
+.idea/vcs.xml
+jetracer2/.idea/jetracer2.iml
+.idea/other.xml
