@@ -24,11 +24,16 @@
 			function onConnect() {
 				console.log("mqtt broker connected")
 				client.subscribe("/camerapub");
+				client.subscribe("/camerapub2");
 			}
 			
 			function onMessageArrived(message) {
+				console.log(message)
 				if(message.destinationName == "/camerapub") {
 					var cameraView = $("#cameraView").attr("src", "data:image/jpg;base64," + message.payloadString);	
+				}
+				if(message.destinationName == "/camerapub2") {
+					var cameraView = $("#cameraView2").attr("src", "data:image/jpg;base64," + message.payloadString);	
 				}
 			}
 		</script>
@@ -36,5 +41,6 @@
 	<body>
 		<h5 class="alert alert-info">/home/cameraTest.jsp</h5>
 		<img id="cameraView"/>
+		<img id="cameraView2"/>
 	</body>
 </html>
