@@ -40,9 +40,22 @@ public class HomeController {
 		LOGGER.info("실행");
 		return "home/carInfo";
 	}
+	
 	@RequestMapping("/signup.do")
 	public String signup() {
 		LOGGER.info("실행");
 		return "member/sign_up";
+	}
+	
+	@RequestMapping("/faceAuthentication.do")
+	public String faceAuthentication() {
+		LOGGER.info("실행");
+		return "home/faceAuthentication";
+	}
+	
+	@RequestMapping("/faceResist.do")
+	public String faceResist() {
+		LOGGER.info("실행");
+		return "home/faceResist";
 	}
 }

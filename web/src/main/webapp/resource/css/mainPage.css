@@ -4,12 +4,12 @@ body {
 }
 
 body:after {
-	background-image: url("../img/background.jpg");
+	background-image: url("../image/background.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	opacity: 0.65px; 
 }
-
+	
 .signup{
 	margin: 5%; 
 	font-size:medium;

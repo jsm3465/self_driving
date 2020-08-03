@@ -1,8 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<jsp:include page="../member/sign_up.jsp" />
-<jsp:include page="../member/sign_in.jsp" />
+<jsp:include page="../member/signUp.jsp" />
+<jsp:include page="../member/signIn.jsp" />
+<jsp:include page="../member/findId.jsp" />
+<jsp:include page="../member/findPassword.jsp" />
 
 <!DOCTYPE html>
 <html>
