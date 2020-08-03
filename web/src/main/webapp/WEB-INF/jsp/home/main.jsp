@@ -28,13 +28,13 @@
 		<div class="container-fluid vh-100">
 			<div class="row">
 				<div class="col-md-3">
-					<h1>Autonomous Driving</h1>
+					<a href="main.do"><h1>Autonomous Driving</h1></a>
 				</div>
 				<div class="col-md-7">
 				</div>
 				<div class="col-md-2">
-					<a class="signup" data-toggle="modal" data-target="#modalRegisterForm">회원가입</a>
-					<a class="signin" data-toggle="modal" data-target="#elegantModalForm">로그인</a>
+					<a href="" class="signup" data-toggle="modal" data-target="#modalRegisterForm">회원가입</a>
+					<a href="" class="signin" data-toggle="modal" data-target="#elegantModalForm">로그인</a>
 				</div>
 			</div>
 		</div>

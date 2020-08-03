@@ -50,7 +50,8 @@
 			<div style="border: solid 3px; height: 60%"class="row">
 				<div style="border: solid 3px;"class="col-md-3"></div>
 				<div style="border: solid 3px;"class="col-md-6">
-					<img id="cameraView"/>
+					<!-- <img id="cameraView"/> -->
+					<img style="position: absolute; top:0; left:0; width: 100%; height: 100%;"src="${pageContext.request.contextPath}/resource/img/background.jpg" />
 				</div>
 				<div style="border: solid 3px;"class="col-md-3"></div>
 			</div>

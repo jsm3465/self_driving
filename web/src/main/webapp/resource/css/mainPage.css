@@ -1,13 +1,9 @@
-/* @charset "UTF-8"; */
+@charset "UTF-8";
 body {
-	font-family: 'Do Hyeon', sans-serif;
-}
-
-body:after {
-	background-image: url("../img/background.jpg");
+	background: url("../img/background2.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
-	opacity: 0.65px; 
+	font-family: 'Do Hyeon', sans-serif;	
 }
 
 .signup{
