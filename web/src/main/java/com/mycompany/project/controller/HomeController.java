@@ -53,8 +53,6 @@ public class HomeController {
 		return "home/no22";
 	}
 
-}
-
 	@RequestMapping("/manualDriving.do")
 	public String manualDriving() {
 		LOGGER.info("실행");

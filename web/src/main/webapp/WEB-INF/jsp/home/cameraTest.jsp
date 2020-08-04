@@ -44,11 +44,9 @@
 		</script>
 	</head>
 	<body>
-<<<<<<< HEAD
 		<h5 class="alert alert-info">/home/cameraTest.jsp</h5>
 		<img id="cameraView"/>
 		<img id="cameraView2"/>
-=======
 		<div class="container-fluid vh-100">
 			<div style="border: solid 3px; height: 20%"class="row">
 				<div style="border: solid 3px;"class="col-md-3">
@@ -70,6 +68,5 @@
 				<div style="border: solid 3px;"class="col-md-3"></div>
 			</div>
 		</div>
->>>>>>> db0ed341a01e1aa14c78821803c55192fb5c1e72
 	</body>
 </html>

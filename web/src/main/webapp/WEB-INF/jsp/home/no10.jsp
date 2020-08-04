@@ -15,28 +15,9 @@
 		<script src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
 		<!-- bootswatch slate theme -->
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
-		<script> // canvas 크기를 조정
-            var _canvas;
-            
-            window.onload = function(e) {
-                _canvas = document.querySelector("#mapCanvas");        
-                setCanvasSize();
-                console.log("load")
-            }
-            
-            window.onresize = function(e) {
-                setCanvasSize();
-                console.log("resize")
-            }
-            
-            function setCanvasSize() {
-                _canvas.width = _canvas.parentNode.clientWidth;
-                console.log(_canvas.parentElement)
-                console.log(_canvas.width)
-                _canvas.height = _canvas.parentNode.clientHeight;
-                console.log(_canvas.height)
-            }
-       </script>
+		
+       
+		
 		<!-- 나중에 .css 파일로 옮길것 -->
 		<!-- border는 나중에 지울것 -->
 		<style>
@@ -79,12 +60,50 @@
 				<div class="col-8">
 					<h3>Map</h3>
 					<div class="h-75">
-						<canvas id="mapCanvas" style="border:1px solid #000000;"></canvas>				
+						<canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>				
 					</div>
 				</div>
 			</section>
 			<footer class="row">
 			</footer>
 		</div>
+		
+		<script>
+	        window.onload = function(e) {
+	        	var c = document.getElementById("myCanvas");
+	        	var ctx = c.getContext("2d");
+
+	        	ctx.beginPath();
+	        	ctx.strokeStyle = "white"; // Green path
+	        	ctx.moveTo(50, 50);
+	        	ctx.lineTo(400, 50);
+	        	
+	        	ctx.arcTo(450, 50, 450, 100, 50);
+	        	
+	        	ctx.lineTo(450, 400);
+	        	
+	        	ctx.arcTo(450, 450, 400, 450, 50);
+	        	
+	        	ctx.lineTo(150, 450);
+	        	
+	        	ctx.arcTo(150, 400, 100, 400, 50);
+	        	
+	        	ctx.arcTo(50, 400, 50, 350, 50);
+	        	
+	        	ctx.stroke(); // Draw it
+	        }
+		</script>
+		
+		<!-- <script>
+	        window.onload = function(e) {
+	        	var canvas = document.getElementById("myCanvas");
+	        	canvas.width = canvas.parentNode.clientWidth;
+	        	canvas.height = canvas.parentNode.clientHeight;
+				var ctx = canvas.getContext("2d");
+				ctx.fillStyle = "yellow";
+				ctx.fillRect(0, 0, canvas.width/2, canvas.height/2);
+	        }
+		</script> -->
+		
 	</body>
 </html>
