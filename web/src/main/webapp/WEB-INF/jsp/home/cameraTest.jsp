@@ -25,15 +25,15 @@
 				client.onMessageArrived = onMessageArrived;
 				client.connect({onSuccess:onConnect});
 			});
-			
+
 			function onConnect() {
 				console.log("mqtt broker connected")
 				client.subscribe("/camerapub");
 			}
-			
+
 			function onMessageArrived(message) {
 				if(message.destinationName == "/camerapub") {
-					var cameraView = $("#cameraView").attr("src", "data:image/jpg;base64," + message.payloadString);	
+					var cameraView = $("#cameraView").attr("src", "data:image/jpg;base64," + message.payloadString);
 				}
 			}
 		</script>

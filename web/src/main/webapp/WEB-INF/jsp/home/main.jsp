@@ -1,29 +1,24 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<jsp:include page="../member/sign_up.jsp" />
-<jsp:include page="../member/sign_in.jsp" />
+<jsp:include page="../member/signUp.jsp" />
+<jsp:include page="../member/signIn.jsp" />
+<jsp:include page="../member/findId.jsp" />
+<jsp:include page="../member/findPassword.jsp" />
 
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>Autonomous Driving</title>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+		<title>Autonomous driving</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
-		<script src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
-		<script src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
-		<!-- 부트스트랩 slate -->
-		<link rel="stylesheet" href="${pagecontext.request.contextpath}/resource/css/bootstrap.min.css">
-		<!-- width = 장치 화면 너비에 따라 페이지 너비 설정, initial-scale = 페이지가 처음 브라우저에 의해로드 된 초기 줌 레벨 -->
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- 폰트 -->
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
 		<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-		<!-- 메인페이지 css -->
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/mainPage.css">
 	</head>
+
 	<body>
 		<div class="container-fluid vh-100">
 			<div class="row">
@@ -37,6 +32,18 @@
 					<a href="" class="signin" data-toggle="modal" data-target="#elegantModalForm">로그인</a>
 				</div>
 			</div>
+			<div>
+				<ul>
+					<li><a href="manualDriving.do">Manual Driving</a></li>
+					<li><a href="carInfo.do">Car Info</a></li>
+					<li><a href="navi.do">navi</a></li>
+				</ul>
+			</div>
 		</div>
+		
+		<script src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
 	</body>
 </html>

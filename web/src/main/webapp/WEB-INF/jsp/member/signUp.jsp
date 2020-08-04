@@ -1,8 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/mainPage.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/birthday.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resource/css/mainPage.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resource/css/birthday.css">
 <!-- Sign up -->
 <div class="modal fade" id="modalRegisterForm" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -43,8 +45,18 @@
 						style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
 						data-success="right" for="orangeForm-name">이름</label> <input
 						type="text" id="orangeForm-name" class="form-control validate">
+
 				</div>
 
+				<div class="md-form mb-1">
+					<i class="fas fa-user prefix grey-text"></i> <label
+						style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
+						data-success="right" for="orangeForm-sex">성별</label> <select
+						id="orangeForm-sex">
+						<option value="남">남</option>
+						<option value="여">여</option>
+					</select>
+				</div>
 				<div class="md-form mb-1">
 					<i class="fas fa-user prefix grey-text"></i>
 					<div class="bir_wrap">
@@ -66,8 +78,40 @@
 							<option value="10">10</option>
 							<option value="11">11</option>
 							<option value="12">12</option>
-						</select> <input type="text" id="orangeForm-dd" class="bir_dd"
-							placeholder="일" aria-label="일" maxlength="2">
+						</select> <select id="orangeForm-dd" class="bir_dd" aria-label="일">
+							<option>일</option>
+							<option value="01">1</option>
+							<option value="02">2</option>
+							<option value="03">3</option>
+							<option value="04">4</option>
+							<option value="05">5</option>
+							<option value="06">6</option>
+							<option value="07">7</option>
+							<option value="08">8</option>
+							<option value="09">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">20</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
+						</select>
 					</div>
 				</div>
 
@@ -88,7 +132,7 @@
 				</div>
 			</div>
 			<div class="modal-footer d-flex justify-content-center">
-				<a href="cameraTest.do"><button
+				<a href="faceResist.do"><button
 						style="background-color: #008CBA; color: white"
 						class="btn btn-deep-orange">다음</button></a>
 			</div>

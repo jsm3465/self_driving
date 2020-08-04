@@ -1,22 +1,26 @@
 @charset "UTF-8";
 body {
-	background: url("../img/background2.jpg");
+	font-family: 'Do Hyeon', sans-serif;
+}
+
+body:after {
+	background-image: url("../image/background.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
-	font-family: 'Do Hyeon', sans-serif;	
+	font-family: 'Do Hyeon', sans-serif;
 }
 
 .signup{
-	margin: 5%; 
+	margin: 5%;
 	font-size:medium;
-	color: #aaa; 
+	color: #aaa;
 	float: right;
 }
 
 .signin{
-	margin: 5%; 
+	margin: 5%;
 	font-size:medium;
-	color: #aaa; 
+	color: #aaa;
 	float: right;
 }
 
