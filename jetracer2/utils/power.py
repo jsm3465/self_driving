@@ -1,7 +1,13 @@
 import smbus
 import time
 import subprocess
-import display
+import os
+import sys
+
+current_path = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(current_path)
+
+import utils.display as display
 
 # Config Register (R/W)
 _REG_CONFIG                 = 0x00

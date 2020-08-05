@@ -5,7 +5,7 @@ import base64
 import time
 
 class ImageMqttPusblisher:
-    def __init__(self, brokerIp, brokerPort, pubTopic):
+    def __init__(self, brokerIp=None, brokerPort=1883, pubTopic=None):
         self.brokerIp = brokerIp
         self.brokerPort = brokerPort
         self.pubTopic = pubTopic

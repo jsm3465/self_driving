@@ -1,10 +1,6 @@
 import cv2
 import numpy as np
-import os
-import sys
-import camera
-import time
-import threading
+from utils import camera
 
 
 class LaneDetection:

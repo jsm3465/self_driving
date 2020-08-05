@@ -1,10 +1,6 @@
 import cv2
 import numpy as np
-import os
-import sys
-import camera
-import time
-import threading
+from utils import camera
 
 
 class LaneDetection:
@@ -134,93 +130,40 @@ class LaneDetection:
         left_blur = blur[0:bird_height, 0:midpoint]
         right_blur = blur[0:bird_height, midpoint:]
 
-        # cv2.imshow("lb", left_blur)
-        # cv2.imshow("rb", right_blur)
-
-        left_gradient = None
-        right_gradient = None
-
-        # np.nonzero를 사용해서 차선 찾기
         # 왼쪽 차선
-        nonzero_left = np.nonzero(left_blur[10:])
-        lmid = 0
-        # nonezeor의 흰색부분 픽셀이 어느정도 있어야 차선을 찾음, 보통 일반적인 차선이 4500픽셀정도 나옴
-        if len(nonzero_left[0]) > 4500*0.1:
-            # 인식한 선길이가 충분히 길지않으면 무시, 이미지 사이즈바꿔도 알아서 적용되도록 height * 비율로 표시
-            if (nonzero_left[0].max() - nonzero_left[0].min()) > bird_height*0.3:
-                left_fit = np.polyfit(nonzero_left[0], nonzero_left[1], 2)
-                left_fitx = left_fit[0] * ploty ** 2 + left_fit[1] * ploty + left_fit[2]
-                lfx = np.trunc(left_fitx) # 소수점 버림
+        nonzero_left = np.nonzero(left_blur)
+        if len(nonzero_left[0]) > 450:
+            left_fit = np.polyfit(nonzero_left[0], nonzero_left[1], 2)
+            left_fitx = left_fit[0] * ploty ** 2 + left_fit[1] * ploty + left_fit[2]
+            lfx = np.trunc(left_fitx)
 
-                lmid = lfx[int(bird_height / 2)]
-                left_gradient = 2*left_fit[0]*int(bird_height * 0.75) + left_fit[1] * int(bird_height * 0.75)
-                # 2차함수의 위쪽과 아래쪽의 기울기의 부호가 반대면 차선 안그림
-                up = 2 * left_fit[0] * int(bird_height * 0.1) + left_fit[1]
-                down = 2 * left_fit[0] * int(bird_height * 0.9) + left_fit[1]
-                # print("up :",40,"-",up," : ", 200,"-",down)
-                if up * down > 0:
-                    for y, x in zip(ploty, lfx):
-                        if x < 0 or x >= left_blur.shape[1]:
-                            continue
-                        birdeye[int(y), int(x)] = [0, 255, 0]
+            lmid = lfx[int(bird_height * 0.7)]
 
-                    if left_gradient < -25:
-                        self.left_direction = "Right Curve"
-                    elif left_gradient > 25:
-                        self.left_direction = "Left Curve"
-                    else:
-                        self.left_direction = "Straight"
+            for y, x in zip(ploty, lfx):
+                if x < 0 or x >= left_blur.shape[1]:
+                    continue
+                birdeye[int(y), int(x)] = [0, 255, 0]
 
-                    self.direction = self.left_direction
-                    self.gradient = left_gradient
+            self.offcenter = midpoint - lmid
 
         # 오른쪽 차선
-        nonzero_right = np.nonzero(right_blur[10:])
-        rmid = 0
-        if len(nonzero_right[0]) > 4500*0.1:
-            if (nonzero_right[0].max() - nonzero_right[0].min()) > bird_height*0.3:
-                right_fit = np.polyfit(nonzero_right[0], nonzero_right[1], 2)
-                right_fitx = right_fit[0] * ploty ** 2 + right_fit[1] * ploty + right_fit[2]
-                rfx = np.trunc(right_fitx)
+        nonzero_right = np.nonzero(right_blur)
+        if len(nonzero_right[0]) > 450:
+            right_fit = np.polyfit(nonzero_right[0], nonzero_right[1], 2)
+            right_fitx = right_fit[0] * ploty ** 2 + right_fit[1] * ploty + right_fit[2]
+            rfx = np.trunc(right_fitx)
 
-                rmid = midpoint + rfx[int(bird_height/2)]
-                right_gradient = 2 * right_fit[0] * int(bird_height * 0.75) + right_fit[1] * int(bird_height * 0.75)
-                up = 2 * right_fit[0] * int(bird_height * 0.1) + right_fit[1]
-                down = 2 * right_fit[0] * int(bird_height * 0.9) + right_fit[1]
+            rmid = rfx[int(bird_height * 0.7)]
 
-                if up * down > 0:
-                    for y, x in zip(ploty, rfx):
-                        if x < 0 or x >= right_blur.shape[1]:
-                            continue
-                        birdeye[int(y), midpoint + int(x)] = [0, 255, 0]
+            for y, x in zip(ploty, rfx):
+                if x < 0 or x >= right_blur.shape[1]:
+                    continue
+                birdeye[int(y), midpoint + int(x)] = [0, 255, 0]
 
-                    if right_gradient < -25:
-                        self.right_direction = "Right Curve"
-                    elif right_gradient > 25:
-                        self.right_direction = "Left Curve"
-                    else:
-                        self.right_direction = "Straight"
+            self.offcenter = rmid
 
-                    self.direction = self.right_direction
-                    self.gradient = right_gradient
 
-        # 최종으로 커브방향과 offcenter 구하기
-        # 차선이 둘 다 존재하면 비교해서 정하고, 하나만 있으면 그 선을 따라가고, 없으면 이전값 유지
-        if (left_gradient != None) and (right_gradient != None):
-            if nonzero_left[0].size > nonzero_right[0].size:
-                self.direction = self.left_direction
-                self.gradient = left_gradient
-            else:
-                self.direction = self.right_direction
-                self.gradient = right_gradient
-        elif left_gradient != None:
-            self.gradient = left_gradient
-            self.offcenter = midpoint - (lmid + midpoint + lmid) / 2
-        elif right_gradient != None:
-            self.gradient = right_gradient
-            self.offcenter = midpoint - (rmid - midpoint + rmid) / 2
-
-        # print(midpoint, " : ", self.offcenter)
+        print(midpoint, " : " , self.offcenter)
 
         return bird_width, bird_height, birdeye
 

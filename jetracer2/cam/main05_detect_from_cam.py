@@ -1,4 +1,3 @@
-import os
 import sys
 import cv2
 import threading
@@ -66,8 +65,8 @@ def handleDetectedObject(trtThread, condition):
 #%% 메인 함수
 def main():
     # 엔지 파일 경로
-    import camera
-    enginePath = project_path + "/models/ssd_mobilenet_v2_model/tensorrt_fp16.engine"
+    from utils import camera
+    enginePath = project_path + "/models/ssd_mobilenet_v2_classnumerror_model/tensorrt_fp16.engine"
     # 비디오 캡처 객체 얻기
     camera = camera.Video_Setting()
     videoCapture = camera.video_read()

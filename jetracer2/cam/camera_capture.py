@@ -6,7 +6,7 @@ project_path = "/home/jetson/MyWorkspace/jetracer"
 sys.path.append(project_path)
 
 def main():
-    import camera
+    from utils import camera
     # %% 비디오 파일 로딩
     camera = camera.Video_Setting()
     videoCapture = camera.video_read()

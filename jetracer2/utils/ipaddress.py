@@ -1,5 +1,11 @@
 import subprocess
-import display
+import os
+import sys
+
+current_path = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(current_path)
+
+import utils.display as display
 
 def network_interface_state(interface):
     try:

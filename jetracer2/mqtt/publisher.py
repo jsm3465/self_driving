@@ -20,12 +20,14 @@ class MqttPublisher:
     def __on_disconnect(self):
         print("** disconnection **")
 
-    def __publish(self, message):
+    def __publish(self):
         self.__client.connect(self.__brokerIp, self.__brokerPort)
         self.__stop = False
         self.__client.loop_start()
-        self.__client.publish(self.__topic, message, retain=False)
-        # print("발행 내용:", self.__topic, message)
+        while not self.__stop:
+            message = self.rover.sensorMessage()
+            self.__client.publish(self.__topic, message, retain=False)
+            time.sleep(1)
         self.__client.loop_stop()
 
     def start(self):
