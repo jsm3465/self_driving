@@ -6,23 +6,23 @@ class MqttSubscriber:
     def __init__(self, brokerip=None, brokerport=1883, topic=None):
         self.__brokerip = brokerip
         self.__brokerport = brokerport
-        self.topic = "None"
+        self.__topic = topic
         self.__client = mqtt.Client()
         self.__client.on_connect = self.__on_connect
         self.__client.on_disconnect = self.__on_disconnect
         self.__client.on_message = self.__on_message
-        self.message = "None"
+        self.message = None
 
     def __on_connect(self, client, userdata, flags, rc):
-        print("** connection **")
+        print("** subscriber connection **")
         self.__client.subscribe(self.__topic, qos=0)
 
     def __on_disconnect(self, client, userdata, rc):
         print("** disconnection **")
 
     def __on_message(self, client, userdata, message):
-        self.message = str(message.payload, encoding="UTF-8")
-        self.topic = message.topic
+        self.message = message
+        print("subscribe@@@@@@@@@@@@@@")
         print("구독 내용: {}, 토픽: {}, Qos: {}".format(
             str(message.payload, encoding="UTF-8"),
             message.topic,

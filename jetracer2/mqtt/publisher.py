@@ -15,7 +15,7 @@ class MqttPublisher:
         self.rover = AIrover
 
     def __on_connect(self):
-        print("** connection **")
+        print("** publisher connection **")
 
     def __on_disconnect(self):
         print("** disconnection **")

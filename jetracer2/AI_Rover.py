@@ -45,7 +45,7 @@ class AI_Rover:
     def handle_left(self):
         if self.__handle_angle <= 1:
             self.__handle_angle += 0.1
-            self.__motor_contrl.steering = self.__handle_angle
+            self.__motor_control.steering = self.__handle_angle
             # print("left : " + self.__handle_angle)
 
     def handle_refront(self):
@@ -79,7 +79,7 @@ class AI_Rover:
         # print("backward")
         # self.__motor_control.throttle = 0
         self.__direction = "froward"
-        self.__motor_control.throttle_gain = 0.55
+        self.__motor_control.throttle_gain = 0.6
         self.__motor_control.throttle = -1
 
     def stop(self):
@@ -111,59 +111,60 @@ class AI_Rover:
         message = json.dumps(message)
         return message
 
+
 if __name__ == '__main__':
     import time
 
     rover = AI_Rover()
     # rover.forward()
     # time.sleep(5)
-    # rover.stop()
-
-    import sys
-    project_path = "/home/jetson/MyWorkspace/jetracer"
-    sys.path.append(project_path)
-
-    import cv2
-    from datetime import datetime
-    from collections import deque
-    import linedetect.line_detect as line
-    from utils import PID, camera
-
-    road_half_width_list = deque(maxlen=10)
-    road_half_width_list.append(165)
-
-    pid_controller = PID.PIDController(round(datetime.utcnow().timestamp() * 1000))
-    pid_controller.set_gain(0.63, -0.001, 0.23)
-
-    Camera = camera.Video_Setting()
-    video = Camera.video_read()
-
-    while video.isOpened():
-        retval, frame = video.read()
-        if not retval:
-            print("video capture fail")
-            break
-
-        line_retval, L_lines, R_lines = line.line_detect(frame)
-
-        # =========================선을 찾지 못했다면, 다음 프레임으로 continue=========================
-        if line_retval == False:
-            cv2.imshow("frame", frame)
-            continue
-        else:
-            # ==========================선 찾아서 offset으로 돌려야할 각도 계산====================
-            angle = line.offset_detect(frame, L_lines, R_lines, road_half_width_list)
-            angle = pid_controller.equation(angle)
-
-            # 핸들 제어
-            rover.set_angle(angle)
-            cv2.imshow("frame", frame)
-
-        if cv2.waitKey(1) == 27:
-            rover.stop()
-            break
-
-    video.release()
-    cv2.destroyAllWindows()
-    print("videoCapture is not opened")
     rover.stop()
+    #
+    # import sys
+    # project_path = "/home/jetson/MyWorkspace/jetracer"
+    # sys.path.append(project_path)
+    #
+    # import cv2
+    # from datetime import datetime
+    # from collections import deque
+    # import linedetect.line_detect as line
+    # from utils import PID, camera
+    #
+    # road_half_width_list = deque(maxlen=10)
+    # road_half_width_list.append(165)
+    #
+    # pid_controller = PID.PIDController(round(datetime.utcnow().timestamp() * 1000))
+    # pid_controller.set_gain(0.63, -0.001, 0.23)
+    #
+    # Camera = camera.Video_Setting()
+    # video = Camera.video_read()
+    #
+    # while video.isOpened():
+    #     retval, frame = video.read()
+    #     if not retval:
+    #         print("video capture fail")
+    #         break
+    #
+    #     line_retval, L_lines, R_lines = line.line_detect(frame)
+    #
+    #     # =========================선을 찾지 못했다면, 다음 프레임으로 continue=========================
+    #     if line_retval == False:
+    #         cv2.imshow("frame", frame)
+    #         continue
+    #     else:
+    #         # ==========================선 찾아서 offset으로 돌려야할 각도 계산====================
+    #         angle = line.offset_detect(frame, L_lines, R_lines, road_half_width_list)
+    #         angle = pid_controller.equation(angle)
+    #
+    #         # 핸들 제어
+    #         rover.set_angle(angle)
+    #         cv2.imshow("frame", frame)
+    #
+    #     if cv2.waitKey(1) == 27:
+    #         rover.stop()
+    #         break
+    #
+    # video.release()
+    # cv2.destroyAllWindows()
+    # print("videoCapture is not opened")
+    # rover.stop()

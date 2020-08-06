@@ -6,13 +6,6 @@ import ctypes
 import tensorrt as trt
 import random
 import colorsys
-import sys
-
-project_path = "/home/jetson/MyWorkspace/jetracer"
-sys.path.append(project_path)
-
-import linedetect.line_detect as line
-from collections import deque
 
 # -------------------------------------------------------------------------------------
 # CUDA 드라이버를 초기화하고 입력 이미지를 얻어 TrtSSD 클래스에게 감지를 위임하는 스레드 클래스
@@ -39,17 +32,10 @@ class TrtThread(threading.Thread):
         self.confs = None
         self.clss = None
         self.running = True
-        self.angle = 0
-        self.lane_img = None
-        self.road_half_width_list = deque(maxlen=10)
-        self.road_half_width_list.append(165)
 
     # start() 메소드가 호출되면 실행
     def run(self):
-        # CUDA 드라이버 초기화
-        cuda.init()
-        # GPU 0의 CUDA Context 생성
-        self.cuda_ctx = cuda.Device(0).make_context()
+
         # 사물 감지를 수행하는 TrtSSD 생성
         self.trt_ssd = TrtSSD(self.enginePath)
         # 입력 소스별로 이미지를 읽고 TrTSSD에게 감지 요청
@@ -70,23 +56,13 @@ class TrtThread(threading.Thread):
                 videoCapture = self.inputSource
                 retval, img = videoCapture.read()
 
-                line_retval, L_lines, R_lines = line.line_detect(img)
-
                 if retval is True:
-                    # 선을 찾지 못했다면, 다음 프레임으로 continue
-                    if line_retval == False:
-                        pass
-                    else:
-                        # 선 찾아서 offset으로 돌려야할 각도 계산
-                        self.angle, self.lane_img = line.offset_detect(img, L_lines, R_lines, self.road_half_width_list)
-
                     boxes, confs, clss = self.trt_ssd.detect(img, self.conf_th)
                     with self.condition:
                         self.img, self.boxes, self.confs, self.clss = img, boxes, confs, clss
                         self.condition.notify()
                 else:
                     self.running = False
-
         # TrtSSD 소멸
         del self.trt_ssd
         # CUDA Context 소멸
@@ -95,7 +71,7 @@ class TrtThread(threading.Thread):
 
     # 감지 결과를 호출하는 곳으로 전달
     def getDetectResult(self):
-        return self.img, self.boxes, self.confs, self.clss, self.angle, self.lane_img
+        return self.img, self.boxes, self.confs, self.clss
 
     # 스레드 중지
     def stop(self):

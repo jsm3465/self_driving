@@ -8,7 +8,7 @@ project_path = "/home/jetson/MyWorkspace/jetracer"
 sys.path.append(project_path)
 
 from utils.trt_ssd_object_detect import TrtThread, BBoxVisualization
-from utils.road_label_map import CLASSES_DICT
+from utils.object_label_map import CLASSES_DICT
 
 #%% 감지 결과 활용(처리)
 def handleDetectedObject(trtThread, condition):
@@ -66,10 +66,11 @@ def handleDetectedObject(trtThread, condition):
 def main():
     # 엔지 파일 경로
     from utils import camera
-    enginePath = project_path + "/models/ssd_mobilenet_v2_classnumerror_model/tensorrt_fp16.engine"
+    enginePath = project_path + "/models/ssd_mobilenet_v2_object_model/tensorrt_fp16.engine"
     # 비디오 캡처 객체 얻기
     camera = camera.Video_Setting()
     videoCapture = camera.video_read()
+
     # videoCapture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
     # videoCapture.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 
