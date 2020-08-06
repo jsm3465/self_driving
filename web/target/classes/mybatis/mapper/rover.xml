@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="rover">
+	<!-- parameterType의 type이 mybatis에 존재할 경우(int, char, ...) 명시 안해도 됨 -->
+	<!-- parameterType에는 매개변수의 타입 명시 -->
+	
+	<select id="selectAll" resultType="rover">
+		select rname, rtype, rip, ruser, rdistance
+		from rover
+	</select>
+	
+	
+	
+	<!-- mybatis examples -->
+	<!-- <insert id="insert" parameterType="board"
+		useGeneratedKeys="true" keyProperty="bno">
+		insert into board 
+		(btitle, bcontent, bwriter, bhitcount, bdate, starscore, battachoname, battachsname, battachtype)
+		values
+		(#{btitle}, #{bcontent}, #{bwriter}, 0, now(6), 0, #{battachoname}, #{battachsname}, #{battachtype})
+	</insert>
+
+	<select id="selectByBno" resultType="board">
+		select bno, btitle, bcontent, bwriter, bhitcount, bdate, starscore, battachoname, battachsname, battachtype
+		from board
+		where bno=#{bno}
+	</select>
+	
+	<select id="selectByPage" resultType="board">
+		SELECT bno, btitle, bwriter, bhitcount, bdate, starscore
+		FROM board
+		ORDER BY bdate DESC
+		LIMIT #{startIndex}, #{rowsPerPage}	
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT count(*) FROM board;
+	</select>
+	
+	<update id="updateByBno">
+		UPDATE board
+		SET btitle=#{btitle}, bcontent=#{bcontent}
+		WHERE bno=#{bno}
+	</update>
+	
+	<update id="updateBhitcountByBno">
+		UPDATE board
+		SET bhitcount=bhitcount+1
+		WHERE bno=#{bno}
+	</update>
+	
+	<update id="updateStarscoreByBno">
+		UPDATE board
+		SET starscore=#{starscore}
+		WHERE bno=#{bno}
+	</update>
+	
+	<delete id="deleteByBno">
+		DELETE FROM board
+		WHERE bno=#{bno}
+	</delete> -->
+</mapper>

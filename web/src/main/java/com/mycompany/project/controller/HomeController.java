@@ -1,16 +1,22 @@
 package com.mycompany.project.controller;
 
+import javax.annotation.PostConstruct;
+
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.mycompany.project.network.MyMqttClient;
 
 @Controller
 @RequestMapping("/home")
 public class HomeController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
-
+	
 	@RequestMapping("/main.do")
 	public String main() {
 		LOGGER.info("실행");
@@ -21,18 +27,6 @@ public class HomeController {
 	public String redirectToMain() {
 		LOGGER.info("실행");
 		return "redirect:main.do";
-	}
-
-	@GetMapping("/no10.do")
-	public String no10() {
-		LOGGER.info("실행");
-		return "home/no10";
-	}
-
-	@GetMapping("/no14.do")
-	public String no14() {
-		LOGGER.info("실행");
-		return "home/no14";
 	}
 
 	@GetMapping("/no15.do")

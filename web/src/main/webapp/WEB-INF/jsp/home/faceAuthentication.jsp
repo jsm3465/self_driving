@@ -17,6 +17,8 @@
 	href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/css/faceAuthentication.css">
+
+
 </head>
 <body>
 
@@ -35,7 +37,9 @@
 		</section>
 		<footer class="row">
 			<div class="col-3"></div>
-			<div class="col-6"></div>
+			<div class="col-6">
+			<form id="next" name="nextPage"></form>
+			</div>
 			<div class="col-3"></div>
 		</footer>
 	</div>
@@ -48,4 +52,6 @@
 		src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/faceAuthentication.js"></script>
 </html>

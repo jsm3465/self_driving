@@ -37,11 +37,12 @@
 					<li><a href="manualDriving.do">Manual Driving</a></li>
 					<li><a href="carInfo.do">Car Info</a></li>
 					<li><a href="navi.do">navi</a></li>
-					<li><a href="no10.do">no10.do</a></li>
+					<li><a href="roverList.do">roverList.do</a></li>
 					<li><a href="no14.do">no14.do</a></li>
 					<li><a href="no15.do">no15.do</a></li>
 					<li><a href="no18.do">no18.do</a></li>
 					<li><a href="no22.do">no22.do</a></li>
+					<li><a href="cameraTest.do">cameraTest.do</a></li>
 				</ul>
 			</div>
 		</div>
@@ -50,16 +51,6 @@
 		<script src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
-
-		<h5 class="alert alert-info">/home/main.jsp</h5>
-		<ul>
-			<li><a href="cameraTest.do">cameraTest.do</a></li>
-			<li><a href="no10.do">no10.do</a></li>
-			<li><a href="no14.do">no14.do</a></li>
-			<li><a href="no15.do">no15.do</a></li>
-			<li><a href="no18.do">no18.do</a></li>
-			<li><a href="no22.do">no22.do</a></li>
-		</ul>
 
 	</body>
 </html>

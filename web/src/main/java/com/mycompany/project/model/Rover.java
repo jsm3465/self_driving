@@ -4,6 +4,8 @@ public class Rover {
 	private String rname;
 	private String rtype;
 	private String rip;
+	private String ruser;
+	private int rdistance;
 
 	public String getRname() {
 		return rname;
@@ -29,6 +31,14 @@ public class Rover {
 		this.rip = rip;
 	}
 
+	public String getRuser() {
+		return ruser;
+	}
+
+	public void setRuser(String ruser) {
+		this.ruser = ruser;
+	}
+
 	public int getRdistance() {
 		return rdistance;
 	}
@@ -37,5 +47,4 @@ public class Rover {
 		this.rdistance = rdistance;
 	}
 
-	private int rdistance;
 }
