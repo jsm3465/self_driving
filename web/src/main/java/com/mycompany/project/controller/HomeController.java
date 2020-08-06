@@ -3,7 +3,6 @@ package com.mycompany.project.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -41,21 +40,5 @@ public class HomeController {
 		return "home/carInfo";
 	}
 	
-	@RequestMapping("/signup.do")
-	public String signup() {
-		LOGGER.info("실행");
-		return "member/sign_up";
-	}
 	
-	@RequestMapping("/faceAuthentication.do")
-	public String faceAuthentication() {
-		LOGGER.info("실행");
-		return "home/faceAuthentication";
-	}
-	
-	@RequestMapping("/faceResist.do")
-	public String faceResist() {
-		LOGGER.info("실행");
-		return "home/faceResist";
-	}
 }

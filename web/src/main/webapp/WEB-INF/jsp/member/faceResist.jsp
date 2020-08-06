@@ -36,7 +36,7 @@
 		<footer class="row">
 			<div class="col-3"></div>
 			<div id="resiterButtonDiv" class="col-6">
-			<button type="button" class="btn btn-primary" >사진 등록</button>
+			<button style="font-size: 1.0rem;"type="button" class="btn btn-primary" >사진 등록</button>
 			</div>
 			<div class="col-3"></div>
 		</footer>

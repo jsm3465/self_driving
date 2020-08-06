@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="member">
+	<insert id="signup" parameterType="member">
+		insert into member (mid, mpassword, mname, msex, mbirth, memail, mstate)
+		values(#{mid}, #{mpassword}, #{mname}, #{msex}, #{mbirth}, #{memail}, #{mstate})
+	</insert>
+	
+	<select id="selectByMid" resultType="member">
+		select mid, mpassword, mname, msex, mbirth, memail, mstate from member
+		where mid=#{mid}
+	</select>
+	
+	<update id="updateByMid">
+		update member
+		set mpassword=#{mpassword}, mname=#{mname}, msex=#{msex}, mbirth=#{mbirth}, memail=#{memail}, mstate=#{mstate}
+		where mid=#{mid}
+	</update>
+	
+	<update id="updateStateByMid">
+		update member
+		set mstate=#{mstate}
+		where mid=#{mid}
+	</update>
+	
+	<select id="selectByMnameAndMemail" resultType="String">
+		select mid from member
+		where mname=#{mname} and memail=#{memail}
+	</select>
+	
+	<select id="selectByMidAndMnameAndMtel" resultType="String">
+		select mpassword from member
+		where mid=#{mid} and mname=#{mname} and memail=#{memail}
+	</select>
+	
+	<select id="selectByMemail" resultType="member">
+		select mid, mpassword, mname, msex, mbirth, memail, mstate from member
+		where memail=#{memail}
+	</select>
+</mapper>

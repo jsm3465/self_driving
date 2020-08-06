@@ -8,6 +8,15 @@ public class Member {
 	private String memail;
 	private String mbirth;
 	private String msex;
+	private int mstate;
+
+	public int getMstate() {
+		return mstate;
+	}
+
+	public void setMstate(int mstate) {
+		this.mstate = mstate;
+	}
 
 	public String getMid() {
 		return mid;

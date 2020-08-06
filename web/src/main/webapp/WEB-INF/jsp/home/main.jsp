@@ -1,10 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<jsp:include page="../member/signUp.jsp" />
-<jsp:include page="../member/signIn.jsp" />
-<jsp:include page="../member/findId.jsp" />
-<jsp:include page="../member/findPassword.jsp" />
 
 <!DOCTYPE html>
 <html>
@@ -22,14 +18,19 @@
 	<body>
 		<div class="container-fluid vh-100">
 			<div class="row">
-				<div class="col-md-3">
-					<a href="main.do"><h1>Autonomous Driving</h1></a>
+				<div class="col-md-3" id="logo">
+					<a href="main.do">Autonomous Driving</a>
 				</div>
 				<div class="col-md-7">
 				</div>
 				<div class="col-md-2">
-					<a href="" class="signup" data-toggle="modal" data-target="#modalRegisterForm">회원가입</a>
-					<a href="" class="signin" data-toggle="modal" data-target="#elegantModalForm">로그인</a>
+					<c:if test="${sessionMid == null}">
+						<a href="${pageContext.request.contextPath}/member/signupForm.do" class="signup">회원가입</a>
+						<a href="${pageContext.request.contextPath}/member/signinForm.do" class="signin">로그인</a>
+					</c:if>
+					<c:if test="${sessionMid != null}">
+						<a href="${pageContext.request.contextPath}/member/signout.do" class="signout">로그아웃</a>
+					</c:if>
 				</div>
 			</div>
 			<div>
