@@ -3,15 +3,20 @@ import cv2
 import threading
 import time
 
-#%% 프로젝트 폴더를 sys.path에 추가(Jetson Nano에서 직접 실행할 때 필요)
+from utils.trt_ssd_object_detect import TrtThread, BBoxVisualization
+from utils.object_label_map import CLASSES_DICT
+from linedetect.line_detect import LineDetector
+
+# 프로젝트 폴더를 sys.path에 추가(Jetson Nano에서 직접 실행할 때 필요)
 project_path = "/home/jetson/MyWorkspace/jetracer"
 sys.path.append(project_path)
 
-from utils.trt_ssd_object_detect import TrtThread, BBoxVisualization
-from utils.object_label_map import CLASSES_DICT
 
 #%% 감지 결과 활용(처리)
-def handleDetectedObject(trtThread, condition):
+def auto_driving_camera(trtThread, condition):
+    # 차선 인식 클래스
+    line_detector = LineDetector()
+
     # 전체 스크린 플래그 변수
     full_scrn = False
 
@@ -38,6 +43,10 @@ def handleDetectedObject(trtThread, condition):
 
         # 초당 프레임 수 드로잉
         img = vis.drawFps(img, fps)
+
+        # ---- 2. 차선 인식 ----
+        # 차선 인식 화면
+         = line_detector.line_camera(frame)
 
         # 이미지를 윈도우에 보여주기
         cv2.imshow("detect_from_video", img)

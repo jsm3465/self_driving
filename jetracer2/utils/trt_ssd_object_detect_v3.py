@@ -12,26 +12,25 @@ import colorsys
 # -------------------------------------------------------------------------------------
 class TrtThread(threading.Thread):
     # 정적 멤버 필드 선언
-    INPUT_TYPE_IMAGE = 0
-    INPUT_TYPE_VIDEO = 1
+    INPUT_TYPE_IMAGE =  0
+    INPUT_TYPE_VIDEO =  1
     INPUT_TYPE_USBCAM = 2
 
     # 생성자 선언
     def __init__(self, enginePath, inputType, inputSource, conf_th, condition):
         threading.Thread.__init__(self)
-        self.enginePath = enginePath
-        self.inputSource = inputSource
-        self.inputType = inputType
-        self.condition = condition
+        self.enginePath =   enginePath
+        self.inputSource =  inputSource
+        self.inputType =    inputType
+        self.condition =    condition
         self.conf_th = conf_th
         self.cuda_ctx = None
-        self.trt_ssd = None
-        self.running = False
-        self.img = None
+        self.trt_ssd =  None
+        self.running =  True
+        self.img =  None
+        self.clss = None
         self.boxes = None
         self.confs = None
-        self.clss = None
-        self.running = True
 
     # start() 메소드가 호출되면 실행
     def run(self):

@@ -1,4 +1,6 @@
 import sys
+project_path = "/home/jetson/MyWorkspace/jetracer"
+sys.path.append(project_path)
 
 from mqtt.subscriber import MqttSubscriber
 from mqtt.Camerapublisher import ImageMqttPusblisher
@@ -11,8 +13,11 @@ from utils import camera
 from linedetect.line_detect import LineDetector
 import pycuda.driver as cuda
 
-project_path = "/home/jetson/MyWorkspace/jetracer"
-sys.path.append(project_path)
+from utils import trt_ssd_object_detect as trt
+from utils.object_label_map import CLASSES_DICT
+import time
+
+
 enginePath = project_path + "/models/ssd_mobilenet_v2_object_model/tensorrt_fp16.engine"
 
 # ======================= MQTT ================================
@@ -29,8 +34,9 @@ sensorpub.start()
 
 
 # ==================== object detection ========================
+conf_th = 0.6
+fps = 0.0
 enginePath = project_path + "/models/ssd_mobilenet_v2_object_model/tensorrt_fp16.engine"
-
 
 # ===============================================================
 # 카메라 동영상 읽어오기
@@ -43,6 +49,10 @@ flag = 2
 
 # 차선 인식 클래스
 line_detector = LineDetector()
+
+# 객체 인식 클래스
+trt_ssd = trt.TrtSSD(enginePath)
+vis = trt.BBoxVisualization(CLASSES_DICT)
 
 # CUDA 드라이버 초기화
 cuda.init()
@@ -78,7 +88,7 @@ try:
             # ------------------ 자율 주행 모드 ON -----------------
             if flag == 1:
                 print("자율 주행 ON")
-                #rover.forward()
+                # rover.forward()
 
                 # 자율 주행 카메라 영상 처리
                 # ---- 1. 차선 인식 ----
@@ -89,10 +99,21 @@ try:
                 rover.set_angle(line_detector.angle)
 
                 # ---- 2. 객체 인식 ----
+                boxes, confs, clss = trt_ssd.detect(frame, conf_th)
 
+                # 감지 결과 출력
+                img = vis.drawBboxes(img, boxes, confs, clss)
 
+                # 초당 프레임 수 드로잉
+                img = vis.drawFps(img, fps)
 
-            #  ------------------ 자율 주행 모드 OFF -----------------
+                # 초당 프레임 수 계산
+                toc = time.time()
+                curr_fps = 1.0 / (toc - tic)
+                fps = curr_fps if fps == 0.0 else (fps * 0.95 + curr_fps * 0.05)
+                tic = toc
+
+            # ------------------ 자율 주행 모드 OFF -----------------
             elif flag == 2:
                 rover.stop()
 

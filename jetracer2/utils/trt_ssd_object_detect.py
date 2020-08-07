@@ -26,7 +26,6 @@ class TrtThread(threading.Thread):
         self.conf_th = conf_th
         self.cuda_ctx = None
         self.trt_ssd = None
-        self.running = False
         self.img = None
         self.boxes = None
         self.confs = None
@@ -66,6 +65,7 @@ class TrtThread(threading.Thread):
                         self.condition.notify()
                 else:
                     self.running = False
+
         # TrtSSD 소멸
         del self.trt_ssd
         # CUDA Context 소멸
@@ -90,7 +90,7 @@ class TrtSSD(object):
         # 엔진 파일 경로 필드 선언 및 초기화
         self.enginePath = enginePath
         # 라이브러리 로딩
-        ctypes.CDLL("../lib/libflattenconcat.so")
+        ctypes.CDLL("/home/jetson/MyWorkspace/jetracer/lib/libflattenconcat.so")
         # 로거 필드 선언 및 초기화
         self.trtLogger = trt.Logger(trt.Logger.INFO)
         # TensorRT 로거 세팅
