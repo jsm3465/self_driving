@@ -11,7 +11,8 @@ sys.path.append(project_path)
 import utils.ipaddress as ip
 import utils.power as pw
 from utils.display import Oled
-
+from sensor.distance import Distance
+from sensor.Pcf8591 import Pcf8591
 
 class AI_Rover:
     def __init__(self):
@@ -25,6 +26,10 @@ class AI_Rover:
         self.__handle_angle = 0
         self.__dcMotor_speed = 0
         self.__direction = None
+
+        # sensor
+        self.pcf8591 = Pcf8591(0x48)
+        self.distance = Distance(self.pcf8591, 0)
 
     def __oled_setting(self):
         while True:
@@ -102,12 +107,14 @@ class AI_Rover:
         message = {}
         # message["buzzer"] = self.buzzer.state # on, off
         # message["dcmotor_speed"] = str(self.dcmotor.speed) # pwm값
-        message["dcmotor_dir"] = self.__direction # forward, backward
-        # message["distance"] = str(self.hcsr.dist) # 계속 변화하는 거리값
+        # message["dcmotor_dir"] = self.__direction # forward, backward
+        # message["distance"] = str(self.distance.read()) # 계속 변화하는 거리값
         # message["photo"] = str(self.photo.photolevel) # 계속 변화하는 조도값
         # message["led"] = self.led.state # red, green, blue
-        message["servo"] = str(self.__handle_angle)  # 앞바퀴 서보
+        # message["servo"] = str(self.__handle_angle)  # 앞바퀴 서보
         # message["temperature"] = str(self.thermistor.cur_temp) # 계속 변화하는 온도 ( 지금은 1초 주기인데 늘려도 괜찮을듯)
+        message["battery"] = str(self.get_voltage_percentage())  # 앞바퀴 서보
+
         message = json.dumps(message)
         return message
 

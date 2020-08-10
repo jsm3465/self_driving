@@ -22,7 +22,7 @@ class MqttSubscriber:
 
     def __on_message(self, client, userdata, message):
         self.message = message
-        print("subscribe@@@@@@@@@@@@@@")
+        # print("subscribe@@@@@@@@@@@@@@")
         print("구독 내용: {}, 토픽: {}, Qos: {}".format(
             str(message.payload, encoding="UTF-8"),
             message.topic,

@@ -46,7 +46,7 @@ def auto_driving_camera(trtThread, condition):
 
         # ---- 2. 차선 인식 ----
         # 차선 인식 화면
-         = line_detector.line_camera(frame)
+        img = line_detector.line_camera(img)
 
         # 이미지를 윈도우에 보여주기
         cv2.imshow("detect_from_video", img)

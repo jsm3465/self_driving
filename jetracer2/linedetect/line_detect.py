@@ -95,7 +95,7 @@ class LineDetector:
         L_lines_detected = bool(len(L_lines) != 0)
         R_lines_detected = bool(len(R_lines) != 0)
 
-        # 둘다 찾았을 경우
+        # 둘 다 찾았을 경우
         if L_lines_detected and R_lines_detected:
             for each_line in L_lines:
                 x1, y1, x2, y2 = each_line
@@ -176,6 +176,10 @@ class LineDetector:
                 road_center_x = right_line_x - road_half_width
                 road_center_point = (int(road_center_x), y_fix)
 
+        # 차선을 찾지 못했을 경우
+        else:
+            return lane_img
+
         # 도로 중간 지점 / 자동차 중간 지점과 라인 시각화
         cv2.circle(lane_img, road_center_point, 5, (255, 0, 0), -1)
         cv2.circle(lane_img, center_point, 5, (0, 255, 0), -1)
@@ -188,7 +192,7 @@ class LineDetector:
         # 각도 구하기
         # 오른쪽으로 회전해야 하는 경우 각도가 음수, 왼쪽으로 회전해야하는 경우 양수
         angle = np.arctan2(offset_height, offset_width) * 180 / (np.pi) - 90
-        angle = self.__pid_controller.equation(self.angle)
+        angle = self.__pid_controller.equation(angle)
         self.angle = angle
 
         return lane_img
