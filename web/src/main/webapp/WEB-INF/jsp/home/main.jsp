@@ -35,9 +35,10 @@
 			</div>
 			<div>
 				<ul>
-					<li><a href="manualDriving.do">Manual Driving</a></li>
+					<li><a href="${pageContext.request.contextPath}/home/manualDriving.do">Manual Driving</a></li>
 					<li><a href="carInfo.do">Car Info</a></li>
 					<li><a href="navi.do">navi</a></li>
+					<li><a href="${pageContext.request.contextPath}/member/memberInformationForm.do">memberInformation</a></li>
 				</ul>
 			</div>
 		</div>

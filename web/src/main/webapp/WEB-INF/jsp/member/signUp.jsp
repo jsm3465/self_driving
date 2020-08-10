@@ -1,12 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>회원 가입</title>
+		<title>Sign Up</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
@@ -25,21 +26,25 @@
 			<div style="height: 60%"class="row">
 				<div class="col-md-4"></div>
 				<div class="col-md-4">
-				<form method="post" action="signup.do">
+				<form:form method="post" action="signup.do" modelAttribute="member">
 				<div class="md-form mb-1">
 					<i class="fas fa-user prefix grey-text"></i> <label
 						style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-						data-success="right" for="orangeForm-name">아이디</label> <input
+						data-success="right" for="orangeForm-name">아이디</label> <form:input
+						path="mid"
 						style="margin-bottom: 20px;" name="mid"
-						type="text" id="orangeForm-id" class="form-control validate">
+						type="text" id="orangeForm-id" class="form-control validate"/>
+						<form:errors path="mid" style="color:red; font-size:1.0rem" />
 				</div>
 
 				<div class="md-form mb-1">
 					<i class="fas fa-lock prefix grey-text"></i> <label
 						style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-						data-success="right" for="orangeForm-pass">비밀번호</label> <input
+						data-success="right" for="orangeForm-pass">비밀번호</label> <form:input
+						path="mpassword"
 						style="margin-bottom: 20px;" name="mpassword"
-						type="password" id="orangeForm-pass" class="form-control validate">
+						type="password" id="orangeForm-pass" class="form-control validate"/>
+						<form:errors path="mpassword" style="color:red; font-size:1.0rem" />
 				</div>
 
 				<div class="md-form mb-1">
@@ -53,9 +58,11 @@
 				<div class="md-form mb-1">
 					<i class="fas fa-user prefix grey-text"></i> <label
 						style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-						data-success="right" for="orangeForm-name">이름</label> <input
+						data-success="right" for="orangeForm-name">이름</label> <form:input
+						path="mname"
 						style="margin-bottom: 20px;" name="mname"
-						type="text" id="orangeForm-name" class="form-control validate">
+						type="text" id="orangeForm-name" class="form-control validate"/>
+						<form:errors path="mname" style="color:red; font-size:1.0rem" />
 
 				</div>
 
@@ -125,21 +132,21 @@
 							<option value="30">30</option>
 							<option value="31">31</option>
 						</select>
+						<form:errors path="mbirth" style="color:red; font-size:1.0rem" />
 					</div>
 				</div>
-				
-				<!-- <form method="post" action="emailCheck.do"> -->
+
 					<div class="md-form mb-1">
 						<i class="fas fa-envelope prefix grey-text"></i> <label
 							style="margin-bottom: 0px; font-size: 20px; margin-top: 20px;" 
 							data-error="wrong"
-							data-success="right" for="orangeForm-email">이메일</label> <input
+							data-success="right" for="orangeForm-email">이메일</label> <form:input
+						path="memail"
 							style="margin-bottom: 20px;" name="memail"
-							type="email" id="orangeForm-email" class="form-control validate">
+							type="email" id="orangeForm-email" class="form-control validate"/>
 						<a type="button"style="float: right; margin-bottom: 20px; border: none;" onclick="fun1()">인증하기</a>
+						<form:errors path="memail" style="color:red; font-size:1.0rem" />
 					</div>
-				<!-- </form> -->
-				<!-- <form method="post" action="emailKey.do"> -->
 					<div>
 						<i class="fas fa-envelope prefix grey-text"></i> <label
 							style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
@@ -148,13 +155,12 @@
 							type="text" id="orangeForm-email2" class="form-control validate">
 						<a type="button"style="float: right; margin-bottom: 20px; border: none;" onclick="fun2()">인증</a>
 					</div>
-				<!-- </form> -->
 				<div class="md-form mb-1">
-				<a href="${pageContext.request.contextPath}/member/faceResistForm.do"><button
+				<button
 						style="background-color: #AAAAAA; color: white; width: 100%;"
-						class="btn btn-deep-orange">다음</button></a>
+						class="btn btn-deep-orange">다음</button>
 			</div>
-			</form>
+			</form:form>
 			</div>
 			
 				</div>

@@ -24,6 +24,7 @@ public class MemberService {
 	public static final int LOGIN_FAIL_MPASSWORD = 1;
 	public static final int LOGIN_SUCCESS = 2;
 	public int signin(Member member) {
+		LOGGER.info("실행");
 		Member dbMember = memberDao.selectByMid(member.getMid());
 		
 		if(dbMember == null) {
@@ -54,6 +55,11 @@ public class MemberService {
 	public Member selectByMemail(String memail) {
 		LOGGER.info("실행");
 		Member member = memberDao.selectByMemail(memail);
+		return member;
+	}
+
+	public Member selectByMid(String mid) {
+		Member member = memberDao.selectByMid(mid);
 		return member;
 	}
 

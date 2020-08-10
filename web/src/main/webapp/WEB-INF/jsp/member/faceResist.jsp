@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Face authentication</title>
+<title>Face Resist</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
