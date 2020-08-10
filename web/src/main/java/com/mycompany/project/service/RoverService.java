@@ -24,6 +24,22 @@ public class RoverService {
 		List<Rover> list = roverDao.getRoverList();
 		return list;
 	}
+
+	public void resisterRover(Rover rover) {
+		LOGGER.info("실행");
+		roverDao.resisterRover(rover);
+	}
+
+	public Rover getRover(String rname) {
+		LOGGER.info("실행");
+		Rover rover = roverDao.getRover(rname);
+		return rover;
+	}
+
+	public void deleteRover(String rname) {
+		LOGGER.info("실행");
+		roverDao.deleteRover(rname);
+	}
 	
 	
 }

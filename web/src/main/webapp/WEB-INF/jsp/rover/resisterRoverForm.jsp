@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>No. 14</title>
+<title>resisterRoverForm</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
 
@@ -16,25 +16,9 @@
 <!-- bootswatch slate theme -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
-<!-- 나중에 .css 파일로 옮길것 -->
-<!-- border는 나중에 지울것 -->
-<style>
-* {
-	border: solid 1px;
-}
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resource/css/resisterRoverForm.css">
 
-header {
-	height: 10%;
-}
-
-section {
-	height: 85%;
-}
-
-footer {
-	height: 5%;
-}
-</style>
 </head>
 <body>
 	<div class="container-fluid vh-100">
@@ -47,22 +31,22 @@ footer {
 		</header>
 		<section class="row">
 			<div class="col-5 align-items-center justify-content-center">
-				<form>
+				<form method="post" action="resisterRover.do">
 					<div class="form-group">
-						<label for="inputName">Name</label> <input type="text"
-							class="form-control" id="inputName">
+						<label for="inputName">Name</label> 
+						<input type="text" id="inputName" class="form-control" name="rname">
 					</div>
 					<div class="form-group">
-						<label for="inputType">Type</label><select id="inputType"
-							class="form-control">
+						<label for="inputType">Type</label>
+						<select id="inputType" class="form-control" name="rtype">
 							<option selected>Choose</option>
 							<option>jetRacer</option>
 							<option>sensingRover</option>
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="inputIP">IP address</label> <input type="text"
-							class="form-control" id="inputIP">
+						<label for="inputIP">IP address</label> 
+						<input type="text" id="inputIP" class="form-control" name="rip">
 					</div>
 					<button type="submit" class="btn btn-primary">Register</button>
 				</form>
@@ -80,7 +64,5 @@ footer {
 		src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
-		<script
-		src="${pageContext.request.contextPath}/resource/js/resisterRover.js"></script>
 </body>
 </html>

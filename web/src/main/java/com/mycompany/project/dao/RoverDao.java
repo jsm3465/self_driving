@@ -20,5 +20,21 @@ public class RoverDao extends EgovAbstractMapper{
 		List<Rover> list =selectList("rover.selectAll");
 		return list;
 	}
+
+	public void resisterRover(Rover rover) {
+		LOGGER.info("실행");
+		insert("rover.insert", rover);
+	}
+
+	public Rover getRover(String rname) {
+		LOGGER.info("실행");
+		Rover rover = selectOne("rover.selectByRname", rname);
+		return rover;
+	}
+
+	public void deleteRover(String rname) {
+		LOGGER.info("실행");
+		delete("deleteByRname", rname);
+	}
 	
 }

@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+* {
+	border: solid 1px;
+}
+
+header {
+	height: 10%;
+}
+
+section {
+	height: 85%;
+}
+
+footer {
+	height: 5%;
+}

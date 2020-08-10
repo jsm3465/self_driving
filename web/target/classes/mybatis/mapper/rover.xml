@@ -11,8 +11,21 @@
 		from rover
 	</select>
 	
+	<select id="selectByRname" resultType="rover">
+		select rname, rtype, rip, ruser, rdistance
+		from rover
+		where rname=#{rname}
+	</select>
 	
+	<insert id="insert" parameterType="rover">
+		insert into rover (rname, rtype, rip, ruser, rdistance)
+		values (#{rname}, #{rtype}, #{rip}, "notUsed", 0)
+	</insert>
 	
+	<delete id="deleteByRname">
+		delete from rover
+		where rname=#{rname}
+	</delete>
 	<!-- mybatis examples -->
 	<!-- <insert id="insert" parameterType="board"
 		useGeneratedKeys="true" keyProperty="bno">

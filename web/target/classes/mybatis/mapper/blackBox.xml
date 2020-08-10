@@ -22,6 +22,12 @@
 		from blackbox
 		where rname=#{rname}
 	</select>
+	
+	<select id="selectAllByRname" resultType="String">
+		select rimg
+		from blackbox
+		where rname=#{rname} order by rdate
+	</select>
 
 	<!-- 특정  -->
 

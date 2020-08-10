@@ -26,7 +26,7 @@
 			<div id ="logo" class="col-3"><a href="main.do">Autonomous Driving</a></div>
 			<div id="modeName"class="col-6">MANUAL MODE</div>
 			<div id="userName" class="col-3">
-				user name1 
+				${rover.ruser} 
 		 		<button id="aiModeButton" type="button" class="btn btn-secondary" >AI MODE</button>
 			</div>
 		</header>

@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+* {
+	border: solid 1px;
+	
+}
+
+header {
+	height: 10%;
+}
+
+section {
+	height: 75%;
+}
+
+footer {
+	height: 15%;
+}
+
+.card {
+	width: 60%;
+	height: 60%;
+}
+
+#roverNameDiv{
+	display: flex;
+	justify-content: center;
+	align-items : center;
+	font-size: 64px;	
+	font-family:'Do Hyeon', sans-serif;		
+}
+
+#userIdDiv{
+	display: flex;
+	justify-content: flex-end;
+	align-items : flex-end;
+	font-size: 32px;
+	font-family:'Do Hyeon', sans-serif;			
+}
+
+#infoButtonDiv{
+	display: flex;
+	justify-content: flex-end;
+	align-items : flex-end;
+	font-size: 32px;
+	font-family:'Do Hyeon', sans-serif;			
+}
+
+#blackBoxImageDiv{
+	display: flex;
+	justify-content: center;
+	align-items : center;
+	padding:0;
+	height:500px;
+	width:500px;
+}
+
+#blackBoxImage{
+	height:400px;
+	width:400px;
+	padding:0;
+	margin:0;	
+}

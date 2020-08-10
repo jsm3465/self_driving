@@ -34,13 +34,6 @@
 			</div>
 			<div>
 				<ul>
-					<li><a href="manualDriving.do">Manual Driving</a></li>
-					<li><a href="carInfo.do">Car Info</a></li>
-					<li><a href="navi.do">navi</a></li>
-					<li><a href="roverList.do">roverList.do</a></li>
-					<li><a href="no14.do">no14.do</a></li>
-					<li><a href="no15.do">no15.do</a></li>
-					<li><a href="no18.do">no18.do</a></li>
 					<li><a href="no22.do">no22.do</a></li>
 					<li><a href="cameraTest.do">cameraTest.do</a></li>
 				</ul>

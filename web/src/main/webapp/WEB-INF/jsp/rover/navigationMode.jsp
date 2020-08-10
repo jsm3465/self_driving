@@ -27,7 +27,7 @@
 				<a href="main.do">Autonomous Driving</a>
 			</div>
 			<div id="modeName" class="col-6">NAVIGATION MODE</div>
-			<div id="userName" class="col-3">user name1</div>
+			<div id="userName" class="col-3">${rover.ruser}</div>
 		</header>
 		<section class="row">
 			<div id="inputForm" class="col-4">

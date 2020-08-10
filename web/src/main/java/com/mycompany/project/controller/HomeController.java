@@ -29,40 +29,10 @@ public class HomeController {
 		return "redirect:main.do";
 	}
 
-	@GetMapping("/no15.do")
-	public String no15() {
-		LOGGER.info("실행");
-		return "home/no15";
-	}
-
-	@GetMapping("/no18.do")
-	public String no18() {
-		LOGGER.info("실행");
-		return "home/no18";
-	}
-
 	@GetMapping("/no22.do")
 	public String no22() {
 		LOGGER.info("실행");
 		return "home/no22";
-	}
-
-	@RequestMapping("/manualDriving.do")
-	public String manualDriving() {
-		LOGGER.info("실행");
-		return "home/manualDriving";
-	}
-
-	@RequestMapping("/navi.do")
-	public String navi() {
-		LOGGER.info("실행");
-		return "home/navi";
-	}
-
-	@RequestMapping("/carInfo.do")
-	public String carInfo() {
-		LOGGER.info("실행");
-		return "home/carInfo";
 	}
 
 	@RequestMapping("/signup.do")
