@@ -45,7 +45,6 @@ public class MyMqttClient {
 
 			@Override
 			public void deliveryComplete(IMqttDeliveryToken arg0) {
-				// TODO Auto-generated method stub
 
 			}
 

@@ -25,7 +25,9 @@
 			<div class="col-6">
 				<h1>Control Center</h1>
 			</div>
-			<div class="col-3"></div>
+			<div id="userIdDiv" class="col-3">
+				${sessionMid}
+			</div>
 		</header>
 		<section class="row">
 			<div id="roverList" class="col-4">

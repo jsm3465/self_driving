@@ -40,7 +40,10 @@ public class BlackBoxController {
 		LOGGER.info("실행");
 		//LOGGER.info(rname);
 		List<String> list = blackBoxService.getImages(rname);
-
+		
+		
+		LOGGER.info("{}", list.size());
+		
 		//BlackBox객체의 리스트 JSON으로 변환 및 response 하기
 		response.setContentType("application/json; charset=UTF-8");
 		

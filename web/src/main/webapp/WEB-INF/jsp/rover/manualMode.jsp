@@ -17,7 +17,7 @@
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resource/css/manualDriving.css">
+	href="${pageContext.request.contextPath}/resource/css/manualMode.css">
 
 </head>
 <body>

@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class BlackBox {
 
-	private String rno;
 	private String rname;
 	private String rimg;
 	private Date rdate;

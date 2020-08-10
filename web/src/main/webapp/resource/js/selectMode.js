@@ -1,10 +1,3 @@
-function help(img) {
-	$("#blackBoxImage").attr("src", "data:image/jpg;base64," + img);
-	var start = new Date().getTime();
-	while (new Date().getTime() < start + 100)
-		;
-};
-
 function playBlackBox(i) {
 	var rname = $("#roverNameDiv").text();
 	$.ajax({
@@ -15,6 +8,7 @@ function playBlackBox(i) {
 		},
 		// Callback
 		success : function(data, testStatus, jqXHR) {
+			console.log(i);
 			$("#blackBoxImage").attr("src","data:image/jpg;base64," + data.item[i].img);
 			if (i < Number(data.limit)) {
 				playBlackBox(i+1);
