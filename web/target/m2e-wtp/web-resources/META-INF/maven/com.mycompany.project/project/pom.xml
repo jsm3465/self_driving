@@ -99,6 +99,7 @@
 			<artifactId>antlr</artifactId>
 			<version>3.5</version>
 		</dependency>
+<<<<<<< HEAD
 
 		<dependency>
 			<groupId>com.googlecode.log4jdbc</groupId>
@@ -144,6 +145,20 @@
 			<version>20160810</version>
 		</dependency>
 
+=======
+		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>4.3.16.RELEASE</version>
+		</dependency>
+		    
+	    <dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
+		</dependency>
+>>>>>>> ec314a797cab064d7ac51425972f0a89c6c184da
 	</dependencies>
 
 	<build>

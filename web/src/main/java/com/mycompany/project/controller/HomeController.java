@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mycompany.project.network.MyMqttClient;
@@ -35,6 +34,7 @@ public class HomeController {
 		return "home/no22";
 	}
 
+<<<<<<< HEAD
 	@RequestMapping("/signup.do")
 	public String signup() {
 		LOGGER.info("실행");
@@ -52,4 +52,13 @@ public class HomeController {
 		LOGGER.info("실행");
 		return "home/faceResist";
 	}
+=======
+	@RequestMapping("/carInfo.do")
+	public String carInfo() {
+		LOGGER.info("실행");
+		return "home/carInfo";
+	}
+	
+	
+>>>>>>> ec314a797cab064d7ac51425972f0a89c6c184da
 }

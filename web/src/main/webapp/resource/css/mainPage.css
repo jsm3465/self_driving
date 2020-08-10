@@ -1,26 +1,29 @@
-/* @charset "UTF-8"; */
+@charset "UTF-8";
 body {
 	font-family: 'Do Hyeon', sans-serif;
-}
-
-body:after {
 	background-image: url("../image/background.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
-	opacity: 0.65px; 
 }
-	
+
 .signup{
-	margin: 5%; 
+	margin: 5%;
 	font-size:medium;
-	color: #aaa; 
+	color: #aaa;
 	float: right;
 }
 
 .signin{
-	margin: 5%; 
+	margin: 5%;
 	font-size:medium;
-	color: #aaa; 
+	color: #aaa;
+	float: right;
+}
+
+.signout{
+	margin: 5%;
+	font-size:medium;
+	color: #aaa;
 	float: right;
 }
 
@@ -45,3 +48,31 @@ body:after {
 
 .form-elegant .modal-body, .form-elegant .modal-footer {
     font-weight: 400; }
+    
+#logo {
+	bottom:0px;
+	text-align: left;
+	font-size: 32px;
+	font-family:'Do Hyeon', sans-serif;	
+}
+#logo a{
+	color: #AAAAAA;
+	text-decoration: none;
+}
+
+#logo:link a{
+	color: #AAAAAA;
+	text-decoration: none;
+}
+#logo:visited a{
+	color: #AAAAAA;
+	text-decoration: none;
+}
+#logo:active a{ 
+	color: #AAAAAA;
+	text-decoration: none;
+}
+#logo:hover a{
+	color: #AAAAAA;
+	text-decoration: none;
+}

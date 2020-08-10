@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Face authentication</title>
+<title>Face Authentication</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -16,7 +16,9 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resource/css/faceResist.css">
+	href="${pageContext.request.contextPath}/resource/css/faceAuthentication.css">
+
+
 </head>
 <body>
 
@@ -35,8 +37,8 @@
 		</section>
 		<footer class="row">
 			<div class="col-3"></div>
-			<div id="resiterButtonDiv" class="col-6">
-			<button type="button" class="btn btn-primary" >사진 등록</button>
+			<div class="col-6">
+			<form id="next" name="nextPage"></form>
 			</div>
 			<div class="col-3"></div>
 		</footer>
@@ -50,4 +52,6 @@
 		src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/faceAuthentication.js"></script>
 </html>

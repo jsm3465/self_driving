@@ -7,11 +7,19 @@
 		class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+<<<<<<< HEAD
 		<property name="url" value="jdbc:mysql://192.168.3.242:3306/self_driving"/>
+=======
+		<property name="url" value="jdbc:mysql://192.168.3.242:3306/self_Driving"/>
+>>>>>>> ec314a797cab064d7ac51425972f0a89c6c184da
 		<property name="username" value="root"/>
 		<property name="password" value="12345"/>
 		<property name="initialSize" value="3"/>
 		<property name="maxActive" value="10"/>
 		<property name="maxIdle" value="3"/>
 	</bean>
+<<<<<<< HEAD
+=======
+
+>>>>>>> ec314a797cab064d7ac51425972f0a89c6c184da
 </beans>

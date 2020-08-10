@@ -26,5 +26,4 @@
 		<property name="defaultEncoding" value="UTF-8"/>
 		<property name="cacheSeconds" value="60"/>
 	</bean>
-	
 </beans>
