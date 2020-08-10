@@ -4,7 +4,6 @@
 
 <configuration>
 	<typeAliases>
-<<<<<<< HEAD
 		<typeAlias alias="member"
 			type="com.mycompany.project.model.Member" />
 			
@@ -13,8 +12,5 @@
 
 		<typeAlias alias="blackBox"
 			type="com.mycompany.project.model.BlackBox" />
-=======
-		<typeAlias alias="member" type="com.mycompany.project.model.Member"/>
->>>>>>> ec314a797cab064d7ac51425972f0a89c6c184da
 	</typeAliases>
 </configuration>

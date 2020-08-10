@@ -11,10 +11,6 @@
 			value="classpath:/mybatis/config/mapper-config.xml"/>
 		<property name="mapperLocations"
 			value="classpath:/mybatis/mapper/*.xml"/>
-<<<<<<< HEAD
-=======
-		
->>>>>>> ec314a797cab064d7ac51425972f0a89c6c184da
 	</bean>
 
 </beans>

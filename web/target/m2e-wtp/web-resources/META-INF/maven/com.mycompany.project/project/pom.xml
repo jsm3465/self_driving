@@ -99,8 +99,6 @@
 			<artifactId>antlr</artifactId>
 			<version>3.5</version>
 		</dependency>
-<<<<<<< HEAD
-
 		<dependency>
 			<groupId>com.googlecode.log4jdbc</groupId>
 			<artifactId>log4jdbc</artifactId>
@@ -137,7 +135,7 @@
 			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
 			<version>1.2.0</version>
 		</dependency>
-		
+
 		<!-- AJAX 사용시 data전달을 위한 JSON 타입 사용을 위한 라이브러리 의존 설정 -->
 		<dependency>
 			<groupId>org.json</groupId>
@@ -145,20 +143,17 @@
 			<version>20160810</version>
 		</dependency>
 
-=======
-		
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context-support</artifactId>
 		    <version>4.3.16.RELEASE</version>
 		</dependency>
-		    
+
 	    <dependency>
 		    <groupId>javax.mail</groupId>
 		    <artifactId>mail</artifactId>
 		    <version>1.4.7</version>
 		</dependency>
->>>>>>> ec314a797cab064d7ac51425972f0a89c6c184da
 	</dependencies>
 
 	<build>
