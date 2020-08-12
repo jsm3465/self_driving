@@ -26,6 +26,7 @@ class AI_Rover:
         self.__handle_angle = 0
         self.__dcMotor_speed = 0
         self.__direction = None
+        self.__angle = 0
 
         # sensor
         self.pcf8591 = Pcf8591(0x48)
@@ -45,12 +46,24 @@ class AI_Rover:
         if self.__handle_angle >= -1:
             self.__handle_angle -= 0.1
             self.__motor_control.steering = self.__handle_angle
+            angle = int(self.__handle_angle * 30)
+            if angle > 30:
+                angle = 30
+            if angle < -30:
+                angle = -30
+            self.__angle = angle
             # print("right:" + self.__handle_angle)
 
     def handle_left(self):
         if self.__handle_angle <= 1:
             self.__handle_angle += 0.1
             self.__motor_control.steering = self.__handle_angle
+            angle = int(self.__handle_angle * 30)
+            if angle > 30:
+                angle = 30
+            if angle < -30:
+                angle = -30
+            self.__angle = angle
             # print("left : " + self.__handle_angle)
 
     def handle_refront(self):
@@ -74,8 +87,9 @@ class AI_Rover:
         # print("forward")
         # self.__motor_control.throttle = 0
         self.__direction = "backward"
-        self.__motor_control.throttle_gain = 0.55
+        self.__motor_control.throttle_gain = 0.6
         self.__motor_control.throttle = 1
+        self.__dcMotor_speed = 60
 
     def forward(self):
         # if self.__dcMotor_speed < 1.0:
@@ -86,6 +100,7 @@ class AI_Rover:
         self.__direction = "froward"
         self.__motor_control.throttle_gain = 0.6
         self.__motor_control.throttle = -1
+        self.__dcMotor_speed = 60
 
     def stop(self):
         # print("stop")
@@ -100,20 +115,23 @@ class AI_Rover:
             angle = 30
         if angle < -30:
             angle = -30
+
+        self.__angle = angle
+
         steering = angle / 30
         self.__motor_control.steering = steering
 
     def sensorMessage(self):
         message = {}
         # message["buzzer"] = self.buzzer.state # on, off
-        # message["dcmotor_speed"] = str(self.dcmotor.speed) # pwm값
-        # message["dcmotor_dir"] = self.__direction # forward, backward
-        # message["distance"] = str(self.distance.read()) # 계속 변화하는 거리값
+        message["dcmotor_speed"] = str(self.__dcMotor_speed)
+        message["dcmotor_dir"] = self.__direction # forward, backward
+        message["distance"] = str(self.distance.read())
         # message["photo"] = str(self.photo.photolevel) # 계속 변화하는 조도값
         # message["led"] = self.led.state # red, green, blue
-        # message["servo"] = str(self.__handle_angle)  # 앞바퀴 서보
+        message["angle"] = str(self.__angle)  # 앞바퀴 서보
         # message["temperature"] = str(self.thermistor.cur_temp) # 계속 변화하는 온도 ( 지금은 1초 주기인데 늘려도 괜찮을듯)
-        message["battery"] = str(self.get_voltage_percentage())  # 앞바퀴 서보
+        message["battery"] = str(self.get_voltage_percentage())
 
         message = json.dumps(message)
         return message

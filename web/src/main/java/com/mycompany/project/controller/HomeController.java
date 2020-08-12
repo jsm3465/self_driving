@@ -21,6 +21,12 @@ public class HomeController {
 		LOGGER.info("실행");
 		return "home/cameraTest";
 	}
+	
+	@RequestMapping("/testt.do")
+	public String testt() {
+		LOGGER.info("실행");
+		return "home/testt";
+	}
 }
 
 

@@ -18,6 +18,7 @@
 		<h5 class="alert alert-info">/home/main.jsp</h5>
 		<ul>
 			<li><a href="cameraTest.do">cameraTest.do</a></li>
+			<li><a href="testt.do">camedsadasdraTest.do</a></li>
 		</ul>
 	</body>
 </html>

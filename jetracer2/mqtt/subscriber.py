@@ -12,6 +12,7 @@ class MqttSubscriber:
         self.__client.on_disconnect = self.__on_disconnect
         self.__client.on_message = self.__on_message
         self.message = None
+        self.receive = True
 
     def __on_connect(self, client, userdata, flags, rc):
         print("** subscriber connection **")
@@ -21,13 +22,18 @@ class MqttSubscriber:
         print("** disconnection **")
 
     def __on_message(self, client, userdata, message):
-        self.message = message
+        # print(message.topic)
+        if "receive" in message.topic:
+            self.receive = True
+        else:
+            self.message = message
+
         # print("subscribe@@@@@@@@@@@@@@")
-        print("구독 내용: {}, 토픽: {}, Qos: {}".format(
-            str(message.payload, encoding="UTF-8"),
-            message.topic,
-            message.qos
-        ))
+        # print("구독 내용: {}, 토픽: {}, Qos: {}".format(
+        #     str(message.payload, encoding="UTF-8"),
+        #     message.topic,
+        #     message.qos
+        # ))
 
 
     def start(self):

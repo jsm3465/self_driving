@@ -3,7 +3,6 @@ CLASSES_LIST = [
     'red',
     'green',
     'yellow',
-    'left',
     'crosswalk',
     'schoolzone',
     'curve',
@@ -18,6 +17,17 @@ CLASSES_LIST = [
     'B',
     'C',
     'D',
+    'E',
+    'F',
+    'H',
+    'I',
+    'J',
+    'K',
+    'M',
+    'N',
+    'P',
+    'S',
+    'T',
     'road'
 ]
 

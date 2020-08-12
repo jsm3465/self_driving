@@ -5,6 +5,7 @@ sys.path.append(project_path)
 from mqtt.subscriber import MqttSubscriber
 from mqtt.Camerapublisher import ImageMqttPusblisher
 from mqtt.publisher import MqttPublisher
+from mqtt.objectpublisher import ObjectPublisher
 
 from AI_Rover import AI_Rover
 
@@ -17,26 +18,25 @@ from utils.object_label_map import CLASSES_DICT
 import time
 import cv2
 
-
-enginePath = project_path + "/models/ssd_mobilenet_v2_object_model/tensorrt_fp16.engine"
-
 # ======================= MQTT ================================
-mqttSub = MqttSubscriber("192.168.3.223", topic="/order/rover1/#")
+mqttSub = MqttSubscriber("192.168.3.223", topic="/rover1/order/#")
 mqttSub.start()
 
-campub = ImageMqttPusblisher("192.168.3.223", pubTopic="/camerapub/rover1")
+campub = ImageMqttPusblisher("192.168.3.223", pubTopic="/rover1/camerapub")
 campub.connect()
 
 rover = AI_Rover()
 
-sensorpub = MqttPublisher(rover, "192.168.3.223", topic="/sensor/rover1")
+sensorpub = MqttPublisher(rover, "192.168.3.223", topic="/rover1/sensor")
 sensorpub.start()
 
+objectpub = ObjectPublisher("192.168.3.223", topic="/rover1/object")
+objectpub.start()
 
 # ==================== object detection ========================
 conf_th = 0.6
 fps = 0.0
-enginePath = project_path + "/models/ssd_mobilenet_v2_object_model/tensorrt_fp16.engine"
+enginePath = project_path + "/models/ssd_mobilenet_v2_model_5/tensorrt_fp16.engine"
 
 # ===============================================================
 # 카메라 동영상 읽어오기
@@ -92,10 +92,8 @@ try:
                 dist = rover.distance.read()
                 # print(dist)
 
-                if dist < 15:
+                if dist < 20:
                     rover.stop()
-                else:
-                    rover.forward()
 
                 # 자율 주행 카메라 영상 처리
                 # ---- 1. 차선 인식 ----
@@ -107,11 +105,26 @@ try:
 
                 # ---- 2. 객체 인식 ----
                 boxes, confs, clss = trt_ssd.detect(frame, conf_th)
-                print(clss, " : ", boxes)
+
                 # 감지 결과 출력
                 obj = vis.drawBboxes(frame, boxes, confs, clss)
 
                 frame = cv2.addWeighted(line, 0.5, obj, 0.5, 0)
+
+                if len(clss) > 0:
+                    objectpub.publish(clss, boxes)
+                    if (1 in clss) or (3 in clss):
+                        index = clss.index(1)
+                        size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                        print(size)
+                    if 12 in clss:
+                        index = clss.index(12)
+                        size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                        print(size)
+                    if 29 in clss:
+                        index = clss.index(29)
+                        size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                        print(size)
 
             # ------------------ 자율 주행 모드 OFF -----------------
             elif flag == 2:
@@ -119,7 +132,7 @@ try:
 
             #  ------------------ 조작 모드 -----------------
             elif flag == 3:
-                print("mode2 실행")
+                # print("mode2 실행")
                 if "direction" in topic:
                     if message == "forward":
                         rover.forward()
@@ -134,7 +147,7 @@ try:
                     elif message == "refront":
                         rover.handle_refront()
             else:
-                pass
+                mqttSub.receive = True
 
         # 초당 프레임 수 드로잉
         img = vis.drawFps(frame, fps)
@@ -145,7 +158,9 @@ try:
         fps = curr_fps if fps == 0.0 else (fps * 0.95 + curr_fps * 0.05)
         tic = toc
 
+        # if mqttSub.receive:
         campub.sendBase64(img)
+            # mqttSub.receive = False
 
 except KeyboardInterrupt:
     pass
