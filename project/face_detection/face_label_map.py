@@ -1,6 +1,6 @@
 CLASSES_LIST = [
     'brotherwook',
-    'face',
+    'not our member',
     'gord10011',
     'jsm3465',
     'sjpark-dev',

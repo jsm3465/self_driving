@@ -3,14 +3,16 @@ import paho.mqtt.client as mqtt
 import threading
 import base64
 import time
+import json
 
 
 class ImageMqttPublisher:
-    def __init__(self, brokerIp, brokerPort, pubTopic):
+    def __init__(self, brokerIp, brokerPort, camTopic, strtopic):
         self.brokerIp = brokerIp
         self.brokerPort = brokerPort
-        self.pubTopic = pubTopic
+        self.camTopic = camTopic
         self.client = None
+        self.strtopic = strtopic
 
     def connect(self):
         thread = threading.Thread(target=self.__run, daemon=True)
@@ -32,6 +34,12 @@ class ImageMqttPublisher:
     def disconnect(self):
         self.client.disconnect()
 
+    def publish(self, id):
+        message = {'id': id}
+        message = json.dumps(message)
+        self.client.publish("/", message, retain=False)
+        print('발행내용:', self.strtopic, message)
+
     def sendBase64(self, frame):
         if self.client is None:
             return
@@ -42,7 +50,7 @@ class ImageMqttPublisher:
             print('image encoding fail')
             return
         b64_bytes = base64.b64encode(bytes)
-        self.client.publish(self.pubTopic, b64_bytes)
+        self.client.publish(self.camTopic, b64_bytes)
 
 
 if __name__ == "__main__":
@@ -50,7 +58,7 @@ if __name__ == "__main__":
     videoCapture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
     videoCapture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
-    imageMqttPublisher = ImageMqttPublisher('192.168.3.131', 1883, "/camerapub")
+    imageMqttPublisher = ImageMqttPublisher('192.168.3.242', 1883, "/camerapub", "/temp")
     imageMqttPublisher.connect()
 
     while True:

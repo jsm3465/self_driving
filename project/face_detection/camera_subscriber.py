@@ -4,7 +4,7 @@ import face_detection.face_classifier as classifier
 import base64
 import cv2
 import numpy as np
-from sample.campub import ImageMqttPublisher
+import face_detection.camera_publisher as camera_publisher
 
 
 class MqttSubscriber:
@@ -17,7 +17,7 @@ class MqttSubscriber:
         self.__client.on_disconnect = self.on_disconnect
         self.__client.on_message = self.on_message
         self.faceclassifier = classifier.FaceClassifier()
-        self.campub = ImageMqttPublisher('192.168.3.242', 1883, "/camerapub")
+        self.camerapublisher = camera_publisher.ImageMqttPublisher('192.168.3.242', 1883, "/camerapub/faceID", "/temp")
 
     def on_connect(self, client, userdata, flags, rc):
         print('MQTT Client MQTT broker connected')
@@ -28,13 +28,17 @@ class MqttSubscriber:
 
     def on_message(self, client, userdata, message):
         while True:
+            print(message)
             message = message.payload
+            print(message)
             bytes = base64.b64decode(message)
             np_data = np.frombuffer(bytes, dtype=np.uint8)
             img = cv2.imdecode(np_data, cv2.IMREAD_COLOR)
+            print("-------------------------------------")
             img = self.faceclassifier.classify(img)
             cv2.imshow("", img)
-            self.campub.sendBase64(img)
+            # self.camerapublisher.sendBase64(img)
+            # print("-----------------")
             cv2.waitKey(1)
 
     def start(self):
@@ -51,5 +55,5 @@ class MqttSubscriber:
 
 
 if __name__ == '__main__':
-    mqttsubscriber = MqttSubscriber('192.168.3.131', topic='/camerapub')
+    mqttsubscriber = MqttSubscriber('192.168.3.242', topic='/camerapub')
     mqttsubscriber.start()
