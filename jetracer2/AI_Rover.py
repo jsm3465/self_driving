@@ -27,6 +27,7 @@ class AI_Rover:
         self.__dcMotor_speed = 0
         self.__direction = None
         self.__angle = 0
+        self.mode = "manual"
 
         # sensor
         self.pcf8591 = Pcf8591(0x48)
@@ -89,7 +90,7 @@ class AI_Rover:
         self.__direction = "backward"
         self.__motor_control.throttle_gain = 0.6
         self.__motor_control.throttle = 1
-        self.__dcMotor_speed = 60
+        self.__dcMotor_speed = self.__motor_control.throttle_gain * 100
 
     def forward(self):
         # if self.__dcMotor_speed < 1.0:
@@ -98,16 +99,27 @@ class AI_Rover:
         # print("backward")
         # self.__motor_control.throttle = 0
         self.__direction = "froward"
-        self.__motor_control.throttle_gain = 0.6
+        self.__motor_control.throttle_gain = 0.55
         self.__motor_control.throttle = -1
-        self.__dcMotor_speed = 60
+        self.__dcMotor_speed = self.__motor_control.throttle_gain * 100
 
     def stop(self):
         # print("stop")
+        self.setspeed(40)
         self.__direction = "stop"
         self.__dcMotor_speed = 0
         self.__motor_control.throttle_gain = self.__dcMotor_speed
         self.__motor_control.throttle = self.__dcMotor_speed
+
+    def setspeed(self, speed):
+
+        if speed < 0:
+            throttle = -1
+        else:
+            throttle = 1
+        self.__motor_control.throttle_gain = (abs(speed) / 100)
+        self.__motor_control.throttle = throttle
+        self.__dcMotor_speed = abs(speed)
     # =========================================================================
 
     def set_angle(self, angle):
@@ -116,7 +128,7 @@ class AI_Rover:
         if angle < -30:
             angle = -30
 
-        self.__angle = angle
+        self.__angle = int(angle)
 
         steering = angle / 30
         self.__motor_control.steering = steering
@@ -132,6 +144,7 @@ class AI_Rover:
         message["angle"] = str(self.__angle)  # 앞바퀴 서보
         # message["temperature"] = str(self.thermistor.cur_temp) # 계속 변화하는 온도 ( 지금은 1초 주기인데 늘려도 괜찮을듯)
         message["battery"] = str(self.get_voltage_percentage())
+        message["mode"] = self.mode
 
         message = json.dumps(message)
         return message

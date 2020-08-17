@@ -14,11 +14,11 @@ def sample1():
     # 다음 중 하나 지정: ssd_mobilenet_v1, ssd_mobilenet_v2, ssd_inception_v2)
     model_type = "ssd_mobilenet_v2"
     # 사전 훈련된 모델 경로
-    model_path = os.path.join(project_path, "models/ssd_mobilenet_v2_model_5")
+    model_path = os.path.join(project_path, "models/ssd_mobilenet_v2_model_9_60000")
     # 동결 추론 그래프 파일 이름
     pb_name = "frozen_inference_graph.pb"
     # 분류 수 (백그라운드 클래스 + 분류할 클래스 수 = 1 + 90)
-    class_num = 30
+    class_num = 28
     # 엔진 파일 생성
         # input_order: 입력 순서를 말하며 Squeeze(이미지데이터)가 0, concat_box_conf가 1, concat_priorbox가 2가 되어야 한다.
         # pb 파일을 TRT 엔진 파일로 바꿀 때마다 달라지므로 임시 순서를 먼저 주고 실행한다.

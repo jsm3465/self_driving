@@ -9,7 +9,6 @@ CLASSES_LIST = [
     'stop',
     '60',
     '100',
-    'speed',
     'car',
     'cone',
     'bump',
@@ -27,8 +26,7 @@ CLASSES_LIST = [
     'N',
     'P',
     'S',
-    'T',
-    'road'
+    'T'
 ]
 
 CLASSES_DICT = {i:n for i, n in enumerate(CLASSES_LIST)}

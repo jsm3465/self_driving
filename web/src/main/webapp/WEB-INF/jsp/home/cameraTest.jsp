@@ -15,44 +15,48 @@
 		<script src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
 		<script>
+			tic = new Date().getTime()
 			$(function(){
-				client = new Paho.MQTT.Client(location.hostname, 61614, new Date().getTime.toString());
+				client = new Paho.MQTT.Client(location.hostname, 61614, new Date().getTime.toString()+"b");
 				client.onMessageArrived = onMessageArrived;
 				client.connect({onSuccess:onConnect});
 				
-				objectclient = new Paho.MQTT.Client(location.hostname, 61614, new Date().getTime.toString()+"a");
+				objectclient = new Paho.MQTT.Client(location.hostname, 61614, new Date().getTime.toString()+"c");
 				objectclient.onMessageArrived = objectonMessageArrived;
 				objectclient.connect({onSuccess:objectonConnect});
 			});
 			
 			function onConnect() {
 				console.log("mqtt broker connected")
-				client.subscribe("/rover1/camerapub");
+				client.subscribe("/rover2/camerapub");
 			}
 			
 			function objectonConnect() {
 				console.log("object mqtt broker connected")
-				objectclient.subscribe("/rover1/object/#");
+				objectclient.subscribe("/rover2/object");
 			}
 			
 			function onMessageArrived(message) {
-				if(message.destinationName == "/camerapub/rover1") {
+				if(message.destinationName == "/rover2/camerapub") {
 					var cameraView = $("#cameraView").attr("src", "data:image/jpg;base64," + message.payloadString);
+					tic = toc
 				}
 				var pubmessage = new Paho.MQTT.Message("receive");
-				   pubmessage.destinationName = "/rover1/order/receive";
+				   pubmessage.destinationName = "/rover2/order/receive";
 				   publisher.send(pubmessage);
 			}
 			function objectonMessageArrived(message) {
-				if(message.destinationName == "/rover1/object") {
-					console.log("object!!!!!!")
+				if(message.destinationName == "/rover2/object") {
 					console.log(message.payloadString)
 				}
+// 				if(message.destinationName == "/rover2/sensor") {
+// 					console.log(message.payloadString)
+// 				}
 			}
 			$(function() {
 			   // Publisher Connection
 			   publisher = new Paho.MQTT.Client(location.hostname, 61614,
-			         new Date().getTime().toString());
+			         new Date().getTime().toString()+"d");
 			   publisher.connect({
 			      onSuccess : onPublisherConnect
 			   });
@@ -75,7 +79,16 @@
 			   
 			})
 
-
+			setInterval(function(){
+				toc = new Date().getTime()
+				if(toc-tic > 3000){
+					client.connect({onSuccess:onConnect});
+					var pubmessage = new Paho.MQTT.Message("receive");
+					   pubmessage.destinationName = "/rover2/order/receive";
+					   publisher.send(pubmessage);
+				}
+			},1000)
+			
 			setInterval(function () {
 			      if(keyset[32]){
 			         stop();			         
@@ -98,7 +111,7 @@
 			      }
 			      
 			      if(keyset[69]){
-			    	  AIstart();
+			    	  maxspeed();
 			      }
 			      
 			      if(keyset[81]){
@@ -110,53 +123,60 @@
 			      }
 			      
 			}, 150);
+			
+			function maxspeed() {
+				console.log("forward")
+				var message = new Paho.MQTT.Message("maxspeed");
+				message.destinationName = "/rover2/order/mode2/direction";
+				publisher.send(message);
+			}
 
 			function forward() {
 				console.log("forward")
 				var message = new Paho.MQTT.Message("forward");
-				message.destinationName = "/rover1/order/mode2/direction";
+				message.destinationName = "/rover2/order/mode2/direction";
 				publisher.send(message);
 			}
 
 			function backward() {
 			   var message = new Paho.MQTT.Message("backward");
-			   message.destinationName = "/rover1/order/mode2/direction";
+			   message.destinationName = "/rover2/order/mode2/direction";
 			   publisher.send(message);
 			}
 
 			function stop() {
 			   var message = new Paho.MQTT.Message("stop");
-			   message.destinationName = "/rover1/order/mode2/direction";
+			   message.destinationName = "/rover2/order/mode2/direction";
 			   publisher.send(message);
 			}
 
 			function left() {
 			   var message = new Paho.MQTT.Message("left");
-			   message.destinationName = "/rover1/order/mode2/direction";
+			   message.destinationName = "/rover2/order/mode2/direction";
 			   publisher.send(message);
 			}
 
 			function right() {
 			   var message = new Paho.MQTT.Message("right");
-			   message.destinationName = "/rover1/order/mode2/direction";
+			   message.destinationName = "/rover2/order/mode2/direction";
 			   publisher.send(message);
 			}
 			
 			function refront() {
 			   var message = new Paho.MQTT.Message("refront");
-			   message.destinationName = "/rover1/order/mode2/direction";
+			   message.destinationName = "/rover2/order/mode2/direction";
 			   publisher.send(message);
 			}
 			
 			function AIstart() {
 			   var message = new Paho.MQTT.Message("start");
-			   message.destinationName = "/rover1/order/mode1";
+			   message.destinationName = "/rover2/order/mode1";
 			   publisher.send(message);
 			}
 			
 			function AIend() {
 			   var message = new Paho.MQTT.Message("end");
-			   message.destinationName = "/rover1/order/mode1";
+			   message.destinationName = "/rover2/order/mode1";
 			   publisher.send(message);
 			}
 			
@@ -166,7 +186,7 @@
 		      		console.log('pushed key ' + e.key);
 		    	  	keyset[keyCode] = false;
 			  		var message = new Paho.MQTT.Message("keyboardup");
-			  		message.destinationName = "/rover1/order";
+			  		message.destinationName = "/rover2/order";
 			  		publisher.send(message);	
 		   		})
 			})

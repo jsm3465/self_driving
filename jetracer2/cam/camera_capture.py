@@ -13,7 +13,7 @@ def main():
 
     # %% 비디오 캡쳐 영상을 윈도우상에 보여주기
     count = 0
-    num = 1
+    num = 280
     while True:
         retval, frame = videoCapture.read()
         # frame = cv2.cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)

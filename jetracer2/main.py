@@ -19,27 +19,27 @@ import time
 import cv2
 
 # ======================= MQTT ================================
-mqttSub = MqttSubscriber("192.168.3.223", topic="/rover1/order/#")
+mqttSub = MqttSubscriber("192.168.3.223", topic="/rover2/order/#")
 mqttSub.start()
 
-campub = ImageMqttPusblisher("192.168.3.223", pubTopic="/rover1/camerapub")
+campub = ImageMqttPusblisher("192.168.3.223", pubTopic="/rover2/camerapub")
 campub.connect()
 
 rover = AI_Rover()
 
-sensorpub = MqttPublisher(rover, "192.168.3.223", topic="/rover1/sensor")
+sensorpub = MqttPublisher(rover, "192.168.3.223", topic="/rover2/sensor")
 sensorpub.start()
 
-objectpub = ObjectPublisher("192.168.3.223", topic="/rover1/object")
+objectpub = ObjectPublisher("192.168.3.223", topic="/rover2/object")
 objectpub.start()
 
 # ==================== object detection ========================
 conf_th = 0.6
 fps = 0.0
-enginePath = project_path + "/models/ssd_mobilenet_v2_model_5/tensorrt_fp16.engine"
+enginePath = project_path + "/models/ssd_mobilenet_v2_model_9_60000/tensorrt_fp16.engine"
 
 # ===============================================================
-# 카메라 동영상 읽어오기
+# 카메라 동영상 읽어오기 하세요
 Camera = camera.Video_Setting()
 capture = Camera.video_read()
 
@@ -56,7 +56,7 @@ trt_ssd = trt.TrtSSD(enginePath)
 vis = trt.BBoxVisualization(CLASSES_DICT)
 
 flag = 0
-
+stopflag = 0
 # 시작 시간
 tic = time.time()
 
@@ -76,11 +76,13 @@ try:
             # print(topic, " : ", message)
 
             if "mode1" in topic:
+                rover.mode = "AI"
                 if "start" in message:
                     flag = 1
                 elif "end" in message:
                     flag = 2
             elif "mode2" in topic:
+                rover.mode = "manual"
                 flag = 3
             else:
                 pass
@@ -90,10 +92,11 @@ try:
             if flag == 1:
                 # print("자율 주행 ON")
                 dist = rover.distance.read()
-                # print(dist)
 
-                if dist < 20:
-                    rover.stop()
+                if dist < 30:
+                    stopflag = 1
+                else:
+                    stopflag = 0
 
                 # 자율 주행 카메라 영상 처리
                 # ---- 1. 차선 인식 ----
@@ -113,18 +116,30 @@ try:
 
                 if len(clss) > 0:
                     objectpub.publish(clss, boxes)
-                    if (1 in clss) or (3 in clss):
+                    # 빨간불
+                    if 1 in clss:
                         index = clss.index(1)
                         size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                        stopflag = 1
                         print(size)
+                    # 노란불
+                    if 3 in clss:
+                        index = clss.index(3)
+                        size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                        stopflag = 1
+                        print(size)
+                    # cone
                     if 12 in clss:
                         index = clss.index(12)
                         size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
-                        print(size)
-                    if 29 in clss:
-                        index = clss.index(29)
-                        size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
-                        print(size)
+                        # if size > 10000:
+                        #     stopflag = 1
+                        # print(size)
+
+                if stopflag == 1:
+                    rover.stop()
+                else:
+                    rover.forward()
 
             # ------------------ 자율 주행 모드 OFF -----------------
             elif flag == 2:
@@ -144,8 +159,8 @@ try:
                         rover.handle_left()
                     elif message == "right":
                         rover.handle_right()
-                    elif message == "refront":
-                        rover.handle_refront()
+                    elif message == "maxspeed":
+                        rover.setspeed(-70)
             else:
                 mqttSub.receive = True
 
@@ -156,11 +171,12 @@ try:
         toc = time.time()
         curr_fps = 1.0 / (toc - tic)
         fps = curr_fps if fps == 0.0 else (fps * 0.95 + curr_fps * 0.05)
-        tic = toc
 
-        # if mqttSub.receive:
-        campub.sendBase64(img)
-            # mqttSub.receive = False
+        if mqttSub.receive:
+            # print("camera send")
+            campub.sendBase64(img)
+            mqttSub.receive = False
+            tic = toc
 
 except KeyboardInterrupt:
     pass

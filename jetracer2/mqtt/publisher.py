@@ -28,7 +28,7 @@ class MqttPublisher:
             message = self.rover.sensorMessage()
             # print(message)
             self.__client.publish(self.__topic, message, retain=False)
-            # time.sleep(1)
+            time.sleep(0.5)
         self.__client.loop_stop()
 
     def start(self):

@@ -44,6 +44,7 @@ class ImageMqttPusblisher:
             # print("image encoding fail")
             return
         # Base64 문자열로 인코딩
+
         b64_bytes = base64.b64encode(bytes)
         # MQTT Broker에 보내기
         self.client.publish(self.pubTopic, b64_bytes)
