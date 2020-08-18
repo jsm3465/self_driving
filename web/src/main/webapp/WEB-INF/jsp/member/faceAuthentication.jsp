@@ -8,7 +8,11 @@
 	<meta charset="UTF-8">
 	<title>Face Authentication</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
-	<script src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script>
+	<%-- <script src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script> --%>
+	<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
@@ -17,6 +21,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/faceAuthentication.css">
+	 
 
 
 	<!-- Camera Access, MQTT -->
@@ -24,9 +29,9 @@
 		
 		$(document).ready(function(){
 			 var login = false;
-		 	 alert("인증에 성공 했습니다.");
-		      $("#next").attr("action", "../rover/roverList.do");
-		      document.nextPage.submit(); 
+		 	/*  alert("인증에 성공 했습니다.");
+		      $("#next").attr("action", "../home/main.do");
+		      document.nextPage.submit();  */
 		      
 		      
 		      
@@ -50,18 +55,18 @@
 				else if(message.destinationName == "/authentication"){
 					console.log(message.payloadString);
 					//member의 id와 비교해서 다음화면으로 전환
-		 		 if(login){
+		 		  if(login){
 						      alert("인증에 실패 했습니다.");
 						      $("#next").attr("action", "redirectToMain.do");
 						      document.nextPage.submit();
 						   }
 						   else{
 						      alert("인증에 성공 했습니다.");
-						      $("#next").attr("action", "../rover/roverList.do");
+						      $("#next").attr("action", "../home/main.do");
 						      document.nextPage.submit();
 						   } 
 						  
-				}
+				} 
 				
 			}
 			
@@ -82,8 +87,8 @@
 				var w = 640;
 				var h = 480;
 				var canvas = document.createElement("canvas");
-				canvas.width = 130;
-				canvas.height = 130;
+				canvas.width = 140;
+				canvas.height = 140;
 				canvas.getContext("2d").drawImage(video,0,0,140,140);
 				base64Frame = canvas.toDataURL();
 				return base64Frame;
