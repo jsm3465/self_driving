@@ -134,10 +134,18 @@
 		    <version>4.3.16.RELEASE</version>
 		</dependency>
 		    
+		<!-- 메일 -->
 	    <dependency>
 		    <groupId>javax.mail</groupId>
 		    <artifactId>mail</artifactId>
 		    <version>1.4.7</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20180813</version>
 		</dependency>
 	</dependencies>
 

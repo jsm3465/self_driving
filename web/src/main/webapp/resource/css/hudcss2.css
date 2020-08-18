@@ -1,0 +1,142 @@
+@charset "UTF-8";
+
+/* 표적 css (주석처리는 임시 - 현재 쓸모가 없음) */
+body{
+   background-color: white;
+}
+
+.hoverbox{
+   /* 윈도우의 크기의 0 , 0에서 시작하게 absolute 지정 */
+   position: absolute;
+   /* 크기 설정 */
+   width: 10px; height: 10px;
+   margin-left: 0px;      
+   margin-top: 0px;      
+   z-index: 10;
+}
+
+.hoverbox .screen{
+   float: left;
+   width: 100px;
+   height: 100px;
+}
+
+/* [class*='hud']의 클래스를 가지고 있는 div를 지정 (속성 선택제) */
+.hoverbox .screen [class*='hud']{
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform:translate(-50%, -50%);
+   opacity: 0.7;
+   transition: all 1s;   
+}
+
+/* 마우스가 올라가면 hud의 클래스 속성들이 투명도가 0 -> 1로 변하게 된다. */
+/* .hoverbox .screen:hover [class*='hud']{ */
+/*    opacity: 0.7; */
+/* } */
+
+.hoverbox .screen[class='hud'] img{
+   max-width: 100%;
+}
+
+/* rotate 속성으로 1바퀴 돌아가는 키프레임 */
+@keyframes rolling01 {
+   0 {transform:translate(-50%,-50%) rotate(0);}
+   100% {transform:translate(-50%,-50%) rotate(360deg);}
+}
+/* rotate 속성으로 1바퀴 돌아가는데, 초반에는 빠르게 돌다가 천천히 돌아가는 키프레임 */
+@keyframes rolling02 {
+   0 {transform:translate(-50%,-50%) rotate(0);}
+   30% {transform:translate(-50%,-50%) rotate(200deg);}
+   100% {transform:translate(-50%,-50%) rotate(360deg);}
+}
+/* rotate 속성으로 1바퀴 돌리고 중간에 크기도 변화기시키는 키프레임  scale()의 1이 기본값!! 값이 1보다 작으면 크기가 작아지고 1보다 값이 크면 크기가 커짐 */
+@keyframes rollandscale {
+   0 {transform:translate(-50%,-50%) rotate(0) scale(1);}
+   35% {transform:translate(-50%,-50%) rotate(360deg) scale(1);}
+   40% {transform:translate(-50%,-50%) rotate(360deg) scale(.5);}
+   60% {transform:translate(-50%,-50%) rotate(0deg) scale(.5);}
+   65% {transform:translate(-50%,-50%) rotate(0deg) scale(1);}
+   100% {transform:translate(-50%,-50%) rotate(360deg)  scale(1);}
+}
+
+.hoverbox .screen .hud01 {animation:rolling01 5s linear infinite; width: 289px;}
+.hoverbox .screen .hud02 {animation:rolling02 10s infinite alternate;  width: 255px;}
+.hoverbox .screen .hud03 {animation:rollandscale 3s infinite;  width: 170px;}
+.hoverbox .screen .hud04 { width: 255px;}
+.hoverbox .screen .hud05 {animation:rolling02 6s infinite alternate;  width: 136px;}
+
+/* 객체 탐지시 수정해야할 부분들 list */
+/* hoverbox의 margin-top / margin-left 큰 박스 위치 조정 필요 */
+/* .hoverbox .screen .hud01 ~ .hud05 이미지 크기 조정 필요 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

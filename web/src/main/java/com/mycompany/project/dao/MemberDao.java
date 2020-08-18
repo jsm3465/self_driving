@@ -34,7 +34,7 @@ public class MemberDao extends EgovAbstractMapper{
 	}
 
 	public String selectByMidAndMnameAndMemail(Member member) {
-		String password = selectOne("member.selectByMidAndMnameAndMtel", member);
+		String password = selectOne("member.selectByMidAndMnameAndMemail", member);
 		return password;
 	}
 
@@ -43,6 +43,21 @@ public class MemberDao extends EgovAbstractMapper{
 		Member member = selectOne("member.selectByMemail", memail);
 		
 		return member;
+	}
+
+	public void updateMember(Member member) {
+		int rows = update("updateByMid", member);
+		
+	}
+
+	public void updatePassword(Member member) {
+		int rows = update("updatePasswordByMid", member);
+		
+	}
+
+	public void deleteMemberByMid(String mid) {
+		int rows = delete("deleteByMid", mid);
+		
 	}
 
 }

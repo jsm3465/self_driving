@@ -2,7 +2,7 @@
 function fun1() {
 	var memail = $("#orangeForm-email").val();
 	$.ajax({
-		url : "emailCheck.do",
+		url : "passemailCheck.do",
 		type : "post",
 		data : {
 			memail : memail
