@@ -21,6 +21,12 @@ public class HomeController {
 		LOGGER.info("실행");
 		return "home/main";
 	}
+	
+	@RequestMapping("/main2.do")
+	public String main2() {
+		LOGGER.info("실행");
+		return "home/main2";
+	}
 
 	@RequestMapping("/redirectToMain.do")
 	public String redirectToMain() {

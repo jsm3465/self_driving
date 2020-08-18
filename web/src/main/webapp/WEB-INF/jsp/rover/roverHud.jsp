@@ -42,13 +42,13 @@
          tic = new Date().getTime()
          
          $(function(){
-               client = new Paho.MQTT.Client("192.168.3.242", 61614, new Date().getTime.toString()+"a");
+               client = new Paho.MQTT.Client("192.168.3.179", 61617, new Date().getTime.toString()+"a");
                client.onMessageArrived = onMessageArrived;
-               client.connect({onSuccess:onConnect});
+               client.connect({onSuccess:onConnect, useSSL:true});
                
-               objectclient = new Paho.MQTT.Client("192.168.3.242", 61614, new Date().getTime.toString()+"b");
+               objectclient = new Paho.MQTT.Client("192.168.3.179", 61617, new Date().getTime.toString()+"b");
                objectclient.onMessageArrived = objectonMessageArrived;
-               objectclient.connect({onSuccess:objectonConnect});
+               objectclient.connect({onSuccess:objectonConnect, useSSL:true});
             });
             
             function onConnect() {
@@ -199,7 +199,7 @@
             
             $(function() {
                // Publisher Connection
-               publisher = new Paho.MQTT.Client("192.168.3.242", 61614,
+               publisher = new Paho.MQTT.Client("192.168.3.179", 61617,
                      new Date().getTime().toString()+"c");
                publisher.connect({
                   onSuccess : onPublisherConnect
@@ -213,7 +213,6 @@
             setInterval(function(){
                 toc = new Date().getTime()
                 if(toc-tic > 3000){
-                   client.connect({onSuccess:onConnect});
                    var pubmessage = new Paho.MQTT.Message("receive");
                       pubmessage.destinationName = "/rover1/order/receive";
                       publisher.send(pubmessage);

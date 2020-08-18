@@ -46,7 +46,7 @@
 			<ul>
 				<li><a href="cctvScreen.do">cctvScreen.do</a></li>
 				<li><a href="temp.do">temp.do</a></li>
-
+				<li><a href="main2.do">main2.do</a></li>
 			</ul>
 		</div>
 	</div>
