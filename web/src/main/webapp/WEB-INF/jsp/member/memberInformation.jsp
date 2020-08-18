@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="deleteMember.jsp" />
 <jsp:include page="changePassword.jsp" />
 
@@ -33,14 +34,14 @@
 		<div style="height: 60%" class="row">
 			<div class="col-md-4"></div>
 			<div class="col-md-4">
-				<form method="post" action="memberUpdate.do">
+				<form:form method="post" action="memberUpdate.do" modelAttribute="member" >
 					<div class="md-form mb-1">
 						<i class="fas fa-user prefix grey-text"></i> <label
 							style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-							data-success="right" for="orangeForm-name">아이디</label> <input
+							data-success="right" for="orangeForm-name">아이디</label> <form:input path="mid"
 							style="margin-bottom: 20px;" name="mid" readonly="true"
-							type="text" value="dd" id="orangeForm-id"
-							class="form-control validate">
+							type="text" value="${member.mid}" id="orangeForm-id"
+							class="form-control validate"/>
 					</div>
 
 					<div class="md-form mb-1">
@@ -49,8 +50,9 @@
 								<i class="fas fa-lock prefix grey-text"></i> <label
 									style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
 									data-success="right" for="orangeForm-pass">비밀번호</label> <input
-									style="margin-bottom: 20px;" name="mpassword" type="password"
-									id="orangeForm-pass" class="form-control validate">
+									style="margin-bottom: 20px;" type="password"
+									readonly="true" value="${member.mpassword}"
+									id="orangeForm-pass" class="form-control validate"/></br>
 							</div>
 							<div class="col-md-2">
 								<button
@@ -64,9 +66,11 @@
 					<div class="md-form mb-1">
 						<i class="fas fa-user prefix grey-text"></i> <label
 							style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-							data-success="right" for="orangeForm-name">이름</label> <input
+							data-success="right" for="orangeForm-name">이름</label> <form:input path="mname"
 							style="margin-bottom: 20px;" name="mname" type="text"
-							id="orangeForm-name" class="form-control validate">
+							value="${member.mname}"
+							id="orangeForm-name" class="form-control validate"/>
+							<form:errors path="mname" style="color:red; font-size:1.0rem" />
 					</div>
 
 					<div class="md-form mb-1">
@@ -84,11 +88,11 @@
 						<div class="bir_wrap">
 							<label style="margin-bottom: 0px; font-size: 20px;"
 								data-error="wrong" data-success="right" for="orangeForm-bir">생년월일</label></br>
-							<input type="text" id="orangeForm-yy" class="bir_yy"
-								name="mbirth" placeholder="년(4자)" aria-label="(년4자)"
-								maxlength="4"> <select id="orangeForm-mm" class="bir_mm"
+							<input type="text" id="orangeForm-yy" class="bir_yy" value="${birth_y}"
+								name="mbirth" placeholder="${birth_y}" aria-label="(년4자)"
+								maxlength="4"/> <select id="orangeForm-mm" class="bir_mm"
 								aria-label="월" name="mbirthM">
-								<option>월</option>
+								<option>${birth_m}</option>
 								<option value="01">1</option>
 								<option value="02">2</option>
 								<option value="03">3</option>
@@ -103,7 +107,7 @@
 								<option value="12">12</option>
 							</select> <select id="orangeForm-dd" class="bir_dd" aria-label="일"
 								name="mbirthD">
-								<option>일</option>
+								<option>${birth_d}</option>
 								<option value="01">1</option>
 								<option value="02">2</option>
 								<option value="03">3</option>
@@ -136,17 +140,17 @@
 								<option value="30">30</option>
 								<option value="31">31</option>
 							</select>
+							<form:errors path="mbirth" style="color:red; font-size:1.0rem" />
 						</div>
 					</div>
 
-					<!-- <form method="post" action="emailCheck.do"> -->
 					<div class="md-form mb-1">
 						<i class="fas fa-envelope prefix grey-text"></i> <label
 							style="margin-bottom: 0px; font-size: 20px; margin-top: 20px;"
 							data-error="wrong" data-success="right" for="orangeForm-email">이메일</label>
-						<input style="margin-bottom: 20px;" name="memail" readonly="true"
-							type="email" id="orangeForm-email" class="form-control validate"
-							value="">
+						<form:input path="memail" style="margin-bottom: 20px;" name="memail" readonly="true" 
+							value="${member.memail}"
+							type="email" id="orangeForm-email" class="form-control validate"/>
 					</div>
 
 					<div class="md-form mb-1" style="height: 50px;">
@@ -157,14 +161,14 @@
 									class="btn btn-deep-orange">수정</button>
 							</div>
 							<div class="col-md-6">
-								<button
+								<a
 									style="background-color: #AAAAAA; color: white; width: 100%; font-size: large;"
 									type="button" class="btn btn-primary" data-toggle="modal"
-									data-target="#deleteMember">회원 탈퇴</button>
+									data-target="#deleteMember">회원 탈퇴</a>
 							</div>
 						</div>
 					</div>
-				</form>
+				</form:form>
 			</div>
 		</div>
 		<div class="col-md-4"></div>

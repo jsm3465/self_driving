@@ -63,4 +63,19 @@ public class MemberService {
 		return member;
 	}
 
+	public void updateMember(Member member) {
+		memberDao.updateMember(member);
+		
+	}
+
+	public void updatePassword(Member member) {
+		memberDao.updatePassword(member);
+		
+	}
+
+	public void deleteMember(String mid) {
+		memberDao.deleteMemberByMid(mid);
+		
+	}
+
 }

@@ -15,7 +15,7 @@
 	
 	<update id="updateByMid">
 		update member
-		set mpassword=#{mpassword}, mname=#{mname}, msex=#{msex}, mbirth=#{mbirth}, memail=#{memail}, mstate=#{mstate}
+		set mpassword=#{mpassword}, mname=#{mname}, msex=#{msex}, mbirth=#{mbirth}, memail=#{memail}
 		where mid=#{mid}
 	</update>
 	
@@ -25,12 +25,18 @@
 		where mid=#{mid}
 	</update>
 	
+	<update id="updatePasswordByMid">
+		update member
+		set mpassword=#{mpassword}
+		where mid=#{mid}
+	</update>
+	
 	<select id="selectByMnameAndMemail" resultType="String">
 		select mid from member
 		where mname=#{mname} and memail=#{memail}
 	</select>
 	
-	<select id="selectByMidAndMnameAndMtel" resultType="String">
+	<select id="selectByMidAndMnameAndMemail" resultType="String">
 		select mpassword from member
 		where mid=#{mid} and mname=#{mname} and memail=#{memail}
 	</select>
@@ -39,4 +45,9 @@
 		select mid, mpassword, mname, msex, mbirth, memail, mstate from member
 		where memail=#{memail}
 	</select>
+	
+	<delete id="deleteByMid">
+		delete from member
+		where mid=#{mid}
+	</delete>
 </mapper>
