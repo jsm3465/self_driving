@@ -82,7 +82,7 @@
 			setInterval(function(){
 				toc = new Date().getTime()
 				if(toc-tic > 3000){
-					client.connect({onSuccess:onConnect});
+// 					client.connect({onSuccess:onConnect});
 					var pubmessage = new Paho.MQTT.Message("receive");
 					   pubmessage.destinationName = "/rover2/order/receive";
 					   publisher.send(pubmessage);
@@ -108,6 +108,10 @@
 			      
 			      if(keyset[40]){
 			    	  backward();
+			      }
+			      
+			      if(keyset[67]){
+			    	  lanechange();
 			      }
 			      
 			      if(keyset[69]){
@@ -162,8 +166,8 @@
 			   publisher.send(message);
 			}
 			
-			function refront() {
-			   var message = new Paho.MQTT.Message("refront");
+			function lanechange() {
+			   var message = new Paho.MQTT.Message("changestart");
 			   message.destinationName = "/rover2/order/mode2/direction";
 			   publisher.send(message);
 			}
@@ -179,6 +183,8 @@
 			   message.destinationName = "/rover2/order/mode1";
 			   publisher.send(message);
 			}
+			
+			
 			
 			$(function() {
 				document.addEventListener('keyup', function(e) {

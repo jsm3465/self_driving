@@ -16,6 +16,9 @@ class LineDetector:
         self.__pid_controller.set_gain(0.65, 0.0, 0.3)
         self.presentroad = 1
         self.precenter = 0
+        self.crosswalk = False
+        self.leftCorner = False
+        self.rightCorner = False
 
     def line_detect(self, frame):
         # =======================편한 사이즈로 재조정=========================
@@ -28,7 +31,7 @@ class LineDetector:
         blur_gray = cv2.GaussianBlur(img_gray, (5, 5), 0)
 
         # =========================threshold 처리=====================================
-        th, img_th = cv2.threshold(blur_gray, 190, 255, cv2.THRESH_BINARY)
+        th, img_th = cv2.threshold(blur_gray, 165, 255, cv2.THRESH_BINARY)
 
         # =========================close morphology : 구멍이 채워지고 좀 더 뚜렷해짐=========================
         kernel = np.ones((5, 5), np.uint8)
@@ -46,14 +49,33 @@ class LineDetector:
                               (40, height / 2),
                               (width-40, height / 2),
                               (width, height)]], dtype=np.int32)
+
+        # vertices = np.array([[(0, height),
+        #                       (0, height - 50),
+        #                       (45, height / 2),
+        #                       (width - 45, height / 2),
+        #                       (width, height - 50),
+        #                       (width, height)]], dtype=np.int32)
+
         cv2.fillPoly(mask, vertices, ignore_mask_color)
-        masked_img = cv2.bitwise_and(edges, mask)
+        test_img = cv2.bitwise_and(edges, mask)
 
         # =============================================
-        test_img = cv2.bitwise_and(img_th, mask)
+        masked_img = cv2.bitwise_and(img_th, mask)
+
+        if masked_img[200][300] == 255:
+            self.rightCorner = True
+        else:
+            self.rightCorner = False
+
+        if masked_img[200][200] == 255:
+            self.leftCorner = True
+        else:
+            self.leftCorner = False
 
         histogramleft = np.sum(test_img[:, :test_img.shape[1] // 2], axis=1)
         histogramright = np.sum(test_img[:, test_img.shape[1] // 2:], axis=1)
+
         leftflag = 0
         cnt = 0
         for i in histogramleft:
@@ -63,9 +85,10 @@ class LineDetector:
                 leftflag = 2
             elif leftflag == 2 and i == 0:
                 cnt += 1
-                if cnt > 40:
+                if cnt > 30:
                     self.presentroad = 2
         print("left cnt :", cnt)
+
         rightflag = 0
         cnt = 0
         for i in histogramright:
@@ -84,6 +107,10 @@ class LineDetector:
 
         mean = np.mean(histogram)
         print("평균값 : ", mean)
+        if mean > 800:
+            self.crosswalk = True
+        else:
+            self.crosswalk = False
 
         # =========================Hough Transform을 이용한 직선 검출, 리턴된 lines는 (n, 1, 4)의 shape을 가진다.(n : 검출된 직선의 개수) =========================
         # threshold : 높을 수록 정확도는 올라가고, 적은 선을 찾음, 낮으면 많은 직선을 찾지만 대부분의 직선을 찾음
@@ -92,7 +119,7 @@ class LineDetector:
 
         if lines is None:
             self.line_retval = False
-            return None, None, mean
+            return None, None
 
         if lines.shape[0] == 1:
             line_arr = lines[0, :, :]
@@ -115,9 +142,9 @@ class LineDetector:
 
         self.line_retval = True
 
-        return L_lines, R_lines, mean
+        return L_lines, R_lines
 
-    def offset_detect(self, img, L_lines, R_lines, road_half_width_list, mean):
+    def offset_detect(self, img, L_lines, R_lines, road_half_width_list):
         h, w, _ = img.shape
         lane_img = img
 
@@ -129,16 +156,21 @@ class LineDetector:
         center_x = int(w / 2)
         center_point = (center_x, y_fix)
 
+        # 교점들을 저장할 리스트
+        left_cross_points = []
+        right_cross_points = []
+
+        # 왼/오 선을 찾았는지 bool 변수에 저장
+        L_lines_detected = bool(len(L_lines) != 0)
+        R_lines_detected = bool(len(R_lines) != 0)
+
         # 횡단보도 bump 등등일때
-        if mean > 1400:
-            # 교점들을 저장할 리스트
-            left_cross_points = []
-            right_cross_points = []
+        if self.crosswalk:
 
             road_half_width = np.mean(road_half_width_list)
 
             # 왼쪽 선만 찾았을 경우
-            if self.presentroad == 1:
+            if self.presentroad == 1 and L_lines_detected:
                 for each_line in L_lines:
                     x1, y1, x2, y2 = each_line
                     # 직선 그리기
@@ -158,7 +190,7 @@ class LineDetector:
                 road_center_point = (int(road_center_x), y_fix)
 
             # 오른쪽 선만 찾았을 경우
-            else:
+            elif self.presentroad == 2 and R_lines_detected:
                 for each_line in R_lines:
                     x1, y1, x2, y2 = each_line
                     cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
@@ -175,15 +207,9 @@ class LineDetector:
                 # 도로 중간 지점 저장
                 road_center_x = right_line_x - road_half_width
                 road_center_point = (int(road_center_x), y_fix)
-
+            else:
+                return lane_img
         else:
-            # 교점들을 저장할 리스트
-            left_cross_points = []
-            right_cross_points = []
-
-            # 왼/오 선을 찾았는지 bool 변수에 저장
-            L_lines_detected = bool(len(L_lines) != 0)
-            R_lines_detected = bool(len(R_lines) != 0)
 
             # 둘 다 찾았을 경우
             if L_lines_detected and R_lines_detected:
@@ -285,7 +311,7 @@ class LineDetector:
 
         # 각도 구하기
         # 오른쪽으로 회전해야 하는 경우 각도가 음수, 왼쪽으로 회전해야하는 경우 양수
-        angle = np.arctan2(offset_height, offset_width) * 180 / (np.pi) - 90
+        angle = np.arctan2(offset_height, offset_width) * 180 / (np.pi) - 80
         angle = self.__pid_controller.equation(angle)
         self.angle = angle
         print("angle :", angle)
@@ -294,58 +320,13 @@ class LineDetector:
 
     def line_camera(self, frame):
         # ================ Line Detect ===================
-        L_lines, R_lines, white = self.line_detect(frame)
+        L_lines, R_lines = self.line_detect(frame)
 
         # 선을 찾지 못했다면, 다음 프레임으로 continue
         if self.line_retval:
             # 선 찾아서 offset으로 돌려야할 각도 계산
-            frame = self.offset_detect(frame, L_lines, R_lines, self.__road_half_width_list, white)
+            frame = self.offset_detect(frame, L_lines, R_lines, self.__road_half_width_list)
 
         return frame
 
-
-# %% test
-if __name__ == '__main__':
-    # videoCapture = cv2.VideoCapture("C:/MyWorkspace/final/project_4_advanced_lane_finding/test_1.avi")
-    import os
-    import sys
-
-    project_path = "/home/jetson/MyWorkspace/jetracer"
-    sys.path.append(project_path)
-
-    from utils import camera
-
-    camera = camera.Video_Setting()
-    videoCapture = camera.video_read()
-
-    while videoCapture.isOpened():
-        retval, frame = videoCapture.read()
-        if not retval:
-            break
-        height = frame.shape[0]
-        width = frame.shape[1]
-        lines = line_detect(frame)
-
-        # =========================선을 찾지 못했다면, 다음 프레임으로 continue=========================
-        if lines is None:
-            cv2.imshow("video", frame)
-            continue
-
-        # =========================선을 하나만 찾는경우, squeeze()에 의해 선의 개수 축(0축)까지 벗겨질 수 있기 때문에 1개의 선만 찾았을 때 분할 처리
-        if lines.shape[1] == 1:
-            line_arr = lines[0, :, :]
-        else:
-            line_arr = lines.squeeze()
-
-
-        # result = line_limited_angle(line_arr, frame)
-
-        cv2.imshow("video", frame)
-
-        key = cv2.waitKey(1)
-        if key == 27:
-            break
-
-    videoCapture.release()
-    cv2.destroyAllWindows()
 

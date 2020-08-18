@@ -28,14 +28,6 @@ class MqttSubscriber:
         else:
             self.message = message
 
-        # print("subscribe@@@@@@@@@@@@@@")
-        # print("구독 내용: {}, 토픽: {}, Qos: {}".format(
-        #     str(message.payload, encoding="UTF-8"),
-        #     message.topic,
-        #     message.qos
-        # ))
-
-
     def start(self):
         thread = threading.Thread(target=self.__subscribe)
         thread.start()

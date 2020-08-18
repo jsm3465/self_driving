@@ -14,7 +14,7 @@ def sample1():
     # 다음 중 하나 지정: ssd_mobilenet_v1, ssd_mobilenet_v2, ssd_inception_v2)
     model_type = "ssd_mobilenet_v2"
     # 사전 훈련된 모델 경로
-    model_path = os.path.join(project_path, "models/ssd_mobilenet_v2_model_9_60000")
+    model_path = os.path.join(project_path, "models/ssd_mobilenet_v2_model_11_2")
     # 동결 추론 그래프 파일 이름
     pb_name = "frozen_inference_graph.pb"
     # 분류 수 (백그라운드 클래스 + 분류할 클래스 수 = 1 + 90)

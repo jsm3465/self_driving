@@ -4,23 +4,39 @@ import threading
 import base64
 import time
 
+import sys
+project_path = "/home/jetson/MyWorkspace/jetracer"
+sys.path.append(project_path)
+
+from utils import camera
+from linedetect.line_detect import LineDetector
+import pycuda.driver as cuda
+
+
+from utils import trt_ssd_object_detect as trt
+from utils.object_label_map import CLASSES_DICT
+
 class ImageMqttPusblisher:
-    def __init__(self, brokerIp=None, brokerPort=1883, pubTopic=None):
+    def __init__(self, rover, mqttSub, brokerIp=None, brokerPort=1883, pubTopic=None):
         self.brokerIp = brokerIp
         self.brokerPort = brokerPort
         self.pubTopic = pubTopic
-        self.client = None
-
-    def connect(self):
-        thread = threading.Thread(target=self.__run, daemon=True)
-        thread.start()
-
-    def __run(self):
         self.client = mqtt.Client()
         self.client.on_connect = self.__on_connect
         self.client.on_disconnect = self.__on_disconnect
+        self.__stop = False
+        self.rover = rover
+        self.mqttsub = mqttSub
+        self.send = False
+
+    def connect(self):
+        thread = threading.Thread(target=self.__run)
+        thread.start()
+
+    def __run(self):
         self.client.connect(self.brokerIp, self.brokerPort)
         self.client.loop_forever()
+
 
     def __on_connect(self, client, userdata, flags, rc):
         print("ImageMqttClient mqtt broker connected")
@@ -30,21 +46,23 @@ class ImageMqttPusblisher:
 
     def disconnect(self):
         self.client.disconnect()
+        self.__stop = True
 
     def sendBase64(self, frame):
         if self.client is None:
+            print("1")
             return
-        # MQTT Broder가 연결되어 있지 않을 경우
+        # MQTT Broker가 연결되어 있지 않을 경우
         if not self.client.is_connected():
+            print("2")
             return
         # JPEG 포맷으로 인코딩
         retval, bytes = cv2.imencode(".jpg", frame)
         # 인코딩이 실패났을 경우
         if not retval:
-            # print("image encoding fail")
+            print("image encoding fail")
             return
         # Base64 문자열로 인코딩
-
         b64_bytes = base64.b64encode(bytes)
         # MQTT Broker에 보내기
         self.client.publish(self.pubTopic, b64_bytes)

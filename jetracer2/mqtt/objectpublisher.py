@@ -22,7 +22,7 @@ class ObjectPublisher:
         message = {}
 
         for i, object in enumerate(clss):
-            message[CLASSES_DICT[object]] = str(boxes[i])
+            message[CLASSES_DICT[object]] = list(boxes[i])
 
         message = json.dumps(message)
 
