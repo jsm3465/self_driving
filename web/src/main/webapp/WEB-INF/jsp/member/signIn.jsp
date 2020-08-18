@@ -8,31 +8,30 @@
 <head>
 <meta charset="UTF-8">
 <title>Sign In</title>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
-<link
-	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resource/css/signIn.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/main.css" />
+		<noscript><link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/noscript.css"/></noscript>
 </head>
 <body>
 	<div class="container-fluid vh-100 vw-100">
 		<div style="height: 30%" class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4" id="logobox">
-				<a href="main.do" id="logo">Autonomous Driving</a>
-			</div>
-			<div class="col-md-4"></div>
+				<div class="col-md-4"></div>
+				<div  class="col-md-4">
+					
+					<h2 id="logo"><a href="main.do">Autonomous Driving</a></h2>
+					
+				</div>
+				<div class="col-md-4"></div>
 		</div>
 		<div style="height: 60%" class="row">
 			<div class="col-md-4"></div>
 			<div class="col-md-4">
 				<form:form method="post" action="signin.do" modelAttribute="member">
+					
+					
+		
 					<div class="md-form mb-3">
 						<label style="font-size: 1.2rem;" data-error="wrong"
 							data-success="right" for="Form-id1">아이디</label>
@@ -69,13 +68,15 @@
 		<div class="col-md-4"></div>
 	</div>
 
-	<script
-		src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
+	<!-- Scripts -->
+			<script src="${pageContext.request.contextPath}/resource/js/jquery.min.js"></script>
+			<script src="${pageContext.request.contextPath}/resource/js/jquery.scrollex.min.js"></script>
+			<script src="${pageContext.request.contextPath}/resource/js/jquery.scrolly.min.js"></script>
+			<script src="${pageContext.request.contextPath}/resource/js/browser.min.js"></script>
+			<script src="${pageContext.request.contextPath}/resource/js/breakpoints.min.js"></script>
+			<script src="${pageContext.request.contextPath}/resource/js/util.js"></script>
+			<script src="${pageContext.request.contextPath}/resource/js/main.js"></script>
+			<script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
+			<script src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
 </body>
 </html>

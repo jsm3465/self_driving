@@ -8,7 +8,11 @@
 		<meta charset="UTF-8">
 		<title>cctvSctreen</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
-		<script src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script>
+<%-- 		<script src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script> --%>
+	<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
 		<script src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">

@@ -1,5 +1,7 @@
 package com.mycompany.project.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,7 +23,6 @@ public class HomeController {
 		LOGGER.info("실행");
 		return "home/main";
 	}
-	
 	@RequestMapping("/main2.do")
 	public String main2() {
 		LOGGER.info("실행");
@@ -29,15 +30,16 @@ public class HomeController {
 	}
 
 	@RequestMapping("/redirectToMain.do")
-	public String redirectToMain() {
+	public String redirectToMain(HttpSession session) {
 		LOGGER.info("실행");
+		session.invalidate();
 		return "redirect:main.do";
 	}
 
-	@GetMapping("/cctvScreen.do")
-	public String cctvScreen() {
+	@GetMapping("/controlView.do")
+	public String controlView() {
 		LOGGER.info("실행");
-		return "home/cctvScreen";
+		return "home/controlView";
 	}
 
 	@RequestMapping("/signup.do")
