@@ -87,8 +87,8 @@ class AI_Rover:
         # self.__motor_control.throttle_gain = self.__dcMotor_speed
         # print("backward")
         # self.__motor_control.throttle = 0
-        self.__direction = "froward"
-        self.__motor_control.throttle_gain = 0.53
+        self.__direction = "forward"
+        self.__motor_control.throttle_gain = 0.6
         self.__motor_control.throttle = -1
         self.__dcMotor_speed = self.__motor_control.throttle_gain * 100
 
@@ -103,9 +103,9 @@ class AI_Rover:
     def setspeed(self, speed):
 
         if speed < 0:
-            throttle = -1
-        else:
             throttle = 1
+        else:
+            throttle = -1
         self.__motor_control.throttle_gain = (abs(speed) / 100)
         self.__motor_control.throttle = throttle
         self.__dcMotor_speed = abs(speed)

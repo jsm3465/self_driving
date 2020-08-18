@@ -27,8 +27,8 @@ mqttSub.start()
 campub = ImageMqttPusblisher(rover, mqttSub, "192.168.3.223", pubTopic="/rover2/camerapub")
 campub.connect()
 
-# campub2 = ImageMqttPusblisher(rover, mqttSub, "192.168.3.242", pubTopic="/rover2/camerapub")
-# campub2.connect()
+campub2 = ImageMqttPusblisher(rover, mqttSub, "192.168.3.242", pubTopic="/rover2/camerapub")
+campub2.connect()
 
 sensorpub = MqttPublisher(rover, "192.168.3.223", topic="/rover2/sensor")
 sensorpub.start()
@@ -65,6 +65,9 @@ tic = time.time()
 
 switchlane = False
 switchcnt = 0
+
+speed = 55
+
 try:
     while True:
         # 카메라 영상 캡처
@@ -77,22 +80,23 @@ try:
             print("cone!!!")
             L_lines, R_lines = line_detector.line_detect(frame)
             # 왼/오 선을 찾았는지 bool 변수에 저장
-            L_lines_detected = bool(len(L_lines) != 0)
-            R_lines_detected = bool(len(R_lines) != 0)
-            rover.forward()
+            # L_lines_detected = bool(len(L_lines) != 0)
+            # R_lines_detected = bool(len(R_lines) != 0)
+            rover.setspeed(50)
             if line_detector.presentroad == 1:
                 rover.set_angle(-10)
                 switchcnt += 1
-                if switchcnt > 30:
-                    # if line_detector.rightCorner:
-                    if L_lines_detected and R_lines_detected:
+                if switchcnt > 40:
+                    if line_detector.rightCorner:
+                    # if L_lines_detected and R_lines_detected:
                         switchlane = False
             elif line_detector.presentroad == 2:
-                rover.set_angle(10)
+                rover.setspeed(60)
+                rover.set_angle(15)
                 switchcnt += 1
-                if switchcnt > 30:
-                    # if line_detector.leftCorner:
-                    if L_lines_detected and R_lines_detected:
+                if switchcnt > 40:
+                    if line_detector.leftCorner:
+                    # if L_lines_detected and R_lines_detected:
                         switchlane = False
 
 
@@ -145,48 +149,68 @@ try:
 
                     if len(clss) > 0:
                         objectpub.publish(clss, boxes)
-                        # 빨간불
-                        if 1 in clss:
-                            index = clss.index(1)
-                            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
-                            if size > 350:
-                                stopflag = 1
-                            print(size)
 
-                        # 노란불
-                        if 3 in clss:
-                            index = clss.index(3)
+                        # speed 100
+                        if 9 in clss:
+                            index = clss.index(9)
                             size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
-                            if size > 350:
-                                stopflag = 1
-                            print(size)
+                            speed = 60
+                            # print(size)
+
+                        # green
+                        if 2 in clss:
+                            index = clss.index(2)
+                            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                            speed = 55
+                            # print(size)
 
                         # 횡단보도
                         if 4 in clss:
                             index = clss.index(4)
                             size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                            speed = 48
                             # if size > 12000:
                             #     stopflag = 1
                             #     line_detector.crosswalk = True
-                            print(size)
+                            # print(size)
 
-                        # stop
-                        if 7 in clss:
-                            index = clss.index(7)
+                        # 어린이 보호구역
+                        if 5 in clss:
+                            index = clss.index(5)
                             size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
-                            if size > 3000:
-                                stopflag = 1
-                            print(size)
+                            speed = 48
+                            # if size > 12000:
+                            #     stopflag = 1
+                            #     line_detector.crosswalk = True
+                            # print(size)
+
+                        # 급커브
+                        if 6 in clss:
+                            index = clss.index(6)
+                            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                            speed = 48
+                            # if size > 12000:
+                            #     stopflag = 1
+                            #     line_detector.crosswalk = True
+                            # print(size)
+
+                        # speed 60
+                        if 8 in clss:
+                            index = clss.index(8)
+                            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                            speed = 48
+                            # print(size)
 
                         # cone
                         if 11 in clss:
                             index = clss.index(11)
                             size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                            speed = 48
                             if size > 800:
                                 stopflag = 1
                                 switchcnt = 0
                                 switchlane = True
-                            print(size)
+                            # print(size)
 
                         # bump
                         if 12 in clss:
@@ -194,15 +218,40 @@ try:
                             size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
                             # line_detector.crosswalk = True
                             # stopflag = 1
-                            print(size)
+                            # print(size)
+
+                            # 빨간불
+                        if 1 in clss:
+                            index = clss.index(1)
+                            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                            speed = 0
+                            stopflag = 1
+                            # print(size)
+
+                            # 노란불
+                        if 3 in clss:
+                            index = clss.index(3)
+                            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                            speed = 0
+                            stopflag = 1
+                            # print(size)
+
+                        # stop
+                        if 7 in clss:
+                            index = clss.index(7)
+                            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
+                            speed = 0
+                            if size > 2000:
+                                stopflag = 1
+                            # print(size)
 
                     if stopflag == 1:
                         if line_detector.crosswalk:
-                            rover.setspeed(45)
+                            rover.setspeed(50)
                         else:
                             rover.stop()
                     else:
-                        rover.forward()
+                        rover.setspeed(speed)
 
                 # ------------------ 자율 주행 모드 OFF -----------------
                 elif flag == 2:
@@ -239,13 +288,15 @@ try:
         fps = curr_fps if fps == 0.0 else (fps * 0.95 + curr_fps * 0.05)
         rover.fps = fps
 
+        print("speed : ", speed)
+
         if mqttSub.receive:
             campub.sendBase64(img)
             tic = toc
             mqttSub.receive = False
             # rover.frame = img
             # campub.send = True
-            # campub2.sendBase64(img)
+            campub2.sendBase64(img)
 
 except KeyboardInterrupt:
     pass

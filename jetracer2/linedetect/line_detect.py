@@ -87,7 +87,7 @@ class LineDetector:
                 cnt += 1
                 if cnt > 30:
                     self.presentroad = 2
-        print("left cnt :", cnt)
+        # print("left cnt :", cnt)
 
         rightflag = 0
         cnt = 0
@@ -100,13 +100,13 @@ class LineDetector:
                 cnt += 1
                 if cnt > 40:
                     self.presentroad = 1
-        print("right cnt : ", cnt)
+        # print("right cnt : ", cnt)
         print("현재 차선 :", self.presentroad, "차선")
 
         histogram = np.sum(test_img[:, :], axis=0)
 
         mean = np.mean(histogram)
-        print("평균값 : ", mean)
+        # print("평균값 : ", mean)
         if mean > 800:
             self.crosswalk = True
         else:
@@ -303,7 +303,7 @@ class LineDetector:
         cv2.circle(lane_img, center_point, 5, (0, 255, 0), -1)
         cv2.line(lane_img, road_center_point, center_point, (255, 255, 255), 2)
 
-        print("center : ", road_center_x)
+        # print("center : ", road_center_x)
 
         # 왼쪽을 돌려야하면 음수, 오른쪽으로 돌려야하면 양수
         offset_width = road_center_x - center_x
@@ -314,7 +314,7 @@ class LineDetector:
         angle = np.arctan2(offset_height, offset_width) * 180 / (np.pi) - 80
         angle = self.__pid_controller.equation(angle)
         self.angle = angle
-        print("angle :", angle)
+        # print("angle :", angle)
 
         return lane_img
 
