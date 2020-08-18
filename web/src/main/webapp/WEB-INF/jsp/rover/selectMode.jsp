@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>No. 15</title>
+<title>SELECT MODE</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
 

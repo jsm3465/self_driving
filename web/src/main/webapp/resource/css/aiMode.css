@@ -6,6 +6,7 @@
 
 header {
 	height: 10%;
+	font-family:'Do Hyeon', sans-serif;
 }
 
 section {
@@ -23,6 +24,19 @@ footer {
 	font-family:'Do Hyeon', sans-serif;	
 }
 
+#modeName {
+	display: flex;
+	justify-content: center;
+	align-items : center;
+	font-size: 64px;
+}
+
+#userName{
+	display: flex;
+	justify-content: flex-end;
+	align-items : flex-end;
+	font-size: 32px;	
+}
 #speedArea {
 	height: 20%;
 }

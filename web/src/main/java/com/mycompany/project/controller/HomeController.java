@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
+	@RequestMapping("/temp.do")
+	public String temp() {
+		LOGGER.info("실행");
+		return "home/temp";
+	}
 	@RequestMapping("/main.do")
 	public String main() {
 		LOGGER.info("실행");
@@ -23,10 +28,10 @@ public class HomeController {
 		return "redirect:main.do";
 	}
 
-	@GetMapping("/no22.do")
-	public String no22() {
+	@GetMapping("/cctvScreen.do")
+	public String cctvScreen() {
 		LOGGER.info("실행");
-		return "home/no22";
+		return "home/cctvScreen";
 	}
 
 	@RequestMapping("/signup.do")

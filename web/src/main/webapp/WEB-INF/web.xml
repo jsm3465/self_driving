@@ -1,68 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
 
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
-  
-  <!-- <error-page>
-  	<error-code>404</error-code>
-  	<location>/common/error.jsp</location>
-  </error-page>
-  
-  <error-page>
-  	<error-code>500</error-code>
-  	<location>/common/error.jsp</location>
-  </error-page> -->
-  
-  <session-config>
-  	<session-timeout>30</session-timeout>
-  </session-config>
-  
-  <listener>
-  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  
-  <context-param>
-  	<param-name>contextConfigLocation</param-name>
-  	<param-value>classpath:/spring/*.xml</param-value>
-  </context-param>
-  
-  <filter>
-  	<filter-name>HTMLTagFilter</filter-name>
-  	<filter-class>egovframework.rte.ptl.mvc.filter.HTMLTagFilter</filter-class>
-  </filter>
-  <filter-mapping>
-  	<filter-name>HTMLTagFilter</filter-name>
-  	<url-pattern>*.do</url-pattern>
-  </filter-mapping>
-  
-  <filter>
-  	<filter-name>encodingFilter</filter-name>
-  	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-  	<init-param>
-  		<param-name>encoding</param-name>
-  		<param-value>utf-8</param-value>
-  	</init-param>
-  </filter>
-  <filter-mapping>
-  	<filter-name>encodingFilter</filter-name>
-  	<url-pattern>*.do</url-pattern>
-  </filter-mapping>  
-  
-  <servlet>
-  	<servlet-name>action</servlet-name>
-  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-  	<init-param>
-  		<param-name>contextConfigLocation</param-name>
-  		<param-value>/WEB-INF/springmvc/dispatcher-servlet.xml</param-value>
-  	</init-param>
-  	<load-on-startup>1</load-on-startup>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>action</servlet-name>
-  	<url-pattern>*.do</url-pattern>
-  </servlet-mapping>
-  
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- <error-page> <error-code>404</error-code> <location>/common/error.jsp</location> 
+		</error-page> <error-page> <error-code>500</error-code> <location>/common/error.jsp</location> 
+		</error-page> -->
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/spring/*.xml</param-value>
+	</context-param>
+
+	<filter>
+		<filter-name>HTMLTagFilter</filter-name>
+		<filter-class>egovframework.rte.ptl.mvc.filter.HTMLTagFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>HTMLTagFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
+
+	<!-- 보안 관련 설정 시작 -->
+	<security-constraint>
+
+		<web-resource-collection>
+
+			<web-resource-name>my-secure-app</web-resource-name>
+
+			<url-pattern>/*</url-pattern>
+
+		</web-resource-collection>
+
+
+
+		<user-data-constraint>
+
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+
+		</user-data-constraint>
+
+	</security-constraint>
+	<!-- 보안 관련 설정 여기까지 -->
+
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/springmvc/dispatcher-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
 </web-app>

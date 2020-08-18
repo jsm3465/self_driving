@@ -9,25 +9,27 @@
 <title>AI MODE</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
-
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
-
 <!-- bootswatch slate theme -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
 <link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap">
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/css/aiMode.css">
+
 
 </head>
 <body>
 	<div class="container-fluid vh-100">
 		<header class="row">
-			<div id ="logo" class="col-3"><a href="main.do">Autonomous Driving</a></div>
-			<div class="col-6">
-				<h1>AI Mode</h1>
+			<div id="logo" class="col-3">
+				<a href="main.do">Autonomous Driving</a>
 			</div>
-			<div class="col-3"></div>
+			<div id="modeName" class="col-6">AI MODE</div>
+			<div id="userName" class="col-3">
+				${rover.ruser}</div>
 		</header>
 		<section class="row">
 			<div class="col-4">
@@ -37,6 +39,7 @@
 					<div class="col-4"></div>
 				</div>
 				<div class="row" id="cameraArea">
+					<input id="rname" type="hidden" value="/${rover.rname}"/>
 					<img id="cameraView" />
 				</div>
 			</div>

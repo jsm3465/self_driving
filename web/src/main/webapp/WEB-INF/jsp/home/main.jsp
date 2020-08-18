@@ -44,8 +44,8 @@
 		</div>
 		<div>
 			<ul>
-				<li><a href="no22.do">no22.do</a></li>
-				<li><a href="cameraTest.do">cameraTest.do</a></li>
+				<li><a href="cctvScreen.do">cctvScreen.do</a></li>
+				<li><a href="temp.do">temp.do</a></li>
 
 			</ul>
 		</div>

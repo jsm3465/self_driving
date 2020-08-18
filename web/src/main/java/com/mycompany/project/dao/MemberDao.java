@@ -20,20 +20,24 @@ public class MemberDao extends EgovAbstractMapper{
    }
 
    public Member selectByMid(String mid) {
+	   LOGGER.info("실행");
       Member member = selectOne("member.selectByMid", mid);
       return member;
    }
 
    public void updateStateByMid(Member member) {
+	   LOGGER.info("실행");
       update("member.updateStateByMid", member);
    }
 
    public String selectByMnameAndMemail(Member member) {
+	   LOGGER.info("실행");
       String mid = selectOne("member.selectByMnameAndMemail", member);
       return mid;
    }
 
    public String selectByMidAndMnameAndMemail(Member member) {
+	   LOGGER.info("실행");
       String password = selectOne("member.selectByMidAndMnameAndMtel", member);
       return password;
    }

@@ -90,7 +90,7 @@ public class MyMqttClient {
 
 	// 메세지 수신
 	public void subscribe() throws MqttException {
-		client.subscribe("/camerapub/#");
+		client.subscribe("/blackBox/#");
 	}
 
 	// 연결 끊기
