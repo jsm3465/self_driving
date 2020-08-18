@@ -133,7 +133,7 @@
 		<dependency>
 			<groupId>org.eclipse.paho</groupId>
 			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-			<version>1.2.0</version>
+			<version>1.2.1</version>
 		</dependency>
 
 		<!-- AJAX 사용시 data전달을 위한 JSON 타입 사용을 위한 라이브러리 의존 설정 -->
