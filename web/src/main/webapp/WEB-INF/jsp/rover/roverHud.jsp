@@ -297,7 +297,7 @@
 
             $(function() {
                // Publisher Connection
-               publisher = new Paho.MQTT.Client("192.168.3.250", 61617,
+               publisher = new Paho.MQTT.Client(location.hostname, 61617,
                      new Date().getTime().toString()+"c");
                publisher.connect({
                   onSuccess : onPublisherConnect,

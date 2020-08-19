@@ -13,34 +13,7 @@
 		<noscript><link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/noscript.css"/></noscript>
 	</head>
 	<body class="landing is-preload">
-
-<<<<<<< HEAD
 <body>
-	<div class="container-fluid vh-100">
-		<div class="row">
-			<div class="col-md-3" id="logo">
-				<a href="main.do">Autonomous Driving</a>
-			</div>
-			<div class="col-md-7"></div>
-			<div class="col-md-2">
-				<c:if test="${sessionMid == null}">
-					<a href="${pageContext.request.contextPath}/member/signupForm.do"
-						class="signup">회원가입</a>
-					<a href="${pageContext.request.contextPath}/member/signinForm.do"
-						class="signin">로그인</a>
-				</c:if>
-				<c:if test="${sessionMid != null}">
-					<a href="${pageContext.request.contextPath}/member/signout.do"
-						class="signout">로그아웃</a>
-				</c:if>
-			</div>
-		</div>
-		<div>
-			<ul>
-				<li><a href="cctvScreen.do">cctvScreen.do</a></li>
-				<li><a href="temp.do">temp.do</a></li>
-				<li><a href="/project/rover/roverHud.do">roverHud.do</a></li>
-=======
 		<!-- Page Wrapper -->
 			<div id="page-wrapper">
 
@@ -59,10 +32,6 @@
 												<li><a href="../member/memberInformationForm.do">User Info</a></li>
 												<li><a href="../member/signout.do">Logout</a></li>
 											</c:if>
-											
-											
->>>>>>> 40e3e59f46513d287603afdaf98b4673e993fb7e
-
 										</ul>
 									</div>
 								</li>
