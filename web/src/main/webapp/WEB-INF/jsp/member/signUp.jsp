@@ -157,8 +157,8 @@
 							style="float: right; margin-bottom: 20px; border: none; font-size: 15px;"
 							onclick="fun2()">인증</a>
 					</div>
-					<div id="next" class="md-form mb-1">
-                  <button disabled style="width: 100%;" class="button primary fit">Next</button>
+					<div class="md-form mb-1">
+                  <button id="next" disabled=true style="width: 100%;" class="button primary fit">Next</button>
                </div>
 					</div>
 				</form:form>
@@ -178,5 +178,6 @@
 		<script src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resource/js/email.js"></script>
 		<script src="${pageContext.request.contextPath}/resource/js/signup.js"></script>
+
 </body>
 </html>

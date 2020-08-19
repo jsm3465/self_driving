@@ -484,7 +484,7 @@ input, select, textarea {
 
 		.row {
 			margin-top: 0;
-			margin-left: -1.5em;
+			margin-left: 0;
 		}
 
 			.row > * {
@@ -4049,7 +4049,7 @@ a:hover{
 .bir_dd, .bir_mm, .bir_yy {
 	padding :0;
 	margin:0;
-    width: 70%; 
+    width: 85%; 
     height: 38px; 
     font-size: 18px;
 }
