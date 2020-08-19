@@ -3,80 +3,82 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Sign In</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/main.css" />
-		<noscript><link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/noscript.css"/></noscript>
+<title>Autonomous Driving</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resource/css/main.css" />
+<noscript>
+	<link rel="stylesheet"
+		href="${pageContext.request.contextPath}/resource/css/noscript.css" />
+</noscript>
 </head>
 <body>
 	<div class="container-fluid vh-100 vw-100">
-		<div style="height: 30%" class="row">
-				<div class="col-md-4"></div>
-				<div  class="col-md-4">
-					
-					<h2 id="logo"><a href="main.do">Autonomous Driving</a></h2>
-					
-				</div>
-				<div class="col-md-4"></div>
+		<div style="height: 20%;" class=row>
+			<div class="col-45"></div>
+			<div class="col-3"></div>
+			<div class="col-45"></div>
 		</div>
-		<div style="height: 60%" class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4">
+		<div style="height: 80%;" class=row>
+			<div class="col-45"></div>
+			<div id="logoDiv" class="col-3">
+				<center>
+					<h2 style="margin-top: 23.4px;">
+						<a id="logo" href="main.do">Autonomous Driving</a>
+					</h2>
+				</center>
 				<form:form method="post" action="signin.do" modelAttribute="member">
-					
-					
-		
-					<div class="md-form mb-3">
-						<label style="font-size: 1.2rem;" data-error="wrong"
-							data-success="right" for="Form-id1">아이디</label>
-						<form:input path="mid" name="mid" type="text" id="orangeForm-id"
+					<div style="margin-top: 3%;">
+						<i class="fas fa-user prefix grey-text"></i> <a>아이디</a>
+						<form:input path="mid" name="mid" type="text" id="mid"
 							class="form-control validate" />
 						<form:errors path="mid" style="color:red; font-size:1.0rem" />
 					</div>
 
-					<div class="md-form pb-3">
-						<label style="font-size: 1.2rem;" data-error="wrong"
-							data-success="right" for="Form-pass1">비밀번호</label>
-						<form:input path="mpassword" type="password" id="Form-pass1"
+					<div style="margin-top: 3%;">
+						<i class="fas fa-lock prefix grey-text"></i> <a>비밀번호</a>
+						<form:input path="mpassword" type="password" id="mpassword"
 							class="form-control validate" name="mpassword" />
 						<form:errors path="mpassword" style="color:red; font-size:1.0rem" />
-						<p style="font-size: 1.0rem;"
-							class="font-small blue-text d-flex justify-content-end">
-							<a href="${pageContext.request.contextPath}/member/findIdForm.do">아이디
-								찾기</a>
-						</p>
-						<p style="font-size: 1.0rem;"
-							class="font-small blue-text d-flex justify-content-end">
-							<a
-								href="${pageContext.request.contextPath}/member/findPasswordForm.do">비밀번호
-								찾기</a>
-						</p>
 					</div>
-					<div class="text-center mb-3">
-						<button style="color: white; background-color: #AAAAAA;"
-							class="btn blue-gradient btn-block btn-rounded z-depth-1a">로그인</button>
+					<div style="margin-top: 3%; text-align: right; font-size: 15px;">
+						<a href="${pageContext.request.contextPath}/member/findIdForm.do">아이디
+							찾기</a> 
+					</div>
+					<div style="margin-top: 3%; text-align: right; font-size: 15px;">
+						<a id="findPassword"
+							href="${pageContext.request.contextPath}/member/findPasswordForm.do">비밀번호
+							찾기</a>
+					</div>
+					<div style="margin-top: 3%; font-size: 20px;">
+						<button style="width: 100%;" class="button primary fit">Login</button>
 					</div>
 				</form:form>
 			</div>
 		</div>
-		<div class="col-md-4"></div>
 	</div>
-
-	<!-- Scripts -->
-			<script src="${pageContext.request.contextPath}/resource/js/jquery.min.js"></script>
-			<script src="${pageContext.request.contextPath}/resource/js/jquery.scrollex.min.js"></script>
-			<script src="${pageContext.request.contextPath}/resource/js/jquery.scrolly.min.js"></script>
-			<script src="${pageContext.request.contextPath}/resource/js/browser.min.js"></script>
-			<script src="${pageContext.request.contextPath}/resource/js/breakpoints.min.js"></script>
-			<script src="${pageContext.request.contextPath}/resource/js/util.js"></script>
-			<script src="${pageContext.request.contextPath}/resource/js/main.js"></script>
-			<script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
-			<script src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/jquery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/jquery.scrollex.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/jquery.scrolly.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/browser.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/breakpoints.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/util.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/main.js"></script>
 </body>
 </html>
