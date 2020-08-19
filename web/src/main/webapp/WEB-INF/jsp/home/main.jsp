@@ -13,7 +13,7 @@
 		<noscript><link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/noscript.css"/></noscript>
 	</head>
 	<body class="landing is-preload">
-
+<body>
 		<!-- Page Wrapper -->
 			<div id="page-wrapper">
 
@@ -32,9 +32,6 @@
 												<li><a href="../member/memberInformationForm.do">User Info</a></li>
 												<li><a href="../member/signout.do">Logout</a></li>
 											</c:if>
-											
-											
-
 										</ul>
 									</div>
 								</li>
