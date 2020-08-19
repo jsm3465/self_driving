@@ -46,6 +46,7 @@
 			<ul>
 				<li><a href="cctvScreen.do">cctvScreen.do</a></li>
 				<li><a href="temp.do">temp.do</a></li>
+				<li><a href="/project/rover/roverHud.do">roverHud.do</a></li>
 
 			</ul>
 		</div>

@@ -8,7 +8,11 @@
       <meta charset="UTF-8">
       <title>Insert title here</title>
       <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
-      <script src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script>
+	  <%-- <script src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script> --%>
+	  <script
+		  src="https://code.jquery.com/jquery-3.4.1.min.js"
+		  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+		  crossorigin="anonymous"></script>
       <script src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
       <script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
       <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
@@ -42,13 +46,13 @@
          tic = new Date().getTime()
          
          $(function(){
-               client = new Paho.MQTT.Client("192.168.3.242", 61614, new Date().getTime.toString()+"a");
+               client = new Paho.MQTT.Client(location.hostname, 61617, new Date().getTime().toString()+"a");
                client.onMessageArrived = onMessageArrived;
-               client.connect({onSuccess:onConnect});
+               client.connect({onSuccess:onConnect, useSSL:true});
                
-               objectclient = new Paho.MQTT.Client("192.168.3.242", 61614, new Date().getTime.toString()+"b");
+               objectclient = new Paho.MQTT.Client(location.hostname, 61617, new Date().getTime().toString()+"b");
                objectclient.onMessageArrived = objectonMessageArrived;
-               objectclient.connect({onSuccess:objectonConnect});
+               objectclient.connect({onSuccess:objectonConnect, useSSL:true});
             });
             
             function onConnect() {
@@ -76,8 +80,15 @@
             function objectonMessageArrived(message) {
             if(message.destinationName == "/rover1/object") {
                   console.log(message.payloadString);
-                  objectLayerctx.clearRect(0, 0, objectLayer.width, objectLayer.height); //아래로 내릴것
+                  objectLayerctx.clearRect(0, 0, objectLayer.width, objectLayer.height);
                   var rover1object = JSON.parse(message.payloadString);
+                  
+                  if(rover1object.road){
+                	  var object = rover1object.road;
+                      var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+                      drawRect(boxArray);
+                      objectLayerctx.fillText("road", object[0] * 3.75, object[1] * 3.75);
+                  }
                   
                   if(rover1object.A){
                      drawLocation("A");
@@ -185,6 +196,93 @@
                      drawRect(boxArray);
                      objectLayerctx.fillText("T", object[0] * 3.75, object[1] * 3.75);
                   }
+                  
+                  if(rover1object.red){
+	               	  var object = rover1object.red;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("red", object[0] * 3.75, object[1] * 3.75);
+                  } else if (rover1object.green) {
+                	  var object = rover1object.green;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("green", object[0] * 3.75, object[1] * 3.75);
+                  } else if (rover1object.yellow) {
+                	  var object = rover1object.yellow;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("yellow", object[0] * 3.75, object[1] * 3.75);
+                  }
+                  
+                  if(rover1object.crosswalk){
+	               	  var object = rover1object.crosswalk;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("crosswalk", object[0] * 3.75, object[1] * 3.75);
+                  }
+                  
+                  if(rover1object.schoolzone){
+	               	  var object = rover1object.schoolzone;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("schoolzone", object[0] * 3.75, object[1] * 3.75);
+                  }
+                  
+                  if(rover1object.curve){
+	               	  var object = rover1object.curve;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("curve", object[0] * 3.75, object[1] * 3.75);
+                  }
+                  
+                  if(rover1object.stop){
+	               	  var object = rover1object.stop;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("stop", object[0] * 3.75, object[1] * 3.75);
+                  }
+                  
+                  if(rover1object.sixty){
+	               	  var object = rover1object.sixty;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("60", object[0] * 3.75, object[1] * 3.75);
+                  }
+                  
+                  if(rover1object.hundred){
+	               	  var object = rover1object.hundred;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("100", object[0] * 3.75, object[1] * 3.75);
+                  }
+                  
+                  if(rover1object.speed){
+	               	  var object = rover1object.speed;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("speed", object[0] * 3.75, object[1] * 3.75);
+                  }
+                  
+                  if(rover1object.car){
+	               	  var object = rover1object.car;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("car", object[0] * 3.75, object[1] * 3.75);
+                  }
+                  
+                  if(rover1object.cone){
+	               	  var object = rover1object.cone;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("cone", object[0] * 3.75, object[1] * 3.75);
+                  }
+                  
+                  if(rover1object.bump){
+	               	  var object = rover1object.bump;
+	                  var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
+	                  drawRect(boxArray); 
+	                  objectLayerctx.fillText("bump", object[0] * 3.75, object[1] * 3.75);
+                  }
                }
                else if(message.destinationName == "/rover1/sensor") {
                   //console.log(message.payloadString)
@@ -199,10 +297,11 @@
             
             $(function() {
                // Publisher Connection
-               publisher = new Paho.MQTT.Client("192.168.3.242", 61614,
+               publisher = new Paho.MQTT.Client(location.hostname, 61617,
                      new Date().getTime().toString()+"c");
                publisher.connect({
-                  onSuccess : onPublisherConnect
+                  onSuccess : onPublisherConnect, 
+                  useSSL:true
                });
             });
    
@@ -213,7 +312,6 @@
             setInterval(function(){
                 toc = new Date().getTime()
                 if(toc-tic > 3000){
-                   client.connect({onSuccess:onConnect});
                    var pubmessage = new Paho.MQTT.Message("receive");
                       pubmessage.destinationName = "/rover1/order/receive";
                       publisher.send(pubmessage);
@@ -231,7 +329,6 @@
                })
                
             })
-   
    
             setInterval(function () {
                   if(keyset[32]){
@@ -409,21 +506,24 @@
          
          //테스트 끝
          
-         setInterval(drawCar, 250);
+         setInterval(drawCar, 500);
          
          var blink = false;
          
          // 자동차 그리기
          function drawCar() {
+        	objectLayerctx.clearRect(0, 0, objectLayer.width, objectLayer.height);
             if(blink) { 
                carLayerctx.clearRect(0, 0, carLayer.width / scale, carLayer.height / scale);
                blink = false;
             }
             else {
-               carLayerctx.beginPath();
-               carLayerctx.arc(mapCoordinates.A[0], mapCoordinates.A[1], 10, 0, 2 * Math.PI);
-               carLayerctx.fill()
-               blink = true;
+            	if(coordinates){
+	               carLayerctx.beginPath();
+	               carLayerctx.arc(coordinates[0], coordinates[1], 10, 0, 2 * Math.PI);
+	               carLayerctx.fill()
+	               blink = true;
+            	}
             }
          }
          
@@ -458,7 +558,7 @@
          objectLayerctx.strokeStyle = "white";
          
          locationLayerctx.lineWidth = 1;
-         locationLayerctx.font = "50px Arial";
+         locationLayerctx.font = "30px Arial";
          locationLayerctx.textBaseline = "top";
          locationLayerctx.fillStyle = "white";
          locationLayerctx.strokeStyle = "white";
@@ -631,7 +731,7 @@
          // 주행구간 그리기
          function drawLocation (loc) {
             locationLayerctx.clearRect(0, 0, locationLayer.width, locationLayer.height);
-            locationLayerctx.fillText("주행구간 " + loc, 800, 600);
+            locationLayerctx.fillText("주행구간 " + loc, 110, 560);
          }
          
          // 지도 그리기
