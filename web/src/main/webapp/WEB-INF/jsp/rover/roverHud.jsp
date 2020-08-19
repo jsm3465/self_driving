@@ -42,11 +42,11 @@
          tic = new Date().getTime()
          
          $(function(){
-               client = new Paho.MQTT.Client("192.168.3.250", 61617, new Date().getTime.toString()+"a");
+               client = new Paho.MQTT.Client("192.168.3.250", 61617, new Date().getTime().toString()+"a");
                client.onMessageArrived = onMessageArrived;
                client.connect({onSuccess:onConnect, useSSL:true});
                
-               objectclient = new Paho.MQTT.Client("192.168.3.250", 61617, new Date().getTime.toString()+"b");
+               objectclient = new Paho.MQTT.Client("192.168.3.250", 61617, new Date().getTime().toString()+"b");
                objectclient.onMessageArrived = objectonMessageArrived;
                objectclient.connect({onSuccess:objectonConnect,useSSL:true});
             });

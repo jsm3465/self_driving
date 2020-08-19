@@ -140,7 +140,7 @@ input, select, textarea {
 		-webkit-transition: color 0.2s ease, border-bottom-color 0.2s ease;
 		-ms-transition: color 0.2s ease, border-bottom-color 0.2s ease;
 		transition: color 0.2s ease, border-bottom-color 0.2s ease;
-		border-bottom: dotted 1px;
+		/* border-bottom: dotted 1px; */
 		color: inherit;
 		text-decoration: none;
 	}
@@ -340,7 +340,8 @@ input, select, textarea {
 		.row > .col-2 {
 			width: 16.66667%;
 		}
-
+		
+		
 		.row > .off-2 {
 			margin-left: 16.66667%;
 		}
@@ -360,6 +361,11 @@ input, select, textarea {
 		.row > .off-4 {
 			margin-left: 33.33333%;
 		}
+		
+		.row > .col-45{
+			width: 37.5%;
+		}
+		
 
 		.row > .col-5 {
 			width: 41.66667%;
@@ -482,7 +488,7 @@ input, select, textarea {
 		}
 
 			.row > * {
-				padding: 0 0 0 1.5em;
+				padding: 0 0 0 0;
 			}
 
 			.row.gtr-uniform {
@@ -970,7 +976,7 @@ input, select, textarea {
 				}
 
 					.row > * {
-						padding: 0 0 0 1.5em;
+						padding: 0 0 0 0;
 					}
 
 					.row.gtr-uniform {
@@ -1835,10 +1841,10 @@ input, select, textarea {
 		-webkit-appearance: none;
 		-ms-appearance: none;
 		appearance: none;
-		background-color: rgba(144, 144, 144, 0.25);
+		background-color: 0;
 		border-radius: 3px;
 		border: none;
-		color: inherit;
+		/* color: inherit; */
 		display: block;
 		outline: 0;
 		padding: 0 1em;
@@ -2424,7 +2430,7 @@ input, select, textarea {
 		height: 3.125em;
 		letter-spacing: 0.225em;
 		line-height: 3.125em;
-		max-width: 30em;
+		/* max-width: 30em; */
 		padding: 0 2.75em;
 		text-align: center;
 		text-decoration: none;
@@ -3998,25 +4004,58 @@ input, select, textarea {
 		background-color: #1d242a;
 	}
 
-	/* 상민이와 찬혁이의 CSS 태그들...ㅠㅠ */	
-	#logo{
-	color: #AAAAAA;
+/* 상민이와 찬혁이의 CSS 태그들...ㅠㅠ */	
+
+a{
+	color:#FFFFFF;
 	text-decoration: none;
 }
 
-#logo:link a{
-	color: #AAAAAA;
+a:link{
+	color:#FFFFFF;
 	text-decoration: none;
 }
-#logo:visited a{
-	color: #AAAAAA;
+a:visited{
+	color:#FFFFFF;
 	text-decoration: none;
 }
-#logo:active a{ 
-	color: #AAAAAA;
+a:active{
+	color:#FFFFFF;
 	text-decoration: none;
 }
-#logo:hover a{
-	color: #AAAAAA;
+a:hover{
+	color:#FFFFFF;
 	text-decoration: none;
+}
+
+#logoDiv h2:before, #logoDiv h2:after {
+	-moz-transition: width 0.85s ease;
+	-webkit-transition: width 0.85s ease;
+	-ms-transition: width 0.85s ease;
+	transition: width 0.85s ease;
+	-moz-transition-delay: 0.25s;
+	-webkit-transition-delay: 0.25s;
+	-ms-transition-delay: 0.25s;
+	transition-delay: 0.25s;
+	background: #fff;
+	content: '';
+	display: block;
+	height: 2px;
+	position: absolute;
+	width: 100%;
+}
+
+/* 생년원일 input */
+.bir_dd, .bir_mm, .bir_yy {
+	padding :0;
+	margin:0;
+    width: 70%; 
+    height: 38px; 
+    font-size: 18px;
+}
+#year {
+    width: 80%; 
+    height: 38px; 
+    font-size: 18px;
+   	margin-right:0px;
 }

@@ -1,4 +1,3 @@
-
 function fun1() {
 	var memail = $("#orangeForm-email").val();
 	$.ajax({
@@ -25,8 +24,7 @@ function fun2() {
 			console.log(data);
 			console.log(typeof (data));
 			if(data.result == ("success")){
-				console.log("ㅎㅇㅎㅇ");
-				$("#next").show();
+				$("#next").attr("disabled", false);
 			}
 		}
 	})

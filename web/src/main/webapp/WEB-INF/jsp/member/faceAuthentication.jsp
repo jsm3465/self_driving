@@ -122,7 +122,7 @@
 <body>
 
 		<!-- 웹캠으로 촬영하는 이미지<br/> -->
-		<video id="video" autoplay width="0" height="0" ></video>
+		<video id="video" autoplay width="140px" height="140px" ></video>
 		<!-- 전송 받은 이미지<br/>
 		<img id="remoteView" width="640px" height="480px"/><br/> -->
 		<!-- 내가 보내고 있는 이미지<br/>

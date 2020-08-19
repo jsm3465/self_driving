@@ -20,7 +20,7 @@
 				<div class="col-md-4"></div>
 				<div  class="col-md-4">
 					
-					<h2 id="logo"><a href="main.do">Autonomous Driving</a></h2>
+					<h2><a id="logo" href="main.do">Autonomous Driving</a></h2>
 					
 				</div>
 				<div class="col-md-4"></div>
