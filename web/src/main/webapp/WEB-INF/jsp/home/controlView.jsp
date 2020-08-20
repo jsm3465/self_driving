@@ -28,7 +28,7 @@
 
 		<script>
 			$(function(){
-				client = new Paho.MQTT.Client("192.168.3.242", 61617, new Date().getTime.toString());
+				client = new Paho.MQTT.Client("192.168.3.179", 61617, new Date().getTime.toString());
 				client.onMessageArrived = onMessageArrived;
 				client.connect({onSuccess:onConnect, useSSL:true});
 			});

@@ -32,6 +32,9 @@
 												<li><a href="../member/memberInformationForm.do">User Info</a></li>
 												<li><a href="../member/signout.do">Logout</a></li>
 											</c:if>
+
+
+
 										</ul>
 									</div>
 								</li>

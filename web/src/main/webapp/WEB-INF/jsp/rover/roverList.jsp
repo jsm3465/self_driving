@@ -26,7 +26,7 @@
 				<h1>Control Center</h1>
 			</div>
 			<div id="userIdDiv" class="col-3">
-				${sessionMid}
+				<a href="${pageContext.request.contextPath}/member/memberInformationForm.do">${sessionMid}</a>
 			</div>
 		</header>
 		<section class="row">
