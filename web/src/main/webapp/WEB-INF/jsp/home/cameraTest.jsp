@@ -21,7 +21,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script>
 			$(function(){
-				client = new Paho.MQTT.Client(location.hostname, 61614, new Date().getTime.toString());
+				client = new Paho.MQTT.Client(location.hostname, 61614, new Date().getTime().toString());
 				client.onMessageArrived = onMessageArrived;
 				client.connect({onSuccess:onConnect});
 			});

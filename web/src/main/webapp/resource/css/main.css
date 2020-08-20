@@ -4047,14 +4047,15 @@ a:hover{
 
 /* 생년원일 input */
 .bir_dd, .bir_mm, .bir_yy {
-	padding :0;
+	padding : 4px;
 	margin:0;
     width: 85%; 
     height: 38px; 
     font-size: 18px;
+    color: #000000;
 }
 #year {
-    width: 80%; 
+    width: 83%; 
     height: 38px; 
     font-size: 18px;
    	margin-right:0px;

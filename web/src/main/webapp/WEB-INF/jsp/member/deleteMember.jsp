@@ -8,17 +8,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Member Information</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
-<link
-	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resource/css/findId.css">
+	href="${pageContext.request.contextPath}/resource/css/main.css" />
+<noscript>
+	<link rel="stylesheet"
+		href="${pageContext.request.contextPath}/resource/css/noscript.css" />
+</noscript>
 </head>
 <body>
 	<div class="modal fade" id="deleteMember" tabindex="-1"
@@ -37,8 +38,8 @@
 					<i class="fas fa-lock prefix grey-text"></i> <label
 						style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
 						data-success="right" for="orangeForm-pass">비밀번호</label> <input
-						style="margin-bottom: 20px;" type="password"
-						id="orangeForm-pass4" class="form-control validate" />
+						style="margin-bottom: 20px;" type="password" id="orangeForm-pass4"
+						class="form-control validate" />
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
@@ -48,13 +49,22 @@
 			</div>
 		</div>
 	</div>
-
 	<script
-		src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script>
+		src="${pageContext.request.contextPath}/resource/js/jquery.min.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
+		src="${pageContext.request.contextPath}/resource/js/jquery.scrollex.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/jquery.scrolly.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/browser.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/breakpoints.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/util.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/main.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
 	<script

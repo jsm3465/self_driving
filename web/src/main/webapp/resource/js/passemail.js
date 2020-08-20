@@ -25,8 +25,8 @@ function fun2() {
 			console.log(data);
 			console.log(typeof (data));
 			if(data.result == ("success")){
-				console.log("ㅎㅇㅎㅇ");
-				$("#next").show();
+				console.log("인증성공");
+				$("#next").attr("disabled", false);
 			}
 		}
 	})
