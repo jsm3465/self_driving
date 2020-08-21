@@ -74,7 +74,7 @@
 			function sendBase64Image(base64Frame){
 				/* var cameraView = document.querySelector("#localView");
 			    cameraView.src = base64Frame; */
-			    base64Frame=base64Frame.replace('data:image/png;base64,', '');
+			    base64Frame=base64Frame.replace('data:image/jpeg;base64,', '');
 				var message = new Paho.MQTT.Message(base64Frame);
 				message.destinationName = "/camerapub/face";
 				client.send(message);
@@ -87,10 +87,10 @@
 				var w = 640;
 				var h = 480;
 				var canvas = document.createElement("canvas");
-				canvas.width = 140;
-				canvas.height = 140;
-				canvas.getContext("2d").drawImage(video,0,0,140,140);
-				base64Frame = canvas.toDataURL();
+				canvas.width = 320;
+				canvas.height = 240;
+				canvas.getContext("2d").drawImage(video,0,0,320,240);
+				base64Frame = canvas.toDataURL('image/jpeg',0.5);
 				return base64Frame;
 			}
 			
