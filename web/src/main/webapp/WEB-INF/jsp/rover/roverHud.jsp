@@ -402,7 +402,37 @@
                message.destinationName = "/rover1/order/mode1";
                publisher.send(message);
             }
+			
+            function AIend() {
+                var message = new Paho.MQTT.Message("end");
+                message.destinationName = "/rover1/order/mode1";
+                publisher.send(message);
+             }
+             
+             function manualStart() {
+                var message = new Paho.MQTT.Message("start");
+                message.destinationName = "/rover1/order/mode2";
+                publisher.send(message);
+             }
 
+             function manualEnd() {
+                var message = new Paho.MQTT.Message("end");
+                message.destinationName = "/rover1/order/mode2";
+                publisher.send(message);
+             }
+             
+             function navStart() {
+          	      var message = new Paho.MQTT.Message("start");
+          	      message.destinationName = "/rover1/order/mode3";
+          	      publisher.send(message);
+          	   }
+
+             function navEnd() {
+                var message = new Paho.MQTT.Message("end");
+                message.destinationName = "/rover1/order/mode3";
+                publisher.send(message);
+             }
+            
             $(function() {
                document.addEventListener('keyup', function(e) {
                      const keyCode = e.keyCode;
@@ -459,8 +489,8 @@
          mapLayer.height = 300;
          var mapLayerctx = mapLayer.getContext("2d");
          var scale = mapLayer.width / 500;
-           mapLayerctx.scale(scale, scale);
-           drawMap();
+         mapLayerctx.scale(scale, scale);
+         drawMap();
 
          var carLayer = document.getElementById("carLayer");
          carLayer.width = 300;

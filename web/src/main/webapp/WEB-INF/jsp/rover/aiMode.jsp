@@ -18,7 +18,8 @@
 	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/css/aiMode.css">
-
+<!-- width = 장치 화면 너비에 따라 페이지 너비 설정, initial-scale = 페이지가 처음 브라우저에 의해로드 된 초기 줌 레벨 -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 <body>
@@ -32,29 +33,80 @@
 				${rover.ruser}</div>
 		</header>
 		<section class="row">
-			<div class="col-4">
-				<div class="row" id="speedArea">
-					<div class="col-4"></div>
-					<div class="col-4"></div>
-					<div class="col-4"></div>
+				<input id="rname" type="hidden" value="/${rover.rname}"/>
+				<canvas id="cameraLayer"></canvas>
+				<canvas id="shapeLayer"></canvas>
+				<canvas id="locationLayer"></canvas>
+				<canvas id="mapLayer"></canvas>
+				<canvas id="carLayer"></canvas>
+				<canvas id="objectLayer"></canvas>
+				
+				<div id="buttonGroup" class="btn-group" role="group" aria-label="Basic example">
+					<button id="aiMode" type="button" class="btn btn-secondary" onclick="changeMode('AI Mode'); AIstart();">AI Mode</button>
+					<button id="manualMode" type="button" class="btn btn-secondary" onclick="changeMode('Manual Mode'); stop();" disabled>Manual Mode</button>
+					<button id="navMode" type="button" class="btn btn-secondary" onclick="changeMode('Navigation Mode'); stop();">Navigation Mode</button>
 				</div>
-				<div class="row" id="cameraArea">
-					<input id="rname" type="hidden" value="/${rover.rname}"/>
-					<img id="cameraView" />
+				
+				<div id="navUI">
+					<form>
+					  <div class="form-group">
+					    <label for="startPosition">Start Position</label>
+					    <select class="form-control" id="startPosition" onchange="drawRoute()" disabled>
+					      <option selected disabled>출발점 선택</option>
+					      <option>A</option>
+					      <option>B</option>
+					      <option>C</option>
+					      <option>D</option>
+					      <option>E</option>
+					      <option>F</option>
+					      <option>H</option>
+					      <option>I</option>
+					      <option>J</option>
+					      <option>K</option>
+					      <option>M</option>
+					      <option>N</option>
+					      <option>P</option>
+					      <option>S</option>
+					      <option>T</option>
+					    </select>
+					  </div>
+					  <div class="form-group">
+					    <label for="endPosition">End Position</label>
+					    <select class="form-control" id="endPosition" onchange="drawRoute()" disabled>
+					      <option selected disabled>도착점 선택</option>
+					      <option>A</option>
+					      <option>B</option>
+					      <option>C</option>
+					      <option>D</option>
+					      <option>E</option>
+					      <option>F</option>
+					      <option>H</option>
+					      <option>I</option>
+					      <option>J</option>
+					      <option>K</option>
+					      <option>M</option>
+					      <option>N</option>
+					      <option>P</option>
+					      <option>S</option>
+					      <option>T</option>
+					    </select>
+					  </div>
+					  <button id="navStart" type="button" class="btn btn-secondary" onclick="checkNav()" disabled>Start navigation</button>
+					  </br>
+					  </br>
+					  <button id="navStop" type="button" class="btn btn-secondary" onclick="stop(); changeMode('Navigation Mode');" disabled>Stop navigation</button>
+					</form>
+					<canvas id="navMapLayer"></canvas>
 				</div>
-			</div>
-			<div class="col-8" id="mapArea"></div>
 		</section>
-		<footer class="row">
-			<div class="col-3"></div>
-			<div class="col-3"></div>
-			<div class="col-3"></div>
-			<div class="col-3"></div>
-		</footer>
 	</div>
 
+<!-- 	<script -->
+<%-- 		src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script> --%>
 	<script
-		src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script>
+		  src="https://code.jquery.com/jquery-3.4.1.min.js"
+		  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+		  crossorigin="anonymous"></script>
 	<script
 		src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
 	<script
@@ -65,6 +117,5 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"
 		type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/resource/js/aiMode.js"></script>
-
 </body>
 </html>
