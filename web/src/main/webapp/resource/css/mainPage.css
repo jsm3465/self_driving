@@ -48,7 +48,7 @@ body {
 
 .form-elegant .modal-body, .form-elegant .modal-footer {
     font-weight: 400; }
-    
+
 #logo {
 	bottom:0px;
 	text-align: left;
@@ -67,7 +67,7 @@ body {
 	color: #AAAAAA;
 	text-decoration: none;
 }
-#logo:active a{ 
+#logo:active a{
 	color: #AAAAAA;
 	text-decoration: none;
 }

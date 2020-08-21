@@ -32,6 +32,9 @@
 												<li><a href="../member/memberInformationForm.do">User Info</a></li>
 												<li><a href="../member/signout.do">Logout</a></li>
 											</c:if>
+
+
+
 										</ul>
 									</div>
 								</li>
@@ -48,8 +51,8 @@
 							the autonomous driving system</p>
 							<ul class="actions special">
 								<c:if test="${sessionMid == null}">
-									<li><a href="../member/signinForm.do" class="button primary">Sign In</a></li>
-									<li><a href="../member/signupForm.do" class="button primary">Sign Up</a></li>
+									<li><a type="button"href="../member/signinForm.do" class="button primary">Sign In</a></li>
+									<li><a type="button"href="../member/signupForm.do" class="button primary">Sign Up</a></li>
 								</c:if>
 							</ul>
 						</div>

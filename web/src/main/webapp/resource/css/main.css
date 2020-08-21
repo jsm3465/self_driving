@@ -340,8 +340,8 @@ input, select, textarea {
 		.row > .col-2 {
 			width: 16.66667%;
 		}
-		
-		
+
+
 		.row > .off-2 {
 			margin-left: 16.66667%;
 		}
@@ -361,11 +361,11 @@ input, select, textarea {
 		.row > .off-4 {
 			margin-left: 33.33333%;
 		}
-		
+
 		.row > .col-45{
 			width: 37.5%;
 		}
-		
+
 
 		.row > .col-5 {
 			width: 41.66667%;
@@ -4004,7 +4004,7 @@ input, select, textarea {
 		background-color: #1d242a;
 	}
 
-/* 상민이와 찬혁이의 CSS 태그들...ㅠㅠ */	
+/* �����̿� �������� CSS �±׵�...�Ф� */
 
 a{
 	color:#FFFFFF;
@@ -4046,16 +4046,121 @@ a:hover{
 }
 
 /* 생년원일 input */
-.bir_dd, .bir_mm, {
-	padding :0;
-	margin:0;
-    width: 85%; 
-    height: 38px; 
+.bir_dd, .bir_mm, .bir_yy {
+   padding : 4px;
+   margin:0;
+    width: 85%;
+    height: 38px;
     font-size: 18px;
+    color: #000000;
 }
 #year {
-    width: 80%; 
-    height: 38px; 
+    width: 83%;
+    height: 38px;
     font-size: 18px;
-   	margin-right:0px;
+      margin-right:0px;
 }
+
+
+header {
+	height: 10%;
+}
+
+section {
+	height: 80%;
+}
+
+footer {
+	height: 10%;
+}
+
+#speedArea {
+	height: 20%;
+}
+
+#cameraArea {
+	height: 80%;
+}
+
+#cameraView {
+	width: 100%;
+	height: 90%;
+}
+
+#cameraView2 {
+	width: 100%;
+	height: 90%;
+}
+#cameraView3 {
+	width: 100%;
+	height: 90%;
+}
+
+#video {
+	width: 100%;
+	height: 90%;
+	border: solid 1px;
+}
+
+#mapArea {
+	width: 100%;
+	height: 100%;
+}
+
+#map {
+	width: 100%;
+	height: 100%;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#logo {
+	bottom:0px;
+	text-align: left;
+	font-size: 32px;
+	font-family:'Do Hyeon', sans-serif;	
+}
+
+#cctvBox {
+	height: 100%
+}
+
+#cctv1 {
+	height: 50%
+}
+
+#cctv2 {
+	height: 50%
+}
+
+#cctv3 {
+	height: 50%
+}
+
+#cctv4 {
+	height: 50%
+}
+#headerDiv {
+	width:100%;
+	height: 15%;
+	vertical-align:middle;
+	border-bottom: solid 1px;
+	
+}
+
+#titleDiv{
+	display: flex;
+	justify-content: center;
+	align-items : center;
+	font-size: 48px;
+	height:100%;
+}
+
+#title{
+	margin:0;
+}
+
+

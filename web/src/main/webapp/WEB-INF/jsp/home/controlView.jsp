@@ -7,28 +7,70 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>cctvSctreen</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
-<%-- 		<script src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script> --%>
-	<script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
-		<script src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
-		<script src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
-		<!-- bootswatch slate theme -->
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap">
-		
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/main.css" />
+		<noscript>
+			<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/noscript.css" />
+		</noscript>
+		<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/cctvScreen.css"> --%>
+	</head>
+	<body>
+		<div class="container-fluid vw-100 vh-100">
+			<header id="headerDiv" class="row">
+				<div id="logoDiv" class="col-3" style="height:100%">
+					<h3><a href="../home/main.do" id="logo">Autonomous Driving</a></h3>
+				</div>
+				<div id="titleDiv" class="col-6">
+					<h2 id="title">CCTV Center</h2>
+				</div>
+				<div class="col-3"></div>
+			</header>
+			<section class="row">
+				<div class="col-2"></div>
+				<div class="col-8">
+					<div id="cctvBox" class="row row-cols-2">
+						<div id="cctv1" class="col">
+							ROVER1
+							<img id="cameraView"/>
+						</div>
+						<div id="cctv2" class="col">
+							ROVER2
+							<img id="cameraView2">
+						</div>
+						<div id="cctv3" class="col">
+							ROVER3
+							<img id="cameraView3">
+						</div>
+						<div id="cctv4" class="col">
+							${sessionMid}
+							<video id="video">
+						</div>
+					</div>
+				</div>
+				<div class="col-2"></div>
+			</section>
+			<footer class="row">
+			</footer>
+		</div>
+		<script	src="${pageContext.request.contextPath}/resource/js/jquery.min.js"></script>
+		<script	src="${pageContext.request.contextPath}/resource/js/jquery.scrollex.min.js"></script>
+		<script	src="${pageContext.request.contextPath}/resource/js/jquery.scrolly.min.js"></script>
+		<script	src="${pageContext.request.contextPath}/resource/js/browser.min.js"></script>
+		<script	src="${pageContext.request.contextPath}/resource/js/breakpoints.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resource/js/util.js"></script>
+		<script src="${pageContext.request.contextPath}/resource/js/main.js"></script>
+		<script	src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
+		<script	src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
+		<script	src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+			    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+				crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
-		
-		
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/cctvScreen.css">
-
 		<script>
 			$(function(){
-				client = new Paho.MQTT.Client("192.168.3.242", 61617, new Date().getTime.toString());
+				client = new Paho.MQTT.Client(location.hostname, 61617, new Date().getTime.toString());
 				client.onMessageArrived = onMessageArrived;
 				client.connect({onSuccess:onConnect, useSSL:true});
 			});
@@ -37,6 +79,9 @@
 				console.log("mqtt broker connected")
 				client.subscribe("/rover1/camerapub");
 				client.subscribe("/rover2/camerapub");
+				client.subscribe("/rover3/camerapub");
+				
+				cameraCapture();
 			}
 			
 			function onMessageArrived(message) {
@@ -67,7 +112,7 @@
 			
 			$(function() {
 			   // Publisher Connection
-			   publisher = new Paho.MQTT.Client("192.168.3.242", 61617,
+			   publisher = new Paho.MQTT.Client(location.hostname, 61617,
 			         new Date().getTime().toString()+"d");
 			   publisher.connect({
 			      onSuccess : onPublisherConnect,
@@ -78,43 +123,22 @@
 			function onPublisherConnect() {
 			   console.log("mqtt broker publisher connected");
 			}
+			
+			function cameraCapture(){
+				var video = document.querySelector("#video");
+
+				if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+					navigator.mediaDevices.getUserMedia({
+						video : true
+					}).then(function(stream) {
+						console.log(stream);
+						video.srcObject = stream;
+						video.play();
+					});
+				}
+				
+			}
 
 		</script>
-	</head>
-	<body>
-		<div class="container-fluid vh-100">
-			<header class="row">
-				<div id="logo" class="col-3" style="height:100%">
-					<a href="main.do">Autonomous Driving</a>
-				</div>
-				<div class="col-6">
-					<h1>CCTV Center</h1>
-				</div>
-				<div class="col-3">
-				</div>
-			</header>
-			<section class="row">
-				<div class="col-8">
-					<div id="cctvBox" class="row row-cols-2">
-						<div id="cctv1" class="col">
-							ROVER1
-							<img id="cameraView"/>
-						</div>
-						<div id="cctv2" class="col">
-							ROVER2
-							<img id="cameraView2">
-						</div>
-						<div id="cctv3" class="col">
-						</div>
-						<div id="cctv4" class="col">
-						</div>
-					</div>
-				</div>
-				<div class="col-4">
-				</div>
-			</section>
-			<footer class="row">
-			</footer>
-		</div>
 	</body>
 </html>

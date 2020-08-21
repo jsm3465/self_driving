@@ -8,97 +8,109 @@
 <head>
 <meta charset="UTF-8">
 <title>Find Password</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
-<link
-	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resource/css/signIn.css">
+	href="${pageContext.request.contextPath}/resource/css/main.css" />
+<noscript>
+	<link rel="stylesheet"
+		href="${pageContext.request.contextPath}/resource/css/noscript.css" />
+</noscript>
 </head>
 <body>
 	<div class="container-fluid vh-100 vw-100">
-		<div style="height: 30%" class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4" id="logobox">
-				<a href="main.do" id="logo">Autonomous Driving</a>
-			</div>
-			<div class="col-md-4"></div>
+		<div style="height: 20%" class="row">
+			<div class="col-45"></div>
+			<div class="col-3"></div>
+			<div class="col-45"></div>
 		</div>
-		<div style="height: 60%" class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4">
+		<div style="height: 80%" class="row">
+			<div class="col-45"></div>
+			<div id="logoDiv" class="col-3">
+				<center>
+					<h2 style="margin-top:23.4px;">
+						<a href="main.do" id="logo">Autonomous Driving</a>
+					</h2>
+				</center>
 				<form:form method="post" action="findPassword.do"
 					modelAttribute="member">
-					<div class="md-form mb-3">
-						<i class="fas fa-user prefix grey-text"></i> <label
-							style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-							data-success="right" for="orangeForm-name">아이디</label>
+					<div class="md-form mb-1">
+						<label style="margin-bottom: 0px; font-size: 20px;"
+							data-error="wrong" data-success="right" for="orangeForm-name">
+							<i class="fas fa-user prefix grey-text"></i>아이디
+						</label>
 						<form:input path="mid" style="margin-bottom: 20px;" name="mid"
 							type="text" id="orangeForm-id" class="form-control validate" />
 						<form:errors path="mid" style="color:red; font-size:1.0rem" />
 					</div>
 
-					<div class="md-form mb-3">
-						<i class="fas fa-user prefix grey-text"></i> <label
-							style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-							data-success="right" for="orangeForm-name">이름</label>
+					<div class="md-form mb-1">
+						<label style="margin-bottom: 0px; font-size: 20px;"
+							data-error="wrong" data-success="right" for="orangeForm-name">
+							<i class="fas fa-user prefix grey-text"></i>이름
+						</label>
 						<form:input path="mname" style="margin-bottom: 20px;" name="mname"
 							type="text" id="orangeForm-name" class="form-control validate" />
 						<form:errors path="mname" style="color:red; font-size:1.0rem" />
 					</div>
 
-					<div class="md-form mb-3">
-						<i class="fas fa-envelope prefix grey-text"></i> <label
+					<div class="md-form mb-1">
+						<label
 							style="margin-bottom: 0px; font-size: 20px; margin-top: 20px;"
-							data-error="wrong" data-success="right" for="orangeForm-email">이메일</label>
-						<form:input path="memail" style="margin-bottom: 20px;"
+							data-error="wrong" data-success="right" for="orangeForm-email">
+							<i class="fas fa-envelope prefix grey-text"></i>이메일
+						</label>
+						<form:input path="memail" style="margin-bottom: 0px;"
 							name="memail" type="email" id="orangeForm-email"
 							class="form-control validate" />
 						<a type="button"
-							style="float: right; margin-bottom: 20px; border: none;"
+							style="float: right; margin-bottom: 20px; border: none; font-size: 15px;"
 							onclick="fun1()">인증하기</a>
-						<form:errors path="memail" style="color:red; font-size:1.0rem" />
+						<form:errors path="memail" style="color:red; font-size:1.0rem" /><br/>
 					</div>
-
-					<div class="md-form pb-3">
-						<i class="fas fa-envelope prefix grey-text"></i> <label
-							style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-							data-success="right" for="orangeForm-conf">인증번호</label> <input
-							style="margin-bottom: 20px;" name="mkey" type="text"
+					<div>
+						<label style="margin-bottom: 0px; font-size: 20px;"
+							data-error="wrong" data-success="right" for="orangeForm-conf">인증번호</label>
+						<input style="margin-bottom: 0px;" name="mkey" type="text"
 							id="orangeForm-email2" class="form-control validate"> <a
 							type="button"
-							style="float: right; margin-bottom: 20px; border: none;"
+							style="float: right; margin-bottom: 20px; border: none; font-size: 15px;"
 							onclick="fun2()">인증</a>
 					</div>
 
-					<div class="md-form pb-3">
-						<a href="confirmPassword.do"><button
-								style="background-color: #AAAAAA; color: white; width: 100%; margin-top: 30px;"
-								class="btn btn-deep-orange" id="next">확인</button></a>
+					<div class="md-form mb-1">
+						<button id="next" disabled=true style="width: 100%;"
+							class="button primary fit">확인</button>
 					</div>
 				</form:form>
 			</div>
 		</div>
-		<div class="col-md-4"></div>
 	</div>
 	<script
-		src="${pageContext.request.contextPath}/resource/jquery/jquery.min.js"></script>
+		src="${pageContext.request.contextPath}/resource/js/jquery.min.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
+		src="${pageContext.request.contextPath}/resource/js/jquery.scrollex.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/jquery.scrolly.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/browser.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/breakpoints.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/util.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/main.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
 	<script
+		src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
+	<script
 		src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resource/js/idemail.js"></script>
-	<script>
-		$(function() {
-			$("#next").hide();
-		});
-	</script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/passemail.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/signup.js"></script>
+
 </body>
 </html>

@@ -42,16 +42,16 @@ public class RoverController {
 		}
 		// model 객체를 이용해서 request범위에 list객체 저장 후 jsp에서 사용한다.
 		model.addAttribute("roverList", list);
-		
+
 		return "rover/roverList";
 	}
-	
+
 	@RequestMapping("/resisterRoverForm.do")
 	public String resisterRoverForm() {
 		LOGGER.info("실행");
 		return "rover/resisterRoverForm";
 	}
-	
+
 	@RequestMapping("/resisterRover.do")
 	public String resisterRover(Rover rover) {
 		LOGGER.info("실행");
@@ -70,7 +70,7 @@ public class RoverController {
 		model.addAttribute("rover", rover);
 		return "rover/roverHud";
 	}
-	
+
 	@RequestMapping("/deleteRover.do")
 	public String deleteRover(String rname) {
 		LOGGER.info("실행");
@@ -84,17 +84,19 @@ public class RoverController {
 		model.addAttribute("rover",rover);
 		return "rover/aiMode";
 	}
-	
+
 	@RequestMapping("/manualMode.do")
 	public String manualMode(Model model, Rover rover) {
 		LOGGER.info("실행");
 		model.addAttribute("rover",rover);
 		return "rover/manualMode";
 	}
-	
+
 	@RequestMapping("/navigationMode.do")
 	public String navigationMode(Model model, Rover rover) {
 		LOGGER.info("실행");
 		return "rover/navigationMode";
 	}
+
+
 }
