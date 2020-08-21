@@ -36,5 +36,12 @@ public class RoverDao extends EgovAbstractMapper{
 		LOGGER.info("실행");
 		delete("deleteByRname", rname);
 	}
+
+	public void returnControl(Rover rover) {
+		LOGGER.info("실행");
+		String rname = rover.getRname();
+		update("updateByRname", rname);
+		
+	}
 	
 }

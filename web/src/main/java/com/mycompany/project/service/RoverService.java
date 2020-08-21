@@ -40,6 +40,12 @@ public class RoverService {
 		LOGGER.info("실행");
 		roverDao.deleteRover(rname);
 	}
+
+	public void returnControl(Rover rover) {
+		
+		LOGGER.info("실행");
+		roverDao.returnControl(rover);
+	}
 	
 	
 }

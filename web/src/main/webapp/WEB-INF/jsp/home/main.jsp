@@ -47,7 +47,7 @@
 						<div class="inner">
 							<h2>Autonomous Driving</h2>
 							<p>Welcome to<br />
-							the control center for<br />
+							the control center of<br />
 							the autonomous driving system</p>
 							<ul class="actions special">
 								<c:if test="${sessionMid == null}">

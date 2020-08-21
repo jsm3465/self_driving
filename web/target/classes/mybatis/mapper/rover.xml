@@ -26,6 +26,12 @@
 		delete from rover
 		where rname=#{rname}
 	</delete>
+	
+	<update id="updateByRname">
+		UPDATE rover
+		SET ruser="notUsed"
+		WHERE rname=#{rbame}
+	</update>
 	<!-- mybatis examples -->
 	<!-- <insert id="insert" parameterType="board"
 		useGeneratedKeys="true" keyProperty="bno">
