@@ -1,21 +1,74 @@
 @charset "UTF-8";
 
-* {
-	border: solid 1px;
-}
-
-header {
-	height: 10%;
+#headerDiv {
+	width:100%;
+	height: 15%;
+	vertical-align:middle;
+	border-bottom: solid 1px;
+	
 }
 
 section {
 	height: 85%;
-}
-
-footer {
-	height: 5%;
+	width:100%;'
 }
 
 #resisterRoverButton{
 	font-size: 50%;	
 }
+
+#logoDiv{
+	height:100%;
+}
+
+#logo{
+	margin: 10px 0 0 10px	
+}
+
+#titleDiv{
+	display: flex;
+	justify-content: center;
+	align-items : center;
+	font-size: 48px;
+	height:100%;
+}
+
+#title{
+	margin:0;
+}
+
+#userIdDiv{
+	display: flex;
+	justify-content: flex-end;
+	align-items : flex-end;
+	font-size: 32px;
+	height:100%;
+}
+
+#userId{
+	margin: 0px 10px 10px 0px;
+}
+
+#roverList{
+	border-right: solid 1px;
+}
+
+#selectCar{
+	margin: 10px 0px 10px 10px;
+}
+
+#mapDiv{
+	width:100%;
+}
+
+#map{
+	margin: 10px 0px 10px 10px;
+}
+
+canvas {
+	position: absolute;
+}
+#carLayer {z-index: 5; bottom:50px}
+#mapLayer {z-index: 4; bottom:50px}
+
+

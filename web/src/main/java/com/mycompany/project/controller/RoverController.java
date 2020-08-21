@@ -23,12 +23,6 @@ public class RoverController {
 	@Autowired
 	private RoverService roverService;
 
-	@RequestMapping("/main.do")
-	public String main() {
-		LOGGER.info("실행");
-		return "home/main";
-	}
-
 	@RequestMapping("/redirectToMain.do")
 	public String redirectToMain() {
 		LOGGER.info("실행");
@@ -61,21 +55,15 @@ public class RoverController {
 		roverService.resisterRover(rover);
 		return "redirect:/rover/roverList.do";
 	}
-	
-	@RequestMapping("/selectMode.do")
-	public String selectMode(Model model, String rname, HttpSession session) {
+
+	@RequestMapping("/roverHud.do")
+	public String roverHud(Model model, String rname) {
 		LOGGER.info("실행");
 		LOGGER.info(rname);
 		Rover rover = roverService.getRover(rname);
-		/*LOGGER.info(rover.getRname());
-		LOGGER.info(rover.getRtype());
-		LOGGER.info(rover.getRip());
-		LOGGER.info(rover.getRuser());
-		*/
-		//rover.setRuser((String)session.getAttribute("sessionMid"));
 		model.addAttribute("rover", rover);
-
-		return "rover/selectMode";
+		
+		return "rover/roverHud";
 	}
 	
 	@RequestMapping("/deleteRover.do")
@@ -103,11 +91,5 @@ public class RoverController {
 	public String navigationMode(Model model, Rover rover) {
 		LOGGER.info("실행");
 		return "rover/navigationMode";
-	}
-	
-	@RequestMapping("/roverHud.do")
-	public String roverHud() {
-		LOGGER.info("실행");
-		return "rover/roverHud";
 	}
 }

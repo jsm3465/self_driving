@@ -298,7 +298,7 @@ public class MemberController {
 		return "member/faceAuthentication";
 	}
 
-	@RequestMapping("/faceResistForm.do")
+	@RequestMapping("/faceResist.do")
 	public String faceResist() {
 		LOGGER.info("실행");
 		return "member/faceResist";

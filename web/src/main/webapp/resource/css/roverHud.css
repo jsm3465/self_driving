@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+* {
+/*    border: solid 1px; */
+}
+
+header {
+   height: 100px;
+   font-family:'Do Hyeon', sans-serif;
+}
+
+section {
+   
+}
+
+footer {
+   
+}
+
+#logo {
+   bottom:0px;
+   text-align: left;
+   font-size: 32px;
+   font-family:'Do Hyeon', sans-serif;   
+}
+
+#modeName {
+   display: flex;
+   justify-content: center;
+   align-items : center;
+   font-size: 64px;
+}
+
+#userName{
+   display: flex;
+   justify-content: flex-end;
+   align-items : flex-end;
+   font-size: 32px;   
+}
+
+canvas {position: absolute;}
+
+#objectLayer {z-index: 6;}
+
+#carLayer {z-index: 5; left: 20px; top: 685px;}
+
+#mapLayer {z-index: 4; left: 20px; top: 685px;}
+
+#locationLayer {z-index: 3;}
+
+#shapeLayer {z-index: 2;}
+
+#cameraLayer {z-index: 1;}
+
+#buttonGroup {position: absolute; left: 1250px;}
+
+#navUI {position: absolute; left: 1250px; top: 200px;}
+
+#navMapLayer {
+   position: absolute;
+   left: 190px;
+   top: 0px;
+   border: solid 1px;
+   }
