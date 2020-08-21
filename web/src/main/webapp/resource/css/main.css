@@ -4096,9 +4096,10 @@ footer {
 	height: 90%;
 }
 
-#cameraView4 {
+#video {
 	width: 100%;
 	height: 90%;
+	border: solid 1px;
 }
 
 #mapArea {
@@ -4161,3 +4162,5 @@ img {
 #title{
 	margin:0;
 }
+
+

@@ -44,8 +44,8 @@
 							<img id="cameraView3">
 						</div>
 						<div id="cctv4" class="col">
-							USER
-							<img id="cameraView4">
+							${sessionMid}
+							<video id="video">
 						</div>
 					</div>
 				</div>
@@ -70,7 +70,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
 		<script>
 			$(function(){
-				client = new Paho.MQTT.Client("192.168.3.179", 61617, new Date().getTime.toString());
+				client = new Paho.MQTT.Client(location.hostname, 61617, new Date().getTime.toString());
 				client.onMessageArrived = onMessageArrived;
 				client.connect({onSuccess:onConnect, useSSL:true});
 			});
@@ -79,6 +79,9 @@
 				console.log("mqtt broker connected")
 				client.subscribe("/rover1/camerapub");
 				client.subscribe("/rover2/camerapub");
+				client.subscribe("/rover3/camerapub");
+				
+				cameraCapture();
 			}
 			
 			function onMessageArrived(message) {
@@ -109,7 +112,7 @@
 			
 			$(function() {
 			   // Publisher Connection
-			   publisher = new Paho.MQTT.Client("192.168.3.242", 61617,
+			   publisher = new Paho.MQTT.Client(location.hostname, 61617,
 			         new Date().getTime().toString()+"d");
 			   publisher.connect({
 			      onSuccess : onPublisherConnect,
@@ -119,6 +122,21 @@
 
 			function onPublisherConnect() {
 			   console.log("mqtt broker publisher connected");
+			}
+			
+			function cameraCapture(){
+				var video = document.querySelector("#video");
+
+				if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+					navigator.mediaDevices.getUserMedia({
+						video : true
+					}).then(function(stream) {
+						console.log(stream);
+						video.srcObject = stream;
+						video.play();
+					});
+				}
+				
 			}
 
 		</script>
