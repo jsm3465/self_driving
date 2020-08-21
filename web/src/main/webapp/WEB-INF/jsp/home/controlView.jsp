@@ -14,21 +14,21 @@
 		<noscript>
 			<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/noscript.css" />
 		</noscript>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/cctvScreen.css">
+		<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/cctvScreen.css"> --%>
 	</head>
 	<body>
-		<div class="container-fluid vh-100">
-			<header class="row">
-				<div id="logo" class="col-3" style="height:100%">
-					<a href="main.do">Autonomous Driving</a>
+		<div class="container-fluid vw-100 vh-100">
+			<header id="headerDiv" class="row">
+				<div id="logoDiv" class="col-3" style="height:100%">
+					<h3><a href="../home/main.do" id="logo">Autonomous Driving</a></h3>
 				</div>
-				<div class="col-6">
-					<h1>CCTV Center</h1>
+				<div id="titleDiv" class="col-6">
+					<h2 id="title">CCTV Center</h2>
 				</div>
-				<div class="col-3">
-				</div>
+				<div class="col-3"></div>
 			</header>
 			<section class="row">
+				<div class="col-2"></div>
 				<div class="col-8">
 					<div id="cctvBox" class="row row-cols-2">
 						<div id="cctv1" class="col">
@@ -40,13 +40,16 @@
 							<img id="cameraView2">
 						</div>
 						<div id="cctv3" class="col">
+							ROVER3
+							<img id="cameraView3">
 						</div>
 						<div id="cctv4" class="col">
+							USER
+							<img id="cameraView4">
 						</div>
 					</div>
 				</div>
-				<div class="col-4">
-				</div>
+				<div class="col-2"></div>
 			</section>
 			<footer class="row">
 			</footer>

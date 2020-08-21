@@ -92,13 +92,6 @@ public class RoverController {
 		LOGGER.info("실행");
 		return "rover/navigationMode";
 	}
-<<<<<<< HEAD
 
-	@RequestMapping("/roverHud.do")
-	public String roverHud() {
-		LOGGER.info("실행");
-		return "rover/roverHud";
-	}
-=======
->>>>>>> f569205276a626d3e97c6927dc3d7b876fa4c6c4
+
 }
