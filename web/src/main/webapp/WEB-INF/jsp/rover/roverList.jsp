@@ -23,9 +23,7 @@
 		<script src="${pageContext.request.contextPath}/resource/js/util.js"></script>
 		<script src="${pageContext.request.contextPath}/resource/js/main.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
-	
-	
-	
+
 	</head>
 
 	<body>
@@ -47,10 +45,19 @@
 					<c:forEach var="rover" items="${roverList}">
 					<form method="post" action="roverHud.do">
 						<input type="hidden" name="rname" value="${rover.rname}"/>
-						<button id="${rover.rname}" type="submit"
+						<c:if test="${rover.ruser != 'notUsed'}">
+							<button id="${rover.rname}" type="submit" disabled="true"
 							class="btn btn-outline-warning btn-block">${rover.rname}
 							<span class="badge badge-secondary">${rover.ruser}</span>
 						</button>
+						</c:if>
+						<c:if test="${rover.ruser == 'notUsed'}">
+							<button id="${rover.rname}" type="submit"
+							class="btn btn-outline-warning btn-block">${rover.rname}
+							<span class="badge badge-secondary">${rover.ruser}</span>
+						</button>
+						</c:if>
+						
 					</form>
 					</c:forEach>
 					<form id="resisterRoverForm" action="resisterRoverForm.do"></form>

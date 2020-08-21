@@ -30,12 +30,16 @@ public class RoverController {
 	}
 
 	@RequestMapping("/roverList.do")
-	public String roverList(Model model) {
+	public String roverList(Model model, HttpSession session) {
 		LOGGER.info("실행");
-
 		// 다음 화면에 출력할 등록된 로버들의 목록 가져오기
 		List<Rover> list = roverService.getRoverList();
-
+		String curUser = (String)session.getAttribute("sessionMid");
+		for(Rover x : list) {
+			if(x.getRuser().equals(curUser)) {
+				roverService.returnControl(x);
+			}
+		}
 		// model 객체를 이용해서 request범위에 list객체 저장 후 jsp에서 사용한다.
 		model.addAttribute("roverList", list);
 		
@@ -51,18 +55,19 @@ public class RoverController {
 	@RequestMapping("/resisterRover.do")
 	public String resisterRover(Rover rover) {
 		LOGGER.info("실행");
-		
 		roverService.resisterRover(rover);
 		return "redirect:/rover/roverList.do";
 	}
 
 	@RequestMapping("/roverHud.do")
-	public String roverHud(Model model, String rname) {
+	public String roverHud(Model model, String rname, HttpSession session) {
 		LOGGER.info("실행");
 		LOGGER.info(rname);
+		String ruser = (String)session.getAttribute("sessionMid");
+		roverService.updateRuser(rname, ruser);
 		Rover rover = roverService.getRover(rname);
+		rover.setRuser(ruser);
 		model.addAttribute("rover", rover);
-		
 		return "rover/roverHud";
 	}
 	

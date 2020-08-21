@@ -1,6 +1,8 @@
 package com.mycompany.project.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,13 +36,22 @@ public class RoverDao extends EgovAbstractMapper{
 
 	public void deleteRover(String rname) {
 		LOGGER.info("실행");
-		delete("deleteByRname", rname);
+		delete("rover.deleteByRname", rname);
 	}
 
 	public void returnControl(Rover rover) {
 		LOGGER.info("실행");
 		String rname = rover.getRname();
-		update("updateByRname", rname);
+		update("rover.updateByRname", rname);
+		
+	}
+
+	public void updateRuser(String rname, String ruser) {
+		LOGGER.info("실행");
+		Map<String, String> data = new HashMap<>();
+		data.put("rname", rname);
+		data.put("ruser", ruser);
+		update("rover.updateRuser", data);
 		
 	}
 	

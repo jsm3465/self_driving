@@ -30,8 +30,16 @@
 	<update id="updateByRname">
 		UPDATE rover
 		SET ruser="notUsed"
-		WHERE rname=#{rbame}
+		WHERE rname=#{rname}
 	</update>
+	
+	<update id="updateRuser">
+		UPDATE rover
+		SET ruser=#{ruser}
+		WHERE rname=#{rname}
+	</update>
+	
+	
 	<!-- mybatis examples -->
 	<!-- <insert id="insert" parameterType="board"
 		useGeneratedKeys="true" keyProperty="bno">

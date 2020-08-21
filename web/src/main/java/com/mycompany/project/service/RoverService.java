@@ -41,10 +41,14 @@ public class RoverService {
 		roverDao.deleteRover(rname);
 	}
 
-	public void returnControl(Rover rover) {
-		
+	public void returnControl(Rover rover) {	
 		LOGGER.info("실행");
 		roverDao.returnControl(rover);
+	}
+
+	public void updateRuser(String rname, String ruser) {
+		LOGGER.info("실행");
+		roverDao.updateRuser(rname, ruser);
 	}
 	
 	
