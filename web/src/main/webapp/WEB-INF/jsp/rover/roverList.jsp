@@ -28,7 +28,7 @@
 	<body>
 		<div class="fluid-container vw-100 vh-100">
 			<header id="headerDiv" class="row">
-				<div id="logoDiv" class="col-3">
+				<div id="logoDiv" class="col-3 style="height:100%">
 					<h3><a href="../home/main.do" id="logo">Autonomous Driving</a></h3>
 				</div>
 				<div id="titleDiv" class="col-6">
