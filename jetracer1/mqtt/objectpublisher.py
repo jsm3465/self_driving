@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 import threading
-from utils.object_label_map import CLASSES_DICT
+from utils.sign_label_map2 import CLASSES_DICT
 import json
 
 class ObjectPublisher:
@@ -8,9 +8,9 @@ class ObjectPublisher:
         self.__brokerIp = brokerIp
         self.__brokerPort = brokerPort
         self.__topic = topic
-        self.__client = mqtt.Client()
-        self.__client.on_connect = self.__on_connect
-        self.__client.on_disconnect = self.__on_disconnect
+        self.client = mqtt.Client()
+        self.client.on_connect = self.__on_connect
+        self.client.on_disconnect = self.__on_disconnect
 
     def __on_connect(self):
         print("** publisher connection **")
@@ -26,10 +26,10 @@ class ObjectPublisher:
 
         message = json.dumps(message)
 
-        self.__client.publish(self.__topic, message, retain=False)
+        self.client.publish(self.__topic, message, retain=False)
 
     def start(self):
-        self.__client.connect(self.__brokerIp, self.__brokerPort)
+        self.client.connect(self.__brokerIp, self.__brokerPort)
 
     def stop(self):
-        self.__client.disconnect()
+        self.client.disconnect()

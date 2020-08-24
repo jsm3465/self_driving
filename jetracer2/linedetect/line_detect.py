@@ -175,7 +175,7 @@ class LineDetector:
                 for each_line in L_lines:
                     x1, y1, x2, y2 = each_line
                     # 직선 그리기
-                    cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+                    # cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
                     # 직선의 기울기
                     slope = (y2 - y1) / (x2 - x1)
                     # 교점의 x 좌표
@@ -194,7 +194,7 @@ class LineDetector:
             elif self.presentroad == 2 and R_lines_detected:
                 for each_line in R_lines:
                     x1, y1, x2, y2 = each_line
-                    cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+                    # cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
                     # 직선의 기울기
                     slope = (y2 - y1) / (x2 - x1)
                     # 교점의 x 좌표
@@ -217,7 +217,7 @@ class LineDetector:
                 for each_line in L_lines:
                     x1, y1, x2, y2 = each_line
                     # 직선 그리기
-                    cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+                    # cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
                     # 직선의 기울기
                     slope = (y2 - y1) / (x2 - x1)
                     # 교점의 x 좌표
@@ -229,7 +229,7 @@ class LineDetector:
                 for each_line in R_lines:
                     x1, y1, x2, y2 = each_line
                     # 직선 그리기
-                    cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+                    # cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
                     # 직선의 기울기
                     slope = (y2 - y1) / (x2 - x1)
                     # 교점의 x 좌표
@@ -259,7 +259,7 @@ class LineDetector:
                     for each_line in L_lines:
                         x1, y1, x2, y2 = each_line
                         # 직선 그리기
-                        cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+                        # cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
                         # 직선의 기울기
                         slope = (y2 - y1) / (x2 - x1)
                         # 교점의 x 좌표
@@ -278,7 +278,7 @@ class LineDetector:
                 else:
                     for each_line in R_lines:
                         x1, y1, x2, y2 = each_line
-                        cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+                        # cv2.line(lane_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
                         # 직선의 기울기
                         slope = (y2 - y1) / (x2 - x1)
                         # 교점의 x 좌표
@@ -300,9 +300,9 @@ class LineDetector:
             self.precenter = road_center_x
 
         # 도로 중간 지점 / 자동차 중간 지점과 라인 시각화
-        cv2.circle(lane_img, road_center_point, 5, (255, 0, 0), -1)
-        cv2.circle(lane_img, center_point, 5, (0, 255, 0), -1)
-        cv2.line(lane_img, road_center_point, center_point, (255, 255, 255), 2)
+        # cv2.circle(lane_img, road_center_point, 5, (255, 0, 0), -1)
+        # cv2.circle(lane_img, center_point, 5, (0, 255, 0), -1)
+        # cv2.line(lane_img, road_center_point, center_point, (255, 255, 255), 2)
 
         # print("center : ", road_center_x)
 

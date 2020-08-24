@@ -12,8 +12,8 @@ sys.path.append(project_path)
 import utils.ipaddress as ip
 import utils.power as pw
 from utils.display import Oled
-from sensor.distance import Distance
-from sensor.Pcf8591 import Pcf8591
+# from sensor.distance import Distance
+# from sensor.Pcf8591 import Pcf8591
 
 class AI_Rover:
     def __init__(self):
@@ -38,8 +38,8 @@ class AI_Rover:
         self.R_lines = []
 
         # sensor
-        self.pcf8591 = Pcf8591(0x48)
-        self.distance = Distance(self.pcf8591, 0)
+        # self.pcf8591 = Pcf8591(0x48)
+        # self.distance = Distance(self.pcf8591, 0)
 
     def __oled_setting(self):
         while True:
@@ -103,7 +103,7 @@ class AI_Rover:
 
     def setspeed(self, speed):
         if speed < 0:
-            self.backward(speed)
+            self.backward(abs(speed))
         elif speed == 0:
             self.stop()
         else:
@@ -126,7 +126,7 @@ class AI_Rover:
         message = {}
         message["dcmotor_speed"] = str(int(self.__dcMotor_speed))
         message["dcmotor_dir"] = self.__direction # forward, backward
-        message["distance"] = str(self.distance.read())
+        # message["distance"] = str(self.distance.read())
         message["angle"] = str(self.__angle)  # 앞바퀴 서보
         message["battery"] = str(self.get_voltage_percentage())
         message["mode"] = self.mode
@@ -135,17 +135,18 @@ class AI_Rover:
         message = json.dumps(message)
         return message
 
-    def AEB(self):
-        dist = self.distance.read()
+    # def AEB(self):
+    #     dist = self.distance.read()
+    #     print("distance :", dist)
+    #
+    #     if dist < 35:
+    #         self.stop()
+    #         self.__stopflag = True
+    #         return True
+    #     else:
+    #         return False
 
-        if dist < 35:
-            self.stop()
-            self.__stopflag = True
-            return True
-        else:
-            return False
-
-    def changeRoad(self, count):
+    def changeRoad(self, count, change_road_flag, speed):
         # 오른쪽 차선에 있을 때
         if self.presentroad == 2:
             if count < 16:
@@ -153,6 +154,7 @@ class AI_Rover:
                 self.set_angle(16)
                 self.forward(0.56)
                 count += 1
+                speed = 0
 
             else:
                 print("yeah")
@@ -160,8 +162,9 @@ class AI_Rover:
                     change_road_flag = False
                     self.presentroad = 1
                     count = 0
+                    speed = 0.55
 
-            return count, change_road_flag
+            return count, change_road_flag, speed
 
         # 왼쪽 차선에 있을 때
         else:
@@ -170,6 +173,7 @@ class AI_Rover:
                 self.set_angle(-16)
                 self.forward(0.56)
                 count += 1
+                speed = 0
 
             else:
                 print("yeah")
@@ -177,6 +181,7 @@ class AI_Rover:
                     change_road_flag = False
                     self.presentroad = 2
                     count = 0
+                    speed = 0.55
 
-            return count, change_road_flag
+            return count, change_road_flag, speed
 
