@@ -1,4 +1,4 @@
-var roverName = $("#rname").val();
+var roverName = $("#roverNameDiv").text();
 
 tic = new Date().getTime()
 
@@ -35,246 +35,246 @@ $(function(){
 
    function onConnect() {
       console.log("mqtt broker connected")
-      client.subscribe("/rover2/camerapub");
+      client.subscribe("/" + roverName + "/camerapub");
    }
 
    function objectonConnect() {
       console.log("object mqtt broker connected")
-      objectclient.subscribe("/rover2/#");
+      objectclient.subscribe("/" + roverName + "/#");
    }
 
    function onMessageArrived(message) {
       //console.log(message);
-       if(message.destinationName == "/rover2/camerapub") {
+       if(message.destinationName == "/" + roverName + "/camerapub") {
           //var cameraView = $("#cameraView").attr("src", "data:image/jpg;base64," + message.payloadString);
           image.src = "data:image/jpg;base64," + message.payloadString;
           tic = toc
        }
        var pubmessage = new Paho.MQTT.Message("receive");
-          pubmessage.destinationName = "/rover2/order/receive";
+          pubmessage.destinationName = "/" + roverName + "/order/receive";
           publisher.send(pubmessage);
    }
 
    function objectonMessageArrived(message) {
-    if(message.destinationName == "/rover2/navi") {
+    if(message.destinationName == "/" + roverName + "/navi") {
        navMapLayerctx.clearRect(200, 200, 100 / scale1, 100 / scale1);
        drawStatus(message.payloadString);
     }
     
-   if(message.destinationName == "/rover2/object") {
+   if(message.destinationName == "/" + roverName + "/object") {
          console.log(message.payloadString);
          objectLayerctx.clearRect(0, 0, objectLayer.width, objectLayer.height);
-         var rover2object = JSON.parse(message.payloadString);
+         var roverobject = JSON.parse(message.payloadString);
 
-         if(rover2object.road){
-            var object = rover2object.road;
+         if(roverobject.road){
+            var object = roverobject.road;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("road", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover2object.A){
+         if(roverobject.A){
             drawLocation("A");
             coordinates = mapCoordinates.A;
-            var object = rover2object.A;
+            var object = roverobject.A;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("A", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.B){
+         } else if (roverobject.B){
             drawLocation("B");
             coordinates = mapCoordinates.B;
-            var object = rover2object.B;
+            var object = roverobject.B;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("B", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.C){
+         } else if (roverobject.C){
             drawLocation("C");
             coordinates = mapCoordinates.C;
-            var object = rover2object.C;
+            var object = roverobject.C;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("C", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.D){
+         } else if (roverobject.D){
             drawLocation("D");
             coordinates = mapCoordinates.D;
-            var object = rover2object.D;
+            var object = roverobject.D;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("D", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.E){
+         } else if (roverobject.E){
             drawLocation("E");
             coordinates = mapCoordinates.E;
-            var object = rover2object.E;
+            var object = roverobject.E;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("E", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.F){
+         } else if (roverobject.F){
             drawLocation("F");
             coordinates = mapCoordinates.F;
-            var object = rover2object.F;
+            var object = roverobject.F;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("F", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.H){
+         } else if (roverobject.H){
             drawLocation("H");
             coordinates = mapCoordinates.H;
-            var object = rover2object.H;
+            var object = roverobject.H;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("H", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.I){
+         } else if (roverobject.I){
             drawLocation("I");
             coordinates = mapCoordinates.I;
-            var object = rover2object.I;
+            var object = roverobject.I;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("I", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.J){
+         } else if (roverobject.J){
             drawLocation("J");
             coordinates = mapCoordinates.J;
-            var object = rover2object.J;
+            var object = roverobject.J;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("J", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.K){
+         } else if (roverobject.K){
             drawLocation("K");
             coordinates = mapCoordinates.K;
-            var object = rover2object.K;
+            var object = roverobject.K;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("K", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.M){
+         } else if (roverobject.M){
             drawLocation("M");
             coordinates = mapCoordinates.M;
-            var object = rover2object.M;
+            var object = roverobject.M;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("M", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.N){
+         } else if (roverobject.N){
             drawLocation("N");
             coordinates = mapCoordinates.N;
-            var object = rover2object.N;
+            var object = roverobject.N;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("N", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.P){
+         } else if (roverobject.P){
             drawLocation("P");
             coordinates = mapCoordinates.P;
-            var object = rover2object.P;
+            var object = roverobject.P;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("P", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.S){
+         } else if (roverobject.S){
             drawLocation("S");
             coordinates = mapCoordinates.S;
-            var object = rover2object.S;
+            var object = roverobject.S;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("S", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.T){
+         } else if (roverobject.T){
             drawLocation("T");
             coordinates = mapCoordinates.T;
-            var object = rover2object.T;
+            var object = roverobject.T;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("T", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover2object.red){
-               var object = rover2object.red;
+         if(roverobject.red){
+               var object = roverobject.red;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("red", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.green) {
-            var object = rover2object.green;
+         } else if (roverobject.green) {
+            var object = roverobject.green;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("green", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover2object.yellow) {
-            var object = rover2object.yellow;
+         } else if (roverobject.yellow) {
+            var object = roverobject.yellow;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("yellow", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover2object.crosswalk){
-               var object = rover2object.crosswalk;
+         if(roverobject.crosswalk){
+               var object = roverobject.crosswalk;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("crosswalk", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover2object.schoolzone){
-               var object = rover2object.schoolzone;
+         if(roverobject.schoolzone){
+               var object = roverobject.schoolzone;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("schoolzone", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover2object.curve){
-               var object = rover2object.curve;
+         if(roverobject.curve){
+               var object = roverobject.curve;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("curve", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover2object.stop){
-               var object = rover2object.stop;
+         if(roverobject.stop){
+               var object = roverobject.stop;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("stop", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover2object.sixty){
-               var object = rover2object.sixty;
+         if(roverobject.sixty){
+               var object = roverobject.sixty;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("60", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover2object.hundred){
-               var object = rover2object.hundred;
+         if(roverobject.hundred){
+               var object = roverobject.hundred;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("100", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover2object.speed){
-               var object = rover2object.speed;
+         if(roverobject.speed){
+               var object = roverobject.speed;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("speed", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover2object.car){
-               var object = rover2object.car;
+         if(roverobject.car){
+               var object = roverobject.car;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("car", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover2object.cone){
-               var object = rover2object.cone;
+         if(roverobject.cone){
+               var object = roverobject.cone;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("cone", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover2object.bump){
-               var object = rover2object.bump;
+         if(roverobject.bump){
+               var object = roverobject.bump;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("bump", object[0] * 3.75, object[1] * 3.75);
          }
       }
-      else if(message.destinationName == "/rover2/sensor") {
+      else if(message.destinationName == "/" + roverName + "/sensor") {
          //console.log(message.payloadString)
-         rover2sensor = JSON.parse(message.payloadString);
-         angle = rover2sensor.angle;
-         speed = rover2sensor.dcmotor_speed;
-         direction = rover2sensor.dcmotor_dir;
-         //mode = rover2sensor.mode;
-         battery = rover2sensor.battery;
+         roversensor = JSON.parse(message.payloadString);
+         angle = roversensor.angle;
+         speed = roversensor.dcmotor_speed;
+         direction = roversensor.dcmotor_dir;
+         //mode = roversensor.mode;
+         battery = roversensor.battery;
       }
    }
 
@@ -296,7 +296,7 @@ $(function(){
        toc = new Date().getTime()
        if(toc-tic > 3000){
           var pubmessage = new Paho.MQTT.Message("receive");
-             pubmessage.destinationName = "/rover2/order/receive";
+             pubmessage.destinationName = "/" + roverName + "/order/receive";
              publisher.send(pubmessage);
        }
     },1000)
@@ -346,71 +346,59 @@ $(function(){
    }, 150);
 
    function forward() {
-     if(mode == "Manual Mode"){
         console.log("forward")
         var message = new Paho.MQTT.Message("forward");
-        message.destinationName = "/rover2/order/mode2/direction";
+        message.destinationName = "/" + roverName + "/order/mode2/direction";
         publisher.send(message);
-     }
    }
 
    function backward() {
-      if(mode == "Manual Mode"){
          var message = new Paho.MQTT.Message("backward");
-         message.destinationName = "/rover2/order/mode2/direction";
+         message.destinationName = "/" + roverName + "/order/mode2/direction";
          publisher.send(message);
-      }
    }
 
    function stop() {
          var message = new Paho.MQTT.Message("stop");
-         message.destinationName = "/rover2/order/mode2/direction";
+         message.destinationName = "/" + roverName + "/order/mode2/direction";
          publisher.send(message);
    }
 
    function left() {
-      if(mode == "Manual Mode"){
          var message = new Paho.MQTT.Message("left");
-         message.destinationName = "/rover2/order/mode2/direction";
+         message.destinationName = "/" + roverName + "/order/mode2/direction";
          publisher.send(message);
-      }
    }
 
    function right() {
-      if(mode == "Manual Mode"){
         var message = new Paho.MQTT.Message("right");
-         message.destinationName = "/rover2/order/mode2/direction";
+         message.destinationName = "/" + roverName + "/order/mode2/direction";
          publisher.send(message);
-      }
    }
 
    function AIstart() {
-      if(mode == "AI Mode"){
          var message = new Paho.MQTT.Message("start");
-         message.destinationName = "/rover2/order/mode1";
+         message.destinationName = "/" + roverName + "/order/mode1";
          publisher.send(message);
-      }
    }
 
    function AIend() {
-      if(mode == "AI Mode"){
          var message = new Paho.MQTT.Message("end");
-         message.destinationName = "/rover2/order/mode1";
+         message.destinationName = "/" + roverName + "/order/mode1";
          publisher.send(message);
-      }
    }
    
    function navStart() {
      console.log("start");
       var message = new Paho.MQTT.Message(startPosition.options[startPosition.selectedIndex].text);
-      message.destinationName = "/rover2/order/mode3/start";
+      message.destinationName = "/" + roverName + "/order/mode3/start";
       publisher.send(message);
    }
 
    function navEnd() {
      console.log("end");
       var message = new Paho.MQTT.Message(endPosition.options[endPosition.selectedIndex].text);
-      message.destinationName = "/rover2/order/mode3/end";
+      message.destinationName = "/" + roverName + "/order/mode3/end";
       publisher.send(message);
    }
    
@@ -478,7 +466,7 @@ $(function(){
             console.log('pushed key ' + e.key);
             keyset[keyCode] = false;
            var message = new Paho.MQTT.Message("keyboardup");
-           message.destinationName = "/rover2/order";
+           message.destinationName = "/" + roverName + "/order";
            publisher.send(message);
          })
    })

@@ -24,7 +24,7 @@ footer {
    font-family:'Do Hyeon', sans-serif;   
 }
 
-#roverNameDiv {
+#roverNameDiv	 {
    display: flex;
    justify-content: center;
    align-items : center;
