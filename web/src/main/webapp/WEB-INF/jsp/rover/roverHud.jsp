@@ -6,15 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>AI MODE</title>
+<title>Rover Hud</title>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
-<%-- <link rel="stylesheet"
-   href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css"> --%>
-   <script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
+<link rel="stylesheet"
+   href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
 <!-- bootswatch slate theme -->
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
@@ -30,9 +26,9 @@
    <div class="container-fluid vh-100">
       <header class="row">
          <div id="logo" class="col-3">
-            <a href="../home/hudTomain.do?rname=${rover.rname}">Autonomous Driving</a>
+            <a href="../home/main.do">Autonomous Driving</a>
          </div>
-         <div id="modeName" class="col-6">${rover.rname}</div>
+         <div id="roverNameDiv" class="col-6">${rover.rname}</div>
          <div id="userName" class="col-3">
             ${rover.ruser}</div>
       </header>
@@ -46,16 +42,16 @@
             <canvas id="objectLayer"></canvas>
             
             <div id="buttonGroup" class="btn-group" role="group" aria-label="Basic example">
-               <button type="button" class="btn btn-secondary" checked>AI Mode</button>
-               <button type="button" class="btn btn-secondary">Manual Mode</button>
-               <button type="button" class="btn btn-secondary">Navigation Mode</button>
+               <button id="aiMode" type="button" class="btn btn-secondary" onclick="changeMode('AI Mode'); AIstart();">AI Mode</button>
+               <button id="manualMode" type="button" class="btn btn-secondary" onclick="changeMode('Manual Mode'); stop();" disabled>Manual Mode</button>
+               <button id="navMode" type="button" class="btn btn-secondary" onclick="changeMode('Navigation Mode'); stop();">Navigation Mode</button>
             </div>
             
             <div id="navUI">
                <form>
                  <div class="form-group">
                    <label for="startPosition">Start Position</label>
-                   <select class="form-control" id="startPosition" onchange="drawRoute()">
+                   <select class="form-control" id="startPosition" onchange="drawRoute()" disabled>
                      <option selected disabled>출발점 선택</option>
                      <option>A</option>
                      <option>B</option>
@@ -76,7 +72,7 @@
                  </div>
                  <div class="form-group">
                    <label for="endPosition">End Position</label>
-                   <select class="form-control" id="endPosition" onchange="drawRoute()">
+                   <select class="form-control" id="endPosition" onchange="drawRoute()" disabled>
                      <option selected disabled>도착점 선택</option>
                      <option>A</option>
                      <option>B</option>
@@ -95,9 +91,71 @@
                      <option>T</option>
                    </select>
                  </div>
+                 <button id="navStart" type="button" class="btn btn-secondary" onclick="checkNav()" disabled>Start navigation</button>
+                 </br>
+                 </br>
+                 <button id="navStop" type="button" class="btn btn-secondary" onclick="stop(); changeMode('Navigation Mode');" disabled>Stop navigation</button>
                </form>
                <canvas id="navMapLayer"></canvas>
             </div>
+            
+            <!-- Button trigger modal -->
+			<button type="button" id="roverInfo" class="btn btn-primary btn-lg"
+				data-toggle="modal" data-target="#carInfo">Rover Info</button>
+
+			<!-- Modal -->
+			<div class="modal fade" id="carInfo" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">Car Information</h4>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<ul>
+								<li>Name: ${rover.rname}</li>
+								<li>Type: ${rover.rtype}</li>
+								<li>IP : ${rover.rip}</li>
+							</ul>
+						</div>
+						<div class="modal-footer">
+							<form id="delete" method="post" action="deleteRover.do">
+								<input type="hidden" name="rname" value="${rover.rname}">
+							</form>
+							<button type="submit" class="btn btn-danger" form="delete">Delete</button>
+							<button type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#blackBox" data-dismiss="modal" onclick="playBlackBox(0)">Black Box</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Modal -->
+			<div class="modal fade" id="blackBox" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">BlackBox</h4>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div id="blackBoxImageDiv" class="modal-body">
+							<img id="blackBoxImage" alt="기록 없음" src=""/>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary"
+								data-dismiss="modal">확인</button>
+						</div>
+					</div>
+				</div>
+			</div>
       </section>
    </div>
 

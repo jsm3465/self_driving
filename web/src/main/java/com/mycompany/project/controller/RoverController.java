@@ -62,7 +62,7 @@ public class RoverController {
 	@RequestMapping("/roverHud.do")
 	public String roverHud(Model model, String rname, HttpSession session) {
 		LOGGER.info("실행");
-		LOGGER.info(rname);
+		//LOGGER.info(rname);
 		String ruser = (String)session.getAttribute("sessionMid");
 		roverService.updateRuser(rname, ruser);
 		Rover rover = roverService.getRover(rname);

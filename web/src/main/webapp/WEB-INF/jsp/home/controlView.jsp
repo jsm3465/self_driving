@@ -69,8 +69,10 @@
 				crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
 		<script>
+			tic = new Date().getTime()
+		
 			$(function(){
-				client = new Paho.MQTT.Client(location.hostname, 61617, new Date().getTime.toString());
+				client = new Paho.MQTT.Client("192.168.3.250", 61617, new Date().getTime.toString());
 				client.onMessageArrived = onMessageArrived;
 				client.connect({onSuccess:onConnect, useSSL:true});
 			});
@@ -107,12 +109,13 @@
 					   pubmessage.destinationName = "/rover3/order/receive";
 					   publisher.send(pubmessage);
 				}
+				tic = toc
 				
 			}
 			
 			$(function() {
 			   // Publisher Connection
-			   publisher = new Paho.MQTT.Client(location.hostname, 61617,
+			   publisher = new Paho.MQTT.Client("192.168.3.250", 61617,
 			         new Date().getTime().toString()+"d");
 			   publisher.connect({
 			      onSuccess : onPublisherConnect,
@@ -138,7 +141,20 @@
 				}
 				
 			}
-
+		   setInterval(function(){
+		       toc = new Date().getTime()
+		       if(toc-tic > 3000){
+		          var pubmessage = new Paho.MQTT.Message("receive");
+		             pubmessage.destinationName = "/rover1/order/receive";
+		             publisher.send(pubmessage);
+	             var pubmessage = new Paho.MQTT.Message("receive");
+	             	pubmessage.destinationName = "/rover2/order/receive";
+	             	publisher.send(pubmessage);
+	             var pubmessage = new Paho.MQTT.Message("receive");
+	             	pubmessage.destinationName = "/rover3/order/receive";
+	             	publisher.send(pubmessage);
+		       }
+		    },1000)
 		</script>
 	</body>
 </html>
