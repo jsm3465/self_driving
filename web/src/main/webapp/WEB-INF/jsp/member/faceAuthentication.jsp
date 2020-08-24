@@ -21,31 +21,31 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/faceAuthentication.css">
-	 
+
 	<!-- Camera Access, MQTT -->
 	<script>
-	
+
 		//인증 여부를 위한 HashMap 자료구조 정의
 		HashMap = function(){
 			this.map = new Array();
 		}
-		
+
 		HashMap.prototype = {
 			// key, value 데이터 추가
 			put : function(key, value){
 				this.map[key] = value;
 			},
-			
+
 			// 지정한 key 값의 value 반환
 			get : function(key){
 				return this.map[key];
 			},
-			
+
 			// HashMap에 key값 존재유무 반환
 			containsKey: function(key){
 				return key in this.map;
 			}
-			
+
 			// 최대값을 갖는 key값 반환 -> 오류나는데 왜 그런지 생각해보기.
 			/* maxKey: function(){
 				var maxKey = null;
@@ -54,25 +54,25 @@
 					if(this.map[temp] > maxValue){
 						maxValue = this.map[temp];
 						maxKey = temp;
-					}		
+					}
 				}
 				console.log("maxValue="+maxValue);
 				console.log("maxKey="+maxKey);
-				return maxkey;		
+				return maxkey;
 			} */
 		}
-		
+
 		$(document).ready(function(){
 			client = new Paho.MQTT.Client("192.168.3.242", 61617, new Date().getTime().toString());
 			client.onMessageArrived = onMessageArrived;
 			client.connect({onSuccess:onConnect, useSSL:true});
-			
+
 			var map = new HashMap();
 			var realUser = "<%=(String)session.getAttribute("sessionMid")%>";
 			var count=0;
 			var maxKey="";
 			var maxValue=0;
-			
+
 			function onConnect(){
 				console.log("MQTT Broker 연결 성공");
 				// 구독하기
@@ -81,16 +81,16 @@
 				// 카메라 캡처 시작하기
 				cameraCapture();
 			}
-			
+
 			function onMessageArrived(message){
 				if(message.destinationName == "/camerapub/faceID"){
-					var cameraView = $("#remoteView").attr("src", "data:image/jpg;base64,"+message.payloadString);						
+					var cameraView = $("#remoteView").attr("src", "data:image/jpg;base64,"+message.payloadString);
 				}
 				else if(message.destinationName == "/authentication"){
 					console.log(message.payloadString);
 					count++;
 					var key = message.payloadString;
-					
+
 					if(map.containsKey(key)){
 						console.log("있다!!");
 						var cur = map.get(key);
@@ -109,7 +109,7 @@
 							maxKey = key;
 						}
 					}
-					
+
 					if(count >=30){
 						console.log("realUser:"+"\""+realUser+"\"");
 						console.log("realUser:"+typeof(realUser));
@@ -121,7 +121,7 @@
 							client.disconnect();
 						 	alert(realUser+"님, 인증에 성공 했습니다.");
 					      	$("#next").attr("action", "../home/main.do");
-					      	document.nextPage.submit();	
+					      	document.nextPage.submit();
 						}
 						else{
 							client.disconnect();
@@ -129,11 +129,11 @@
 						    $("#next").attr("action", "../home/redirectToMain.do");
 						    document.nextPage.submit();
 						}
-					}	  
-				} 
-				
+					}
+				}
+
 			}
-			
+
 			//MQTT client로 base64 이미지 전송하기
 			function sendBase64Image(base64Frame){
 				/* var cameraView = document.querySelector("#localView");
@@ -142,9 +142,9 @@
 				var message = new Paho.MQTT.Message(base64Frame);
 				message.destinationName = "/camerapub/face";
 				client.send(message);
-				
+
 			}
-			
+
 			//촬영하는 웹캠 비디오 이미지로 캡쳐하기
 			function capture(video){
 				//console.log(video);
@@ -154,16 +154,16 @@
 				canvas.width = 320;
 				canvas.height = 240;
 				canvas.getContext("2d").drawImage(video,0,0,320,240);
-				
+
 				//매개변수 -> 1.파일형식, 2.퀄리티
 				base64Frame = canvas.toDataURL('image/jpeg',0.5);
 				return base64Frame;
 			}
-			
+
 			//웹캠으로 촬영하기 및 이미지 전송하기
 			function cameraCapture(){
 				var video = document.querySelector("#video");
-			
+
 				if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 					navigator.mediaDevices.getUserMedia({
 						video : true
@@ -183,7 +183,7 @@
 			}
 		});
 	</script>
-	
+
 </head>
 <body>
 
@@ -193,8 +193,8 @@
 		<img id="remoteView" width="640px" height="480px"/><br/> -->
 		<!-- 내가 보내고 있는 이미지<br/>
 		<img type="hidden" id="localView" /> -->
-	
-	
+
+
  	<div id="wrap" class="container-fulid vh-100">
 		<header class="row">
 			<div class="col-4"></div>
@@ -215,7 +215,7 @@
 			</div>
 			<div class="col-4"></div>
 		</footer>
-	</div> 
+	</div>
 
 </body>
 

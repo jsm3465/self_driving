@@ -24,7 +24,7 @@ footer {
    font-family:'Do Hyeon', sans-serif;   
 }
 
-#modeName {
+#roverNameDiv	 {
    display: flex;
    justify-content: center;
    align-items : center;
@@ -62,3 +62,9 @@ canvas {position: absolute;}
    top: 0px;
    border: solid 1px;
    }
+   
+#roverInfo {
+	position: absolute;
+	left: 1750px;
+	top: 900px;
+}

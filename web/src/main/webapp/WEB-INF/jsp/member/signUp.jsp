@@ -8,18 +8,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Sign Up</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/main.css" />
-<noscript><link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/noscript.css"/></noscript>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resource/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resource/css/main.css" />
+<noscript>
+	<link rel="stylesheet"
+		href="${pageContext.request.contextPath}/resource/css/noscript.css" />
+</noscript>
 </head>
 <body>
 	<div class="container-fluid vh-100 vw-100">
 		<div style="height: 15%" class="row">
 			<div class="col-45"></div>
-			<div id="logoDiv" class="col-3" style="margin-top:50px">
-				<center><h2><a href="main.do" id="logo">Autonomous Driving</a></h2></center>
+			<div id="logoDiv" class="col-3" style="margin-top: 50px">
+				<center>
+					<h2>
+						<a href="main.do" id="logo">Autonomous Driving</a>
+					</h2>
+				</center>
 			</div>
 			<div class="col-45"></div>
 		</div>
@@ -28,18 +39,19 @@
 			<div class="col-3">
 				<form:form method="post" action="signup.do" modelAttribute="member">
 					<div class="md-form mb-1">
-						<label
-							style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-							data-success="right" for="orangeForm-name"> <i class="fas fa-user prefix grey-text"></i> 아이디 </label>
+						<label style="margin-bottom: 0px; font-size: 20px;"
+							data-error="wrong" data-success="right" for="orangeForm-name">
+							<i class="fas fa-user prefix grey-text"></i> 아이디
+						</label>
 						<form:input path="mid" style="margin-bottom: 20px;" name="mid"
 							type="text" id="orangeForm-id" class="form-control validate" />
 						<form:errors path="mid" style="color:red; font-size:1.0rem" />
-					</div>																							
+					</div>
 
 					<div class="md-form mb-1">
-						 <label
-							style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-							data-success="right" for="orangeForm-pass"><i class="fas fa-lock prefix grey-text"></i> 비밀번호</label>
+						<label style="margin-bottom: 0px; font-size: 20px;"
+							data-error="wrong" data-success="right" for="orangeForm-pass"><i
+							class="fas fa-lock prefix grey-text"></i> 비밀번호</label>
 						<form:input path="mpassword" style="margin-bottom: 20px;"
 							name="mpassword" type="password" id="orangeForm-pass"
 							class="form-control validate" />
@@ -47,9 +59,8 @@
 					</div>
 
 					<div class="md-form mb-1">
-						<label
-							style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-							data-success="right" for="orangeForm-name">이름</label>
+						<label style="margin-bottom: 0px; font-size: 20px;"
+							data-error="wrong" data-success="right" for="orangeForm-name">이름</label>
 						<form:input path="mname" style="margin-bottom: 20px;" name="mname"
 							type="text" id="orangeForm-name" class="form-control validate" />
 						<form:errors path="mname" style="color:red; font-size:1.0rem" />
@@ -57,28 +68,26 @@
 					</div>
 
 					<div class="md-form mb-1">
-						<label
-							style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-							data-success="right" for="orangeForm-sex">성별</label>
+						<label style="margin-bottom: 0px; font-size: 20px;"
+							data-error="wrong" data-success="right" for="orangeForm-sex">성별</label>
 						<select
-							style="margin-bottom: 20px; width: 100%; height: 38px; font-size: 20px;"
+							style="margin-bottom: 20px; width: 100%; height: 38px; font-size: 20px; color: #000000;"
 							id="orangeForm-sex" name="msex">
 							<option value="남">남</option>
 							<option value="여">여</option>
 						</select>
 					</div>
 					<div class="md-form mb-1">
-					<label style="margin-bottom: 0px; font-size: 20px;"
-								data-error="wrong" data-success="right" for="orangeForm-bir">생년월일</label>
+						<label style="margin-bottom: 0px; font-size: 20px;"
+							data-error="wrong" data-success="right" for="orangeForm-bir">생년월일</label>
 						<div class="row">
-							<div class="col-4">	
-								<input type="text" id="year" class="bir_yy"
-									name="mbirth" placeholder="년(4자)" aria-label="(년4자)"
-									maxlength="4"> 
+							<div class="col-4">
+								<input type="text" id="year" class="bir_yy" name="mbirth"
+									placeholder="년(4자)" aria-label="(년4자)" maxlength="4">
 							</div>
 							<div class="col-4">
-								<select id="orangeForm-mm" class="bir_mm"
-								aria-label="월" name="mbirthM">
+								<select id="orangeForm-mm" class="bir_mm" aria-label="월"
+									name="mbirthM">
 									<option>월</option>
 									<option value="01">1</option>
 									<option value="02">2</option>
@@ -96,7 +105,7 @@
 							</div>
 							<div class="col-4">
 								<select id="orangeForm-dd" class="bir_dd" aria-label="일"
-								name="mbirthD">
+									name="mbirthD">
 									<option>일</option>
 									<option value="01">1</option>
 									<option value="02">2</option>
@@ -136,48 +145,58 @@
 					</div>
 
 					<div class="md-form mb-1">
-						 <label
+						<label
 							style="margin-bottom: 0px; font-size: 20px; margin-top: 20px;"
-							data-error="wrong" data-success="right" for="orangeForm-email">이메일</label>
+							data-error="wrong" data-success="right" for="orangeForm-email">
+							<i class="fas fa-envelope prefix grey-text"></i>이메일
+						</label>
 						<form:input path="memail" style="margin-bottom: 0px;"
 							name="memail" type="email" id="orangeForm-email"
 							class="form-control validate" />
 						<a type="button"
 							style="float: right; margin-bottom: 20px; border: none; font-size: 15px;"
-							onclick="fun1()">인증하기</a></br>
+							onclick="fun1()">인증하기</a>
 						<form:errors path="memail" style="color:red; font-size:1.0rem" />
 					</div>
 					<div>
-						<label
-							style="margin-bottom: 0px; font-size: 20px;" data-error="wrong"
-							data-success="right" for="orangeForm-conf">인증번호</label> <input
-							style="margin-bottom:0px;" name="mkey" type="text"
+						<label style="margin-bottom: 0px; font-size: 20px;"
+							data-error="wrong" data-success="right" for="orangeForm-conf">인증번호</label>
+						<input style="margin-bottom: 0px;" name="mkey" type="text"
 							id="orangeForm-email2" class="form-control validate"> <a
 							type="button"
 							style="float: right; margin-bottom: 20px; border: none; font-size: 15px;"
 							onclick="fun2()">인증</a>
 					</div>
 					<div class="md-form mb-1">
-                  <button id="next" disabled=true style="width: 100%;" class="button primary fit">Next</button>
-               </div>
+						<button id="next" disabled=true style="width: 100%;"
+							class="button primary fit">Next</button>
 					</div>
-				</form:form>
 			</div>
-			<div class="col-45"></div>
+			</form:form>
 		</div>
+		<div class="col-45"></div>
 	</div>
-		<script src="${pageContext.request.contextPath}/resource/js/jquery.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/js/jquery.scrollex.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/js/jquery.scrolly.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/js/browser.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/js/breakpoints.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/js/util.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/js/main.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/js/email.js"></script>
-		<script src="${pageContext.request.contextPath}/resource/js/signup.js"></script>
+	</div>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/jquery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/jquery.scrollex.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/jquery.scrolly.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/browser.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/js/breakpoints.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/util.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/main.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resource/jquery-ui/jquery-ui.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/email.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/signup.js"></script>
 
 </body>
 </html>

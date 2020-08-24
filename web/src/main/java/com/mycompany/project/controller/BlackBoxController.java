@@ -38,16 +38,15 @@ public class BlackBoxController {
 	@RequestMapping("/getImages.do")
 	public void getImages(String rname, HttpServletResponse response) throws IOException {
 		LOGGER.info("실행");
-		//LOGGER.info(rname);
+		LOGGER.info(rname);
 		List<String> list = blackBoxService.getImages(rname);
 		
-		
-		LOGGER.info("{}", list.size());
+		LOGGER.info("{}11", list.size());
 		
 		//BlackBox객체의 리스트 JSON으로 변환 및 response 하기
 		response.setContentType("application/json; charset=UTF-8");
 		
-		JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = new JSONObject();	
 		
 		JSONArray jsonArray = new JSONArray();
 		for(int i=0; i< list.size();i++) {

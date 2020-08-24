@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/roverList.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/main.css" />
 		<noscript><link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/noscript.css"/></noscript>
+		
 		<script src="${pageContext.request.contextPath}/resource/popper/popper.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resource/js/jquery.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resource/bootstrap/js/bootstrap.min.js"></script>
@@ -23,15 +24,12 @@
 		<script src="${pageContext.request.contextPath}/resource/js/util.js"></script>
 		<script src="${pageContext.request.contextPath}/resource/js/main.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
-	
-	
-	
 	</head>
 
 	<body>
 		<div class="fluid-container vw-100 vh-100">
 			<header id="headerDiv" class="row">
-				<div id="logoDiv" class="col-3">
+				<div id="logoDiv" class="col-3 style="height:100%">
 					<h3><a href="../home/main.do" id="logo">Autonomous Driving</a></h3>
 				</div>
 				<div id="titleDiv" class="col-6">
@@ -47,10 +45,19 @@
 					<c:forEach var="rover" items="${roverList}">
 					<form method="post" action="roverHud.do">
 						<input type="hidden" name="rname" value="${rover.rname}"/>
-						<button id="${rover.rname}" type="submit"
+						<c:if test="${rover.ruser != 'notUsed'}">
+							<button id="${rover.rname}" type="submit" disabled="true"
 							class="btn btn-outline-warning btn-block">${rover.rname}
 							<span class="badge badge-secondary">${rover.ruser}</span>
 						</button>
+						</c:if>
+						<c:if test="${rover.ruser == 'notUsed'}">
+							<button id="${rover.rname}" type="submit"
+							class="btn btn-outline-warning btn-block">${rover.rname}
+							<span class="badge badge-secondary">${rover.ruser}</span>
+						</button>
+						</c:if>
+						
 					</form>
 					</c:forEach>
 					<form id="resisterRoverForm" action="resisterRoverForm.do"></form>
@@ -65,26 +72,26 @@
 					</div>
 				</div>
 			</section>
-		</div>	
+		</div>
 		<script>
 	 $(function(){
          objectclient = new Paho.MQTT.Client("192.168.3.250", 61617, new Date().getTime().toString()+"b");
          objectclient.onMessageArrived = objectonMessageArrived;
          objectclient.connect({onSuccess:objectonConnect, useSSL:true});
     });
-    
+
     function objectonConnect() {
           console.log("object mqtt broker connected")
           objectclient.subscribe("/rover1/#");
           objectclient.subscribe("/rover2/#");
           objectclient.subscribe("/rover3/#");
       }
-    
+
     function objectonMessageArrived(message) {
           if(message.destinationName == "/rover1/object") {
              console.log("rover1", message.payloadString);
              var rover1object = JSON.parse(message.payloadString);
- 
+
              if(rover1object.A){
                 coordinates1 = mapCoordinates.A;
              } else if (rover1object.B){
@@ -116,12 +123,12 @@
              } else if (rover1object.T){
                 coordinates1 = mapCoordinates.T;
              }
-       } 
-          
+       }
+
           if(message.destinationName == "/rover2/object") {
           console.log("rover2", message.payloadString);
              var rover2object = JSON.parse(message.payloadString);
- 
+
              if(rover2object.A){
                 coordinates2 = mapCoordinates.A;
              } else if (rover2object.B){
@@ -154,11 +161,11 @@
                 coordinates2 = mapCoordinates.T;
              }
        }
-          
+
           if(message.destinationName == "/rover3/object") {
           console.log("rover3", message.payloadString);
              var rover3object = JSON.parse(message.payloadString);
- 
+
              if(rover3object.A){
                 coordinates3 = mapCoordinates.A;
              } else if (rover3object.B){
@@ -192,7 +199,7 @@
              }
        }
     }
-    
+
     $(function() {
           // Publisher Connection
           publisher = new Paho.MQTT.Client("192.168.3.250", 61617,
@@ -311,17 +318,17 @@
        var scale = mapLayer.width/500;
        mapLayerctx.scale(scale, scale);
        drawMap();
-      
+
        var carLayer = document.getElementById("carLayer");
        carLayer.width = 750;
        carLayer.height = 750;
        var carLayerctx = carLayer.getContext("2d");
        carLayerctx.scale(scale, scale);
-       
+
        var coordinates1;
        var coordinates2;
        var coordinates3;
-       
+
        setInterval(drawCar, 500);
 
         var blink = false;
@@ -359,7 +366,7 @@
 	           }
            }
         }
-       
+
        var mapCoordinates = {
                A: [400, 50],
                B: [315, 50],
@@ -377,30 +384,30 @@
                S: [450, 205],
                T: [450, 100]
             };
-   
+
       function drawMap () {
            var ctx = mapLayerctx;
            ctx.globalAlpha = 0.2;
-   
+
            ctx.beginPath(); // path 시작 함수, path를 초기화 또는 재설정
            ctx.lineWidth = 10 // path의 굴기 설정
            ctx.strokeStyle = "white"; // path의 색 설정
            ctx.moveTo(150, 50); // path의 시작점
            ctx.lineTo(400, 50); // 해당 좌표로 직선 이어주기
            ctx.arcTo(450, 50, 450, 100, 50); // 해당 좌표로 곡선 이어주기
-   
+
            ctx.lineTo(450, 400);
            ctx.arcTo(450, 450, 400, 450, 50);
-   
+
            ctx.lineTo(150, 450);
            ctx.bezierCurveTo(130, 450, 130, 400, 100, 400); // 해당 좌표로 bezier curve 이어주기
            ctx.arcTo(50, 400, 50, 350, 50);
-   
+
            ctx.lineTo(50, 300);
            ctx.lineTo(100, 150);
            ctx.lineTo(100, 100);
            ctx.arcTo(100, 50, 150, 50, 50);
-   
+
            ctx.stroke(); // 위에서 이어준 좌표 실제로 그리기
         }
 	</script>

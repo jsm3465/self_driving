@@ -1,6 +1,27 @@
-var roverName = $("#rname").val();
+var roverName = $("#roverNameDiv").text();
 
 tic = new Date().getTime()
+
+function playBlackBox(i) {
+	//console.log("블랙박스 시작");
+	var rname = $("#roverNameDiv").text();
+	//console.log(rname);
+	$.ajax({
+		// 비동기 요청 경로
+		url : "https://192.168.3.242:8443/project/getImages.do",
+		data : {
+			rname : rname
+		},
+		// Callback
+		success : function(data, testStatus, jqXHR) {
+			console.log(i);
+			$("#blackBoxImage").attr("src","data:image/jpg;base64," + data.item[i].img);
+			if (i < Number(data.limit)) {
+				playBlackBox(i+1);
+			}
+		}
+	});
+};
 
 $(function(){
       client = new Paho.MQTT.Client("192.168.3.250", 61617, new Date().getTime().toString()+"a");
@@ -14,241 +35,246 @@ $(function(){
 
    function onConnect() {
       console.log("mqtt broker connected")
-      client.subscribe("/rover1/camerapub");
+      client.subscribe("/" + roverName + "/camerapub");
    }
 
    function objectonConnect() {
       console.log("object mqtt broker connected")
-      objectclient.subscribe("/rover1/#");
+      objectclient.subscribe("/" + roverName + "/#");
    }
 
    function onMessageArrived(message) {
       //console.log(message);
-       if(message.destinationName == "/rover1/camerapub") {
+       if(message.destinationName == "/" + roverName + "/camerapub") {
           //var cameraView = $("#cameraView").attr("src", "data:image/jpg;base64," + message.payloadString);
           image.src = "data:image/jpg;base64," + message.payloadString;
           tic = toc
        }
        var pubmessage = new Paho.MQTT.Message("receive");
-          pubmessage.destinationName = "/rover1/order/receive";
+          pubmessage.destinationName = "/" + roverName + "/order/receive";
           publisher.send(pubmessage);
    }
 
    function objectonMessageArrived(message) {
-   if(message.destinationName == "/rover1/object") {
+    if(message.destinationName == "/" + roverName + "/navi") {
+       navMapLayerctx.clearRect(200, 200, 100 / scale1, 100 / scale1);
+       drawStatus(message.payloadString);
+    }
+    
+   if(message.destinationName == "/" + roverName + "/object") {
          console.log(message.payloadString);
          objectLayerctx.clearRect(0, 0, objectLayer.width, objectLayer.height);
-         var rover1object = JSON.parse(message.payloadString);
+         var roverobject = JSON.parse(message.payloadString);
 
-         if(rover1object.road){
-            var object = rover1object.road;
+         if(roverobject.road){
+            var object = roverobject.road;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("road", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover1object.A){
+         if(roverobject.A){
             drawLocation("A");
             coordinates = mapCoordinates.A;
-            var object = rover1object.A;
+            var object = roverobject.A;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("A", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.B){
+         } else if (roverobject.B){
             drawLocation("B");
             coordinates = mapCoordinates.B;
-            var object = rover1object.B;
+            var object = roverobject.B;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("B", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.C){
+         } else if (roverobject.C){
             drawLocation("C");
             coordinates = mapCoordinates.C;
-            var object = rover1object.C;
+            var object = roverobject.C;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("C", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.D){
+         } else if (roverobject.D){
             drawLocation("D");
             coordinates = mapCoordinates.D;
-            var object = rover1object.D;
+            var object = roverobject.D;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("D", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.E){
+         } else if (roverobject.E){
             drawLocation("E");
             coordinates = mapCoordinates.E;
-            var object = rover1object.E;
+            var object = roverobject.E;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("E", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.F){
+         } else if (roverobject.F){
             drawLocation("F");
             coordinates = mapCoordinates.F;
-            var object = rover1object.F;
+            var object = roverobject.F;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("F", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.H){
+         } else if (roverobject.H){
             drawLocation("H");
             coordinates = mapCoordinates.H;
-            var object = rover1object.H;
+            var object = roverobject.H;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("H", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.I){
+         } else if (roverobject.I){
             drawLocation("I");
             coordinates = mapCoordinates.I;
-            var object = rover1object.I;
+            var object = roverobject.I;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("I", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.J){
+         } else if (roverobject.J){
             drawLocation("J");
             coordinates = mapCoordinates.J;
-            var object = rover1object.J;
+            var object = roverobject.J;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("J", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.K){
+         } else if (roverobject.K){
             drawLocation("K");
             coordinates = mapCoordinates.K;
-            var object = rover1object.K;
+            var object = roverobject.K;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("K", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.M){
+         } else if (roverobject.M){
             drawLocation("M");
             coordinates = mapCoordinates.M;
-            var object = rover1object.M;
+            var object = roverobject.M;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("M", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.N){
+         } else if (roverobject.N){
             drawLocation("N");
             coordinates = mapCoordinates.N;
-            var object = rover1object.N;
+            var object = roverobject.N;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("N", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.P){
+         } else if (roverobject.P){
             drawLocation("P");
             coordinates = mapCoordinates.P;
-            var object = rover1object.P;
+            var object = roverobject.P;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("P", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.S){
+         } else if (roverobject.S){
             drawLocation("S");
             coordinates = mapCoordinates.S;
-            var object = rover1object.S;
+            var object = roverobject.S;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("S", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.T){
+         } else if (roverobject.T){
             drawLocation("T");
             coordinates = mapCoordinates.T;
-            var object = rover1object.T;
+            var object = roverobject.T;
             var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
             drawRect(boxArray);
             objectLayerctx.fillText("T", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover1object.red){
-               var object = rover1object.red;
+         if(roverobject.red){
+               var object = roverobject.red;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("red", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.green) {
-            var object = rover1object.green;
+         } else if (roverobject.green) {
+            var object = roverobject.green;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("green", object[0] * 3.75, object[1] * 3.75);
-         } else if (rover1object.yellow) {
-            var object = rover1object.yellow;
+         } else if (roverobject.yellow) {
+            var object = roverobject.yellow;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("yellow", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover1object.crosswalk){
-               var object = rover1object.crosswalk;
+         if(roverobject.crosswalk){
+               var object = roverobject.crosswalk;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("crosswalk", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover1object.schoolzone){
-               var object = rover1object.schoolzone;
+         if(roverobject.schoolzone){
+               var object = roverobject.schoolzone;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("schoolzone", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover1object.curve){
-               var object = rover1object.curve;
+         if(roverobject.curve){
+               var object = roverobject.curve;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("curve", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover1object.stop){
-               var object = rover1object.stop;
+         if(roverobject.stop){
+               var object = roverobject.stop;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("stop", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover1object.sixty){
-               var object = rover1object.sixty;
+         if(roverobject.sixty){
+               var object = roverobject.sixty;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("60", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover1object.hundred){
-               var object = rover1object.hundred;
+         if(roverobject.hundred){
+               var object = roverobject.hundred;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("100", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover1object.speed){
-               var object = rover1object.speed;
+         if(roverobject.speed){
+               var object = roverobject.speed;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("speed", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover1object.car){
-               var object = rover1object.car;
+         if(roverobject.car){
+               var object = roverobject.car;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("car", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover1object.cone){
-               var object = rover1object.cone;
+         if(roverobject.cone){
+               var object = roverobject.cone;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("cone", object[0] * 3.75, object[1] * 3.75);
          }
 
-         if(rover1object.bump){
-               var object = rover1object.bump;
+         if(roverobject.bump){
+               var object = roverobject.bump;
              var boxArray = [object[0], object[1], object[2] - object[0], object[3] - object[1]]
              drawRect(boxArray);
              objectLayerctx.fillText("bump", object[0] * 3.75, object[1] * 3.75);
          }
       }
-      else if(message.destinationName == "/rover1/sensor") {
+      else if(message.destinationName == "/" + roverName + "/sensor") {
          //console.log(message.payloadString)
-         rover1sensor = JSON.parse(message.payloadString);
-         angle = rover1sensor.angle;
-         speed = rover1sensor.dcmotor_speed;
-         direction = rover1sensor.dcmotor_dir;
-         mode = rover1sensor.mode;
-         battery = rover1sensor.battery;
+         roversensor = JSON.parse(message.payloadString);
+         angle = roversensor.angle;
+         speed = roversensor.dcmotor_speed;
+         direction = roversensor.dcmotor_dir;
+         //mode = roversensor.mode;
+         battery = roversensor.battery;
       }
    }
 
@@ -270,7 +296,7 @@ $(function(){
        toc = new Date().getTime()
        if(toc-tic > 3000){
           var pubmessage = new Paho.MQTT.Message("receive");
-             pubmessage.destinationName = "/rover1/order/receive";
+             pubmessage.destinationName = "/" + roverName + "/order/receive";
              publisher.send(pubmessage);
        }
     },1000)
@@ -289,7 +315,9 @@ $(function(){
 
    setInterval(function () {
          if(keyset[32]){
-            stop();
+           if(mode == "Manual Mode"){
+              stop();              
+           }
          }
 
          if(keyset[37]){
@@ -318,79 +346,127 @@ $(function(){
    }, 150);
 
    function forward() {
-      console.log("forward")
-      var message = new Paho.MQTT.Message("forward");
-      message.destinationName = "/rover1/order/mode2/direction";
-      publisher.send(message);
+        console.log("forward")
+        var message = new Paho.MQTT.Message("forward");
+        message.destinationName = "/" + roverName + "/order/mode2/direction";
+        publisher.send(message);
    }
 
    function backward() {
-      var message = new Paho.MQTT.Message("backward");
-      message.destinationName = "/rover1/order/mode2/direction";
-      publisher.send(message);
+         var message = new Paho.MQTT.Message("backward");
+         message.destinationName = "/" + roverName + "/order/mode2/direction";
+         publisher.send(message);
    }
 
    function stop() {
-      var message = new Paho.MQTT.Message("stop");
-      message.destinationName = "/rover1/order/mode2/direction";
-      publisher.send(message);
+         var message = new Paho.MQTT.Message("stop");
+         message.destinationName = "/" + roverName + "/order/mode2/direction";
+         publisher.send(message);
    }
 
    function left() {
-      var message = new Paho.MQTT.Message("left");
-      message.destinationName = "/rover1/order/mode2/direction";
-      publisher.send(message);
+         var message = new Paho.MQTT.Message("left");
+         message.destinationName = "/" + roverName + "/order/mode2/direction";
+         publisher.send(message);
    }
 
    function right() {
-      var message = new Paho.MQTT.Message("right");
-      message.destinationName = "/rover1/order/mode2/direction";
-      publisher.send(message);
+        var message = new Paho.MQTT.Message("right");
+         message.destinationName = "/" + roverName + "/order/mode2/direction";
+         publisher.send(message);
    }
 
    function AIstart() {
-      var message = new Paho.MQTT.Message("start");
-      message.destinationName = "/rover1/order/mode1";
-      publisher.send(message);
+         var message = new Paho.MQTT.Message("start");
+         message.destinationName = "/" + roverName + "/order/mode1";
+         publisher.send(message);
    }
 
    function AIend() {
-      var message = new Paho.MQTT.Message("end");
-      message.destinationName = "/rover1/order/mode1";
-      publisher.send(message);
-   }
-   
-   function manualStart() {
-      var message = new Paho.MQTT.Message("start");
-      message.destinationName = "/rover1/order/mode2";
-      publisher.send(message);
-   }
-
-   function manualEnd() {
-      var message = new Paho.MQTT.Message("end");
-      message.destinationName = "/rover1/order/mode2";
-      publisher.send(message);
+         var message = new Paho.MQTT.Message("end");
+         message.destinationName = "/" + roverName + "/order/mode1";
+         publisher.send(message);
    }
    
    function navStart() {
-         var message = new Paho.MQTT.Message("start");
-         message.destinationName = "/rover1/order/mode3";
-         publisher.send(message);
-      }
-
-   function navEnd() {
-      var message = new Paho.MQTT.Message("end");
-      message.destinationName = "/rover1/order/mode3";
+     console.log("start");
+      var message = new Paho.MQTT.Message(startPosition.options[startPosition.selectedIndex].text);
+      message.destinationName = "/" + roverName + "/order/mode3/start";
       publisher.send(message);
    }
 
+   function navEnd() {
+     console.log("end");
+      var message = new Paho.MQTT.Message(endPosition.options[endPosition.selectedIndex].text);
+      message.destinationName = "/" + roverName + "/order/mode3/end";
+      publisher.send(message);
+   }
+   
+   function checkNav() {
+      if(mode != "Navigation Mode"){
+         alert("내비게이션 모드가 아닙니다.")
+         return;
+      }
+      
+      if(startPosition.selectedIndex == 0 || endPosition.selectedIndex == 0){
+         alert("출발지점과 도착지점 모두 선택해주세요.");
+         return;
+      }
+      if(startPosition.selectedIndex == endPosition.selectedIndex){
+         alert("출발지점과 도착지점을 다르게 선택해주세요.");
+         return;
+      }
+      navStart();
+      navEnd();
+      $("#aiMode").attr("disabled", true);
+      $("#manualMode").attr("disabled", true);
+      $("#navStart").attr("disabled", true);
+      $("#startPosition").attr("disabled", true);
+      $("#endPosition").attr("disabled", true);
+      $("#navStop").attr("disabled", false);
+   }
+   
+   function changeMode (select){
+      mode = select;
+      if(mode == "AI Mode"){
+         $("#aiMode").attr("disabled", true);
+         $("#manualMode").attr("disabled", false);
+         $("#navMode").attr("disabled", false);
+         $("#startPosition").attr("disabled", true);
+         $("#endPosition").attr("disabled", true);
+         $("#navStart").attr("disabled", true);
+         $("#navStop").attr("disabled", true);
+      }
+      if(mode == "Manual Mode"){
+         $("#aiMode").attr("disabled", false);
+         $("#manualMode").attr("disabled", true);
+         $("#navMode").attr("disabled", false);
+         $("#startPosition").attr("disabled", true);
+         $("#endPosition").attr("disabled", true);
+         $("#navStart").attr("disabled", true);
+         $("#navStop").attr("disabled", true);
+      }
+      if(mode == "Navigation Mode"){
+         navMapLayerctx.clearRect(0, 0, navMapLayer.width / scale1, navMapLayer.height / scale1);
+         drawMap(navMapLayerctx);
+         $("#aiMode").attr("disabled", false);
+         $("#manualMode").attr("disabled", false);
+         $("#navMode").attr("disabled", true);
+         $("#startPosition").attr("disabled", false);
+         $("#endPosition").attr("disabled", false);
+         $("#navStart").attr("disabled", false);
+         $("#navStop").attr("disabled", true);
+      }
+      console.log(mode);
+   }
+   
    $(function() {
       document.addEventListener('keyup', function(e) {
             const keyCode = e.keyCode;
             console.log('pushed key ' + e.key);
             keyset[keyCode] = false;
            var message = new Paho.MQTT.Message("keyboardup");
-           message.destinationName = "/rover1/order";
+           message.destinationName = "/" + roverName + "/order";
            publisher.send(message);
          })
    })
@@ -436,7 +512,7 @@ var cameraLayer = document.getElementById("cameraLayer");
          var angle;
          var speed;
          var direction;
-         var mode;
+         var mode = "Manual Mode";
          var battery;
          var coordinates;
 
@@ -502,34 +578,6 @@ var cameraLayer = document.getElementById("cameraLayer");
          carLayerctx.fillStyle = "red";
          carLayerctx.strokeStyle = "red";
 
-         // 객체감지후 확대 그리기
-         function drawObject(arrayBox) {
-            var rectX = arrayBox[0] * 3.75;
-            var rectY = arrayBox[1] *3.75;
-            var rectWidth = arrayBox[2] * 3.75;
-            var rectHeight = arrayBox[3] * 3.75;
-//             objectLayerctx.beginPath();
-//             objectLayerctx.strokeRect(rectX, rectY, rectWidth, rectHeight);
-
-//             var objectImage = new Image();
-//             objectImage.src = cameraLayer.toDataURL();
-
-            objectLayerctx.beginPath();
-            objectLayerctx.moveTo(rectX, rectY);
-            objectLayerctx.lineTo(450, 250);
-            objectLayerctx.moveTo(rectX + rectWidth, rectY + rectHeight);
-            objectLayerctx.lineTo(450 + rectWidth * 2, 250 + rectHeight * 2);
-            objectLayerctx.stroke();
-
-            //객체 확대
-//             console.log(image);
-//             objectLayerctx.drawImage(image, rectX, rectY, rectWidth, rectHeight, 450, 250, rectWidth * 2, rectHeight * 2);
-
-//             cameraLayerctx.getImageData(rectX, rectY, rectWidth, rectHeight);
-//             cameraLayerctx.putImageData(450, 250, rectWidth * 2, rectHeight * 2);
-            objectLayerctx.strokeRect(450, 250, rectWidth * 2, rectHeight * 2);
-         }
-
          // 각도 그리기
          function drawArrow() {
             shapeLayerctx.beginPath();
@@ -575,8 +623,7 @@ var cameraLayer = document.getElementById("cameraLayer");
 
          // 주행 모드 그리기
          function drawMode() {
-            if(mode == "manual") {shapeLayerctx.fillText("Manual Mode", 20, 50);}
-            if(mode == "AI") {shapeLayerctx.fillText("AI Mode", 20, 50);}
+            shapeLayerctx.fillText(mode, 20, 50);
          }
 
 
@@ -703,18 +750,232 @@ var cameraLayer = document.getElementById("cameraLayer");
          navMapLayer.width = 400;
          navMapLayer.height = 400;
          var navMapLayerctx = navMapLayer.getContext("2d");
-         var scale = navMapLayer.width / 500;
-         navMapLayerctx.scale(scale, scale);
+         var scale1 = navMapLayer.width / 500;
+         navMapLayerctx.scale(scale1, scale1);
          drawMap(navMapLayerctx);
          
-         function drawRoute(position) {
-//            var startPosition = document.getElementById("startPosition");
-//            var endPosition = document.getElementById("endPosition");
-//             
-//            if
-//            // select element에서 선택된 option의 value가 저장된다.
-//            var selectValue = langSelect.options[langSelect.selectedIndex].value;
-//          
-//            // select element에서 선택된 option의 text가 저장된다.
-//            var selectText = langSelect.options[langSelect.selectedIndex].text;
+         var startflag;
+         var endflag;
+         var routeflag = true;
+         var routeX;
+         var routeY;
+         
+         function drawRoute() {
+            navMapLayerctx.clearRect(0, 0, navMapLayer.width / scale1, navMapLayer.height / scale1);
+            drawMap(navMapLayerctx);
+            startPosition = document.getElementById("startPosition");
+            endPosition = document.getElementById("endPosition");
+            
+            startflag = match(startPosition.options[startPosition.selectedIndex].text);
+            endflag = match(endPosition.options[endPosition.selectedIndex].text);
+            
+            if(startPosition.selectedIndex != 0 && endPosition.selectedIndex != 0) {
+               routeX = startflag[0];
+               routeY = startflag[1];
+               while(routeflag){
+                  drawPath(routeX, routeY)
+               }
+               routeflag = true;
+            }
+            
+            if(startPosition.selectedIndex != 0) {
+               drawFlag(startflag, "start");
+            }
+            
+            if(endPosition.selectedIndex != 0) {
+               drawFlag(endflag, "end");
+            }
+            
+         }
+         
+         function drawPath(posX, posY){
+            navMapLayerctx.globalAlpha = 1;
+           navMapLayerctx.strokeStyle = "red"; 
+           navMapLayerctx.lineWidth = 10;
+            if(posX == 400 && posY == 50){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.lineTo(315, 50);
+               navMapLayerctx.stroke();
+               routeX = 315;
+               routeY = 50;
+            }
+            if(posX == 315 && posY == 50){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.lineTo(230, 50);
+               navMapLayerctx.stroke();
+               routeX = 230;
+               routeY = 50;
+            }
+            if(posX == 230 && posY == 50){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.lineTo(150, 50);
+               navMapLayerctx.stroke();
+               routeX = 150;
+               routeY = 50;
+            }
+            if(posX == 150 && posY == 50){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.arcTo(100, 50, 100, 100, 50);
+               navMapLayerctx.stroke();
+               routeX = 100;
+               routeY = 100;
+            }
+            if(posX == 100 && posY == 100){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.lineTo(100, 150);
+               navMapLayerctx.stroke();
+               routeX = 100;
+               routeY = 150;
+            }
+            if(posX == 100 && posY == 150){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.lineTo(50, 300);
+               navMapLayerctx.stroke();
+               routeX = 50;
+               routeY = 300;
+            }
+            if(posX == 50 && posY == 300){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.lineTo(50, 350);
+               navMapLayerctx.stroke();
+               routeX = 50;
+               routeY = 350;
+            }
+            if(posX == 50 && posY == 350){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.arcTo(50, 400, 100, 400, 50);
+               navMapLayerctx.stroke();
+               routeX = 100;
+               routeY = 400;
+            }
+            if(posX == 100 && posY == 400){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.bezierCurveTo(130, 400, 130, 450, 150, 450);
+               navMapLayerctx.stroke();
+               routeX = 150;
+               routeY = 450;
+            }
+            if(posX == 150 && posY == 450){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.lineTo(275, 450);
+               navMapLayerctx.stroke();
+               routeX = 275;
+               routeY = 450;
+            }
+            if(posX == 275 && posY == 450){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.lineTo(400, 450);
+               navMapLayerctx.stroke();
+               routeX = 400;
+               routeY = 450;
+            }
+            if(posX == 400 && posY == 450){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.arcTo(450, 450, 450, 400, 50);
+               navMapLayerctx.lineTo(450, 310)
+               navMapLayerctx.stroke();
+               routeX = 450;
+               routeY = 310;
+            }
+            if(posX == 450 && posY == 310){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.lineTo(450, 205)
+               navMapLayerctx.stroke();
+               routeX = 450;
+               routeY = 205;
+            }
+            if(posX == 450 && posY == 205){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.lineTo(450, 100)
+               navMapLayerctx.stroke();
+               routeX = 450;
+               routeY = 100;
+            }
+            if(posX == 450 && posY == 100){
+               if(posX == endflag[0] && posY == endflag[1]) {routeflag = false; return}
+               navMapLayerctx.beginPath();
+               navMapLayerctx.moveTo(posX, posY);
+               navMapLayerctx.arcTo(450, 50, 400, 50, 50);
+               navMapLayerctx.stroke();
+               routeX = 400;
+               routeY = 50;
+            }
+         }
+         
+         function match(text) {
+            if(text == "A"){return mapCoordinates.A}   
+            else if(text == "B"){return mapCoordinates.B}
+            else if(text == "C"){return mapCoordinates.C}
+            else if(text == "D"){return mapCoordinates.D}
+            else if(text == "E"){return mapCoordinates.E}
+            else if(text == "F"){return mapCoordinates.F}
+            else if(text == "H"){return mapCoordinates.H}
+            else if(text == "I"){return mapCoordinates.I}
+            else if(text == "J"){return mapCoordinates.J}
+            else if(text == "K"){return mapCoordinates.K}
+            else if(text == "M"){return mapCoordinates.M}
+            else if(text == "N"){return mapCoordinates.N}
+            else if(text == "P"){return mapCoordinates.P}
+            else if(text == "S"){return mapCoordinates.S}
+            else if(text == "T"){return mapCoordinates.T}
+         }
+         
+         function drawFlag(coordinates, position) {
+            navMapLayerctx.globalAlpha = 1;
+            navMapLayerctx.lineWidth = 2;
+            navMapLayerctx.fillStyle = "white"; 
+            navMapLayerctx.strokeStyle = "white"; 
+            navMapLayerctx.font = "30px Arial";
+            
+            navMapLayerctx.beginPath();
+            navMapLayerctx.arc(coordinates[0], coordinates[1], 10, 0, 2 * Math.PI);
+            navMapLayerctx.fill();
+            navMapLayerctx.beginPath();
+            navMapLayerctx.moveTo(coordinates[0], coordinates[1]);
+            if(position == "start") {
+               navMapLayerctx.lineTo(coordinates[0], coordinates[1] - 20);
+               navMapLayerctx.textBaseline = "bottom";
+               navMapLayerctx.textAlign = "center";
+               navMapLayerctx.fillText(position, coordinates[0], coordinates[1] - 20);
+            } else if (position == "end") {
+               navMapLayerctx.lineTo(coordinates[0], coordinates[1] + 20);
+               navMapLayerctx.textBaseline = "top";
+               navMapLayerctx.textAlign = "center";
+               navMapLayerctx.fillText(position, coordinates[0], coordinates[1] + 20);
+            }
+            navMapLayerctx.stroke();
+         }
+         
+         function drawStatus(status) {
+            navMapLayerctx.fillStyle = "white";
+            navMapLayerctx.font = "50px Arial";
+            navMapLayerctx.fillText(status, 250, 250)            
          }
