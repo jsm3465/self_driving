@@ -30,7 +30,7 @@ class AI_Rover:
         self.__angle = 0
         self.mode = "manual"
         self.fps = 0
-        self.frame = None
+        self.currentLocation = None
 
         # sensor
         self.pcf8591 = Pcf8591(0x48)
@@ -56,7 +56,6 @@ class AI_Rover:
             if angle < -30:
                 angle = -30
             self.__angle = angle
-            # print("right:" + self.__handle_angle)
 
     def handle_left(self):
         if self.__handle_angle <= 1:
@@ -68,40 +67,27 @@ class AI_Rover:
             if angle < -30:
                 angle = -30
             self.__angle = angle
-            # print("left : " + self.__handle_angle)
 
     def backward(self):
-        # if self.__dcMotor_speed < 1.0:
-        #     self.__dcMotor_speed += 0.01
-        # self.__motor_control.throttle_gain = self.__dcMotor_speed
-        # print("forward")
-        # self.__motor_control.throttle = 0
         self.__direction = "backward"
         self.__motor_control.throttle_gain = 0.6
         self.__motor_control.throttle = 1
         self.__dcMotor_speed = self.__motor_control.throttle_gain * 100
 
     def forward(self):
-        # if self.__dcMotor_speed < 1.0:
-        #     self.__dcMotor_speed += 0.01
-        # self.__motor_control.throttle_gain = self.__dcMotor_speed
-        # print("backward")
-        # self.__motor_control.throttle = 0
         self.__direction = "forward"
         self.__motor_control.throttle_gain = 0.6
         self.__motor_control.throttle = -1
         self.__dcMotor_speed = self.__motor_control.throttle_gain * 100
 
     def stop(self):
-        # print("stop")
-        self.setspeed(30)
+        self.setspeed(-30)
         self.__direction = "stop"
         self.__dcMotor_speed = 0
         self.__motor_control.throttle_gain = self.__dcMotor_speed
         self.__motor_control.throttle = self.__dcMotor_speed
 
     def setspeed(self, speed):
-
         if speed < 0:
             throttle = 1
         else:
@@ -109,6 +95,7 @@ class AI_Rover:
         self.__motor_control.throttle_gain = (abs(speed) / 100)
         self.__motor_control.throttle = throttle
         self.__dcMotor_speed = abs(speed)
+
     # =========================================================================
 
     def set_angle(self, angle):
@@ -138,3 +125,11 @@ class AI_Rover:
 
         message = json.dumps(message)
         return message
+
+    def AEB(self):
+        dist = self.distance.read()
+
+        if dist < 35:
+            self.stop()
+
+
