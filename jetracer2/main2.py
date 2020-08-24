@@ -269,16 +269,15 @@ try:
                     speed = obj_operations(clss, boxes, speed)
 
                     # 거리센서값이 가까우면 멈춤 rover.AEB는 멈춰야할때 True, 아니면 False를 반환
-                    # dist = rover.distance.read()
-                    #
-                    # if dist < 30:
-                    #     print("AEB")
-                    #     speed = 0
-
-
-                    # speed가 바뀔때만 setspeed 실행
-                    rover.setspeed(speed)
-                    print("rover speed : ", speed)
+                    dist = rover.distance.read()
+                    if dist < 35:
+                        print("AEB")
+                        rover.stop()
+                        rover.backward(0.3)
+                    else:
+                        # speed가 바뀔때만 setspeed 실행
+                        rover.setspeed(speed)
+                        print("rover speed : ", speed)
 
                 # 차선 변경 시 동작
                 else:
