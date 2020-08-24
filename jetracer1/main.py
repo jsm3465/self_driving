@@ -27,6 +27,9 @@ mqttSub.start()
 campub = ImageMqttPusblisher(rover, mqttSub, "192.168.3.250", pubTopic="/rover1/camerapub")
 campub.connect()
 
+campub2 = ImageMqttPusblisher("192.168.3.242", pubTopic="/blackBox/rover1")
+campub2.connect()
+
 sensorpub = MqttPublisher(rover, "192.168.3.250", topic="/rover1/sensor")
 sensorpub.start()
 
@@ -235,7 +238,7 @@ try:
             campub.sendBase64(frame)
             tic = toc
             mqttSub.receive = False
-
+            campub2.sendBase64(frame)
 
 except KeyboardInterrupt:
     pass

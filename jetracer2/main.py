@@ -14,32 +14,32 @@ from linedetect.line_detect import LineDetector
 import pycuda.driver as cuda
 
 from utils import trt_ssd_object_detect as trt
-from utils.object_label_map import CLASSES_DICT
+from utils.sign_label_map2 import CLASSES_DICT
 import time
 import cv2
 
 # ======================= MQTT ================================
 rover = AI_Rover()
 
-mqttSub = MqttSubscriber("192.168.3.223", topic="/rover2/order/#")
+mqttSub = MqttSubscriber("192.168.3.250", topic="/rover2/order/#")
 mqttSub.start()
 
-campub = ImageMqttPusblisher(rover, mqttSub, "192.168.3.223", pubTopic="/rover2/camerapub")
+campub = ImageMqttPusblisher("192.168.3.250", pubTopic="/rover2/camerapub")
 campub.connect()
 
-campub2 = ImageMqttPusblisher(rover, mqttSub, "192.168.3.242", pubTopic="/rover2/camerapub")
+campub2 = ImageMqttPusblisher("192.168.3.250", pubTopic="/blackBox/rover2")
 campub2.connect()
 
-sensorpub = MqttPublisher(rover, "192.168.3.223", topic="/rover2/sensor")
+sensorpub = MqttPublisher(rover, "192.168.3.250", topic="/rover2/sensor")
 sensorpub.start()
 
-objectpub = ObjectPublisher("192.168.3.223", topic="/rover2/object")
+objectpub = ObjectPublisher("192.168.3.250", topic="/rover2/object")
 objectpub.start()
 
 # ==================== object detection ========================
 conf_th = 0.6
 fps = 0.0
-enginePath = project_path + "/models/ssd_mobilenet_v2_model_10_47396/tensorrt_fp16.engine"
+enginePath = project_path + "/models/ssd_mobilenet_v2_sign12/tensorrt_fp16.engine"
 
 # ===============================================================
 # 카메라 동영상 읽어오기 하세요
@@ -68,83 +68,42 @@ switchcnt = 0
 
 speed = 55
 
-def AI_mode(frame, speed, switchlane, switchcnt):
-    # print("자율 주행 ON")
-    dist = rover.distance.read()
+start = None
+end = None
 
-    if dist < 35:
-        rover.setspeed(-40)
-        speed = 0
-        stopflag = 1
-    else:
-        stopflag = 0
+naviflag = 0
+navicnt = 0
 
-    # 자율 주행 카메라 영상 처리
-    # ---- 1. 차선 인식 ----
-    # 차선 인식 화면
-    line = line_detector.line_camera(frame)
+def obj_operations(clss, boxes, speed, switchcnt, switchlane):
 
-    # 서보 모터 각도 조절
-    rover.set_angle(line_detector.angle)
-
-    # ---- 2. 객체 인식 ----
-    boxes, confs, clss = trt_ssd.detect(frame, conf_th)
-
-    # 감지 결과 출력
-    obj = vis.drawBboxes(frame, boxes, confs, clss)
-
-    frame = cv2.addWeighted(line, 0.5, obj, 0.5, 0)
-
+    stopflag = 0
+    # 객체 감지에 따른 주행 동작
     if len(clss) > 0:
         objectpub.publish(clss, boxes)
 
         # speed 100
         if 9 in clss:
-            index = clss.index(9)
-            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
             speed = 60
-            # print(size)
 
         # green
         if 2 in clss:
-            index = clss.index(2)
-            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
             speed = 55
-            # print(size)
 
         # 횡단보도
         if 4 in clss:
-            index = clss.index(4)
-            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
             speed = 49
-            # if size > 12000:
-            #     stopflag = 1
-            # print(size)
 
         # 어린이 보호구역
         if 5 in clss:
-            index = clss.index(5)
-            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
             speed = 49
-            # if size > 12000:
-            #     stopflag = 1
-            # print(size)
 
         # 급커브
         if 6 in clss:
-            index = clss.index(6)
-            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
             speed = 49
-            # if size > 12000:
-            #     stopflag = 1
-            # print(size)
 
         # speed 60
         if 8 in clss:
-            index = clss.index(8)
-            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
             speed = 49
-            # print(size)
 
         # cone
         if 11 in clss:
@@ -155,31 +114,20 @@ def AI_mode(frame, speed, switchlane, switchcnt):
                     stopflag = 1
                     switchcnt = 0
                     switchlane = True
-            # print(size)
 
         # bump
         if 12 in clss:
-            index = clss.index(12)
-            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
             speed = 49
-            # stopflag = 1
-            # print(size)
 
         # 빨간불
         if 1 in clss:
-            index = clss.index(1)
-            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
             stopflag = 1
             speed = 0
-            # print(size)
 
         # 노란불
         if 3 in clss:
-            index = clss.index(3)
-            size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
             stopflag = 1
             speed = 0
-            # print(size)
 
         # stop
         if 7 in clss:
@@ -188,16 +136,15 @@ def AI_mode(frame, speed, switchlane, switchcnt):
             if size > 2000:
                 speed = 0
                 stopflag = 1
-            # print(size)
 
-    if stopflag == 1:
-        rover.stop()
-    else:
-        rover.setspeed(speed)
+        if 30 in clss:
+            stopflag = 1
+            speed = 0
 
-    print(speed)
+    # if stopflag == 1:
+    #     rover.stop()
 
-    return frame, switchlane, switchcnt
+    return switchcnt, switchlane, speed
 
 
 # ============== main =================
@@ -210,6 +157,14 @@ try:
             print("video capture fail")
             break
 
+        # ---- 객체 인식 ----
+        boxes, confs, clss = trt_ssd.detect(frame, conf_th)
+
+        # 감지 결과 출력
+        obj = vis.drawBboxes(frame, boxes, confs, clss)
+
+
+        # --- 콘 만났을 때 차선 변경 -----
         if switchlane:
             print("cone!!!")
             L_lines, R_lines = line_detector.line_detect(frame)
@@ -217,34 +172,66 @@ try:
             if switchcnt < 50:
                 switchcnt += 1
                 rover.stop()
+                rover.setspeed(-30)
             else:
-                rover.setspeed(70)
-                if line_detector.presentroad == 1:
-                    # R_lines_detected = bool(len(R_lines) != 0)
-                    rover.set_angle(-12)
-                    switchcnt += 1
-                    if switchcnt > 90:
-                        if line_detector.rightCorner:
-                        # if R_lines_detected:
-                            rover.stop()
-                            switchlane = False
-                    elif switchcnt > 150:
-                        rover.stop()
-                        switchlane = False
+                # 오른쪽 차선에 있을 때
+                if line_detector.presentroad == 2:
+                    if switchcnt < 66:
+                        # 핸들 왼쪽으로 꺾
+                        rover.set_angle(16)
+                        rover.setspeed(56)
+                        switchcnt += 1
 
-                elif line_detector.presentroad == 2:
-                    # L_lines_detected = bool(len(L_lines) != 0)
-                    rover.set_angle(25)
-                    switchcnt += 1
-                    if switchcnt > 300:
-                        if line_detector.leftCorner:
-                        # if L_lines_detected:
-                            rover.stop()
+                    else:
+                        print("yeah")
+                        if bool(len(L_lines) != 0) or bool(len(R_lines) != 0):
                             switchlane = False
-                    elif switchcnt > 400:
-                        rover.stop()
-                        switchlane = False
+                            line_detector.presentroad = 1
+                            switchcnt = 0
 
+                # 왼쪽 차선에 있을 때
+                else:
+                    if switchcnt < 66:
+                        # 핸들 오른쪽으로 꺾
+                        rover.set_angle(-16)
+                        rover.setspeed(56)
+                        switchcnt += 1
+
+                    else:
+                        print("yeah")
+                        if bool(len(L_lines)) != 0 or bool(len(R_lines)) != 0:
+                            switchlane = False
+                            line_detector.presentroad = 2
+                            switchcnt = 0
+
+
+
+                # rover.setspeed(70)
+                # if line_detector.presentroad == 1:
+                #     # R_lines_detected = bool(len(R_lines) != 0)
+                #     rover.set_angle(-12)
+                #     switchcnt += 1
+                #     if switchcnt > 90:
+                #         if line_detector.rightCorner:
+                #         # if R_lines_detected:
+                #             rover.stop()
+                #             switchlane = False
+                #     elif switchcnt > 150:
+                #         rover.stop()
+                #         switchlane = False
+                #
+                # elif line_detector.presentroad == 2:
+                #     # L_lines_detected = bool(len(L_lines) != 0)
+                #     rover.set_angle(25)
+                #     switchcnt += 1
+                #     if switchcnt > 300:
+                #         if line_detector.leftCorner:
+                #         # if L_lines_detected:
+                #             rover.stop()
+                #             switchlane = False
+                #     elif switchcnt > 400:
+                #         rover.stop()
+                #         switchlane = False
 
         else:
             # 웹에서 주행 모드 커맨드 받아옴
@@ -263,12 +250,31 @@ try:
                 elif "mode2" in topic:
                     rover.mode = "manual"
                     flag = 3
+                elif "mode3" in topic:
+                    rover.mode = "navi"
+                    flag = 4
                 else:
                     pass
 
                 # ------------------ 자율 주행 모드 ON -----------------
                 if flag == 1:
-                    frame, switchlane, switchcnt = AI_mode(frame, speed, switchlane, switchcnt)
+                    # 자율 주행 카메라 영상 처리
+                    # ---- 1. 차선 인식 ----
+                    # 차선 인식 화면
+                    line = line_detector.line_camera(frame)
+
+                    # 서보 모터 각도 조절
+                    rover.set_angle(line_detector.angle)
+
+                    frame = cv2.addWeighted(line, 0.5, obj, 0.5, 0)
+
+                    # 객체 감지 행동
+                    switchcnt, switchlane, speed = obj_operations(clss, boxes, speed, switchcnt, switchlane)
+                    print(speed)
+
+                    rover.setspeed(speed)
+
+                    rover.AEB()
 
                 # ------------------ 자율 주행 모드 OFF -----------------
                 elif flag == 2:
@@ -293,6 +299,61 @@ try:
                         elif message == "changestart":
                             switchcnt = 0
                             switchlane = True
+
+                # ----------- navi ------------
+                elif flag == 4:
+                    if "start" in topic:
+                        for i, class_name in CLASSES_DICT.items():
+                            if message == class_name:
+                                start = i
+
+                    if "end" in topic:
+                        for i, class_name in CLASSES_DICT.items():
+                            if message == class_name:
+                                end = i
+
+                    # 차선 인식 화면
+                    line = line_detector.line_camera(frame)
+                    # 서보 모터 각도 조절
+                    rover.set_angle(line_detector.angle)
+                    frame = cv2.addWeighted(line, 0.5, obj, 0.5, 0)
+                    switchcnt, switchlane, speed = obj_operations(clss, boxes, speed, switchcnt, switchlane)
+
+                    # 출발지와 도착지 메시지 수신
+                    if start is not None and end is not None:
+                        if len(clss) > 0:
+                            if start in clss:
+                                objectpub.client.publish("/rover2/navi", "drive start")
+                                navicnt += 1
+                                if navicnt < 10:
+                                    speed = -30
+                                elif navicnt < 15:
+                                    speed = 0
+                                    print("A 멈춤")
+                                elif navicnt < 40:
+                                    speed = 55
+                                    rover.forward()
+                                    print("A 출발")
+                            elif end in clss:
+                                objectpub.client.publish("/rover2/navi", "drive end")
+                                navicnt += 1
+                                print("B도착@@@")
+                                if navicnt < 50:
+                                    speed = -30
+                                elif navicnt < 55:
+                                    speed = 0
+                                else:
+                                    start = None
+                                    end = None
+                                    navicnt = 0
+                                    speed = 55
+
+                        else:
+                            objectpub.client.publish("/rover2/navi", "driving")
+
+
+                    print(speed)
+                    rover.setspeed(speed)
                 else:
                     mqttSub.receive = True
 
@@ -311,7 +372,7 @@ try:
             mqttSub.receive = False
             # rover.frame = img
             # campub.send = True
-            campub2.sendBase64(img)
+            campub2.sendBase64(frame)
 
 except KeyboardInterrupt:
     pass
