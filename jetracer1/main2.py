@@ -333,6 +333,7 @@ except KeyboardInterrupt:
 finally:
     rover.stop()
     rover.set_angle(0)
+    del trt_ssd
     cuda_ctx.pop()
     del cuda_ctx
 

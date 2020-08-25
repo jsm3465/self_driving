@@ -200,10 +200,10 @@ def obj_operations(clss, boxes, speed):
             objectpub.client.publish("/rover2/navi", "drive end")
             navicnt += 1
 
-            if navicnt < 40:
+            if navicnt < 50:
                 stopflag = 1
                 speed = 0
-            elif navicnt < 50:
+            elif navicnt < 60:
                 speed = -0.3
             else:
                 mqttSub.start_loc = None
