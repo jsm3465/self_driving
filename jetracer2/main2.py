@@ -118,7 +118,7 @@ def obj_operations(clss, boxes, speed):
         objectpub.publish(clss, boxes)
 
         # speed 100
-        if 9 in clss:
+        if 8 in clss:
             speed = 0.6
 
         # green
@@ -134,11 +134,11 @@ def obj_operations(clss, boxes, speed):
             speed = 0.50
 
         # 급커브
-        if 6 in clss:
+        if 29 in clss:
             speed = 0.50
 
         # speed 60
-        if 8 in clss:
+        if 7 in clss:
             speed = 0.50
 
         # cone
@@ -167,7 +167,7 @@ def obj_operations(clss, boxes, speed):
             speed = 0
 
         # stop
-        if 7 in clss:
+        if 6 in clss:
             index = clss.index(7)
             size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
             if size > 2000:
