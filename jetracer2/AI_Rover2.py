@@ -137,6 +137,7 @@ class AI_Rover:
 
     def AEB(self):
         dist = self.distance.read()
+        print("distance :", dist)
 
         if dist < 35:
             self.stop()
@@ -145,7 +146,7 @@ class AI_Rover:
         else:
             return False
 
-    def changeRoad(self, count):
+    def changeRoad(self, count, change_road_flag, speed):
         # 오른쪽 차선에 있을 때
         if self.presentroad == 2:
             if count < 16:
@@ -153,6 +154,7 @@ class AI_Rover:
                 self.set_angle(16)
                 self.forward(0.56)
                 count += 1
+                speed = 0
 
             else:
                 print("yeah")
@@ -160,8 +162,9 @@ class AI_Rover:
                     change_road_flag = False
                     self.presentroad = 1
                     count = 0
+                    speed = 0.55
 
-            return count, change_road_flag
+            return count, change_road_flag, speed
 
         # 왼쪽 차선에 있을 때
         else:
@@ -170,6 +173,7 @@ class AI_Rover:
                 self.set_angle(-16)
                 self.forward(0.56)
                 count += 1
+                speed = 0
 
             else:
                 print("yeah")
@@ -177,6 +181,7 @@ class AI_Rover:
                     change_road_flag = False
                     self.presentroad = 2
                     count = 0
+                    speed = 0.55
 
-            return count, change_road_flag
+            return count, change_road_flag, speed
 

@@ -161,7 +161,7 @@ try:
         boxes, confs, clss = trt_ssd.detect(frame, conf_th)
 
         # 감지 결과 출력
-        obj = vis.drawBboxes(frame, boxes, confs, clss)
+        # obj = vis.drawBboxes(frame, boxes, confs, clss)
 
 
         # --- 콘 만났을 때 차선 변경 -----
@@ -176,7 +176,7 @@ try:
             else:
                 # 오른쪽 차선에 있을 때
                 if line_detector.presentroad == 2:
-                    if switchcnt < 66:
+                    if switchcnt < 80:
                         # 핸들 왼쪽으로 꺾
                         rover.set_angle(16)
                         rover.setspeed(56)
@@ -191,7 +191,7 @@ try:
 
                 # 왼쪽 차선에 있을 때
                 else:
-                    if switchcnt < 66:
+                    if switchcnt < 80:
                         # 핸들 오른쪽으로 꺾
                         rover.set_angle(-16)
                         rover.setspeed(56)
@@ -266,15 +266,13 @@ try:
                     # 서보 모터 각도 조절
                     rover.set_angle(line_detector.angle)
 
-                    frame = cv2.addWeighted(line, 0.5, obj, 0.5, 0)
+                    # frame = cv2.addWeighted(line, 0.5, obj, 0.5, 0)
 
                     # 객체 감지 행동
                     switchcnt, switchlane, speed = obj_operations(clss, boxes, speed, switchcnt, switchlane)
                     print(speed)
 
                     rover.setspeed(speed)
-
-                    rover.AEB()
 
                 # ------------------ 자율 주행 모드 OFF -----------------
                 elif flag == 2:
@@ -316,7 +314,7 @@ try:
                     line = line_detector.line_camera(frame)
                     # 서보 모터 각도 조절
                     rover.set_angle(line_detector.angle)
-                    frame = cv2.addWeighted(line, 0.5, obj, 0.5, 0)
+                    # frame = cv2.addWeighted(line, 0.5, obj, 0.5, 0)
                     switchcnt, switchlane, speed = obj_operations(clss, boxes, speed, switchcnt, switchlane)
 
                     # 출발지와 도착지 메시지 수신
@@ -358,7 +356,7 @@ try:
                     mqttSub.receive = True
 
         # 초당 프레임 수 드로잉
-        img = vis.drawFps(frame, fps)
+        # img = vis.drawFps(frame, fps)
 
         # 초당 프레임 수 계산
         toc = time.time()
@@ -367,7 +365,7 @@ try:
         rover.fps = fps
 
         if mqttSub.receive:
-            campub.sendBase64(img)
+            campub.sendBase64(frame)
             tic = toc
             mqttSub.receive = False
             # rover.frame = img

@@ -62,6 +62,7 @@ vis = trt.BBoxVisualization(CLASSES_DICT)
 
 # -------- 전역 변수 ---------
 stopflag = 0
+mode = 0
 # 시작 시간
 tic = time.time()
 
@@ -69,6 +70,7 @@ change_road_flag = False
 change_count = 0
 
 speed = 0.55
+temp = 0
 
 start = None
 end = None
@@ -79,8 +81,8 @@ navicnt = 0
 # ---------- 함수 ----------------
 
 def setMode(topic, message):
-    mode = 0
-
+    global speed
+    global mode
     if "mode1" in topic:
         rover.mode = "AI"
         if "start" in message:
@@ -96,16 +98,18 @@ def setMode(topic, message):
         mode = 1
         naviflag = 0
     else:
-        pass
+        print("else")
 
     return mode
 
 
-def obj_operations(clss, boxes, speed, change_road_flag, change_count):
+def obj_operations(clss, boxes, speed):
 
     global rover
     global objectpub
     global mqttSub
+    global change_road_flag
+    global change_count
 
     stopflag = 0
 
@@ -114,7 +118,7 @@ def obj_operations(clss, boxes, speed, change_road_flag, change_count):
         objectpub.publish(clss, boxes)
 
         # speed 100
-        if 9 in clss:
+        if 8 in clss:
             speed = 0.6
 
         # green
@@ -123,19 +127,19 @@ def obj_operations(clss, boxes, speed, change_road_flag, change_count):
 
         # 횡단보도
         if 4 in clss:
-            speed = 0.49
+            speed = 0.50
 
         # 어린이 보호구역
         if 5 in clss:
-            speed = 0.49
+            speed = 0.50
 
         # 급커브
-        if 6 in clss:
-            speed = 0.49
+        if 29 in clss:
+            speed = 0.50
 
         # speed 60
-        if 8 in clss:
-            speed = 0.49
+        if 7 in clss:
+            speed = 0.50
 
         # cone
         if 11 in clss:
@@ -150,7 +154,7 @@ def obj_operations(clss, boxes, speed, change_road_flag, change_count):
 
         # bump
         if 12 in clss:
-            speed = 0.49
+            speed = 0.50
 
         # 빨간불
         if 1 in clss:
@@ -163,7 +167,7 @@ def obj_operations(clss, boxes, speed, change_road_flag, change_count):
             speed = 0
 
         # stop
-        if 7 in clss:
+        if 6 in clss:
             index = clss.index(7)
             size = (boxes[index][2] - boxes[index][0]) * (boxes[index][3] - boxes[index][1])
             if size > 2000:
@@ -177,6 +181,8 @@ def obj_operations(clss, boxes, speed, change_road_flag, change_count):
     if (rover.mode == "navi") and (mqttSub.start_loc is not None):
         global navicnt
         global naviflag
+
+        print(mqttSub.start_loc, " : ", mqttSub.end_loc)
 
         if mqttSub.start_loc in clss:
             objectpub.client.publish("/rover2/navi", "drive start")
@@ -194,31 +200,31 @@ def obj_operations(clss, boxes, speed, change_road_flag, change_count):
             objectpub.client.publish("/rover2/navi", "drive end")
             navicnt += 1
 
-            if navicnt < 40:
+            if navicnt < 50:
                 stopflag = 1
                 speed = 0
-            elif navicnt < 50:
+            elif navicnt < 60:
                 speed = -0.3
             else:
                 mqttSub.start_loc = None
                 mqttSub.end_loc = None
                 navicnt = 0
                 naviflag = 0
+                speed = 0.55
         else:
             if naviflag == 0:
-                objectpub.client.publish("/rover1/navi", "driving")
+                objectpub.client.publish("/rover2/navi", "driving")
                 naviflag = 1
 
     if stopflag == 1:
         rover.stop()
 
 
-    return speed, change_road_flag, change_count
+    return speed
 
 
 
 # -------------- main ----------------
-prespeed = 1
 # CTRL + C 를 누르면 CUDA CONTEXT를 없애주기 위해서 try except 사용
 # 없애주지 않으면 다음에 카메라를 못킴..
 try:
@@ -260,21 +266,23 @@ try:
                     frame = cv2.addWeighted(line, 0.5, obj, 0.5, 0)
 
                     # 객체 감지 행동
-                    speed, change_road_flag, change_count = obj_operations(clss, boxes, speed, change_road_flag, change_count)
+                    speed = obj_operations(clss, boxes, speed)
 
                     # 거리센서값이 가까우면 멈춤 rover.AEB는 멈춰야할때 True, 아니면 False를 반환
-                    if rover.AEB():
-                        speed = 0
-
-                    # speed가 바뀔때만 setspeed 실행
-                    if speed != prespeed:
+                    dist = rover.distance.read()
+                    if dist < 35:
+                        print("AEB")
+                        rover.stop()
+                        rover.backward(0.3)
+                    else:
+                        # speed가 바뀔때만 setspeed 실행
                         rover.setspeed(speed)
-                        prespeed = speed
                         print("rover speed : ", speed)
 
                 # 차선 변경 시 동작
                 else:
-                    change_count, change_road_flag = rover.changeRoad(change_count)
+                    change_count, change_road_flag, speed = rover.changeRoad(change_count, change_road_flag, speed)
+
 
 
 

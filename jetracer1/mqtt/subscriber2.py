@@ -26,17 +26,23 @@ class MqttSubscriber:
 
     def __on_message(self, client, userdata, message):
         # print(message.topic)
+        msg = str(message.payload, encoding="UTF-8")
         if "receive" in message.topic:
             self.receive = True
         elif "start" in message.topic:
             for i, class_name in CLASSES_DICT.items():
-                if message == class_name:
+                if msg == class_name:
                     self.start_loc = i
+                    print(self.start_loc)
+            self.message = message
 
         elif "end" in message.topic:
             for i, class_name in CLASSES_DICT.items():
-                if message == class_name:
+                if msg == class_name:
                     self.end_loc = i
+                    print(self.end_loc)
+            self.message = message
+
         else:
             self.message = message
 
