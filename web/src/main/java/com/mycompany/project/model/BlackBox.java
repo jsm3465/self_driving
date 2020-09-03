@@ -28,7 +28,7 @@ public class BlackBox {
 		return rdate;
 	}
 
-	public void setRdate(Date rdate) {
+	public void setRdate(Date rdate) {	
 		this.rdate = rdate;
 	}
 

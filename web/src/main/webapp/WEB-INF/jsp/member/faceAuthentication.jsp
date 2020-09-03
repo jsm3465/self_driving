@@ -92,7 +92,6 @@
 					var key = message.payloadString;
 
 					if(map.containsKey(key)){
-						console.log("있다!!");
 						var cur = map.get(key);
 						console.log(cur);
 						map.put(key,cur+1);
@@ -102,7 +101,6 @@
 						}
 					}
 					else{
-						console.log("없다!!");
 						map.put(key,1);
 						if(maxValue < 1){
 							maxValue= 1;
@@ -112,10 +110,8 @@
 
 					if(count >=30){
 						console.log("realUser:"+"\""+realUser+"\"");
-						console.log("realUser:"+typeof(realUser));
-						console.log(maxValue);
-						console.log(maxKey);
-						console.log("maxKey:"+typeof(maxKey));
+						console.log("maxValue:"+ maxValue);
+						console.log("maxKey:" + maxKey);
 						realUser ="\""+realUser+"\"";
 						if(realUser == maxKey){
 							client.disconnect();
@@ -142,7 +138,6 @@
 				var message = new Paho.MQTT.Message(base64Frame);
 				message.destinationName = "/camerapub/face";
 				client.send(message);
-
 			}
 
 			//촬영하는 웹캠 비디오 이미지로 캡쳐하기

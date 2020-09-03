@@ -57,7 +57,7 @@ $(function(){
 
    function objectonMessageArrived(message) {
     if(message.destinationName == "/" + roverName + "/navi") {
-       navMapLayerctx.clearRect(200, 200, 100 / scale1, 100 / scale1);
+       drawRoute();
        drawStatus(message.payloadString);
     }
     
@@ -315,9 +315,7 @@ $(function(){
 
    setInterval(function () {
          if(keyset[32]){
-           if(mode == "Manual Mode"){
-              stop();              
-           }
+              stop();         
          }
 
          if(keyset[37]){
@@ -393,6 +391,8 @@ $(function(){
       var message = new Paho.MQTT.Message(startPosition.options[startPosition.selectedIndex].text);
       message.destinationName = "/" + roverName + "/order/mode3/start";
       publisher.send(message);
+      console.log("topic : " + "/" + roverName + "/order/mode3/start")
+      console.log(message.payloadString);
    }
 
    function navEnd() {
@@ -400,6 +400,8 @@ $(function(){
       var message = new Paho.MQTT.Message(endPosition.options[endPosition.selectedIndex].text);
       message.destinationName = "/" + roverName + "/order/mode3/end";
       publisher.send(message);
+      console.log("topic : " + "/" + roverName + "/order/mode3/end")
+      console.log(message.payloadString);
    }
    
    function checkNav() {
@@ -416,6 +418,10 @@ $(function(){
          alert("출발지점과 도착지점을 다르게 선택해주세요.");
          return;
       }
+      navStart();
+      navEnd();
+      navStart();
+      navEnd();
       navStart();
       navEnd();
       $("#aiMode").attr("disabled", true);

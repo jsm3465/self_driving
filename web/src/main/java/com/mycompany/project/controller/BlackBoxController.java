@@ -25,14 +25,14 @@ public class BlackBoxController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BlackBoxController.class);
 	
 	@Autowired
-	private MyMqttClient mqttSubscribe;
+	private MyMqttClient mqttSubscriber;
 	
 	@Autowired
 	private BlackBoxService blackBoxService;
 	
 	@PostConstruct
 	public void init() throws MqttException {
-		mqttSubscribe.subscribe();
+		mqttSubscriber.subscribe();
 	}
 	
 	@RequestMapping("/getImages.do")
@@ -41,7 +41,7 @@ public class BlackBoxController {
 		LOGGER.info(rname);
 		List<String> list = blackBoxService.getImages(rname);
 		
-		LOGGER.info("{}11", list.size());
+		//LOGGER.info("{}", list.size());
 		
 		//BlackBox객체의 리스트 JSON으로 변환 및 response 하기
 		response.setContentType("application/json; charset=UTF-8");

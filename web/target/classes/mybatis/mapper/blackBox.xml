@@ -28,23 +28,4 @@
 		from blackbox
 		where rname=#{rname} order by rdate
 	</select>
-
-	<!-- 특정  -->
-
-	<!-- mybatis examples -->
-	<!-- <insert id="insert" parameterType="board" useGeneratedKeys="true" keyProperty="bno"> 
-		insert into board (btitle, bcontent, bwriter, bhitcount, bdate, starscore, 
-		battachoname, battachsname, battachtype) values (#{btitle}, #{bcontent}, 
-		#{bwriter}, 0, now(6), 0, #{battachoname}, #{battachsname}, #{battachtype}) 
-		</insert> <select id="selectByBno" resultType="board"> select bno, btitle, 
-		bcontent, bwriter, bhitcount, bdate, starscore, battachoname, battachsname, 
-		battachtype from board where bno=#{bno} </select> <select id="selectByPage" 
-		resultType="board"> SELECT bno, btitle, bwriter, bhitcount, bdate, starscore 
-		FROM board ORDER BY bdate DESC LIMIT #{startIndex}, #{rowsPerPage} </select> 
-		<select id="count" resultType="int"> SELECT count(*) FROM board; </select> 
-		<update id="updateByBno"> UPDATE board SET btitle=#{btitle}, bcontent=#{bcontent} 
-		WHERE bno=#{bno} </update> <update id="updateBhitcountByBno"> UPDATE board 
-		SET bhitcount=bhitcount+1 WHERE bno=#{bno} </update> <update id="updateStarscoreByBno"> 
-		UPDATE board SET starscore=#{starscore} WHERE bno=#{bno} </update> <delete 
-		id="deleteByBno"> DELETE FROM board WHERE bno=#{bno} </delete> -->
 </mapper>

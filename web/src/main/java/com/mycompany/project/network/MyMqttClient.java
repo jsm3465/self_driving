@@ -32,7 +32,7 @@ public class MyMqttClient {
 	public MyMqttClient() throws MqttException {	
 
 		// MQTT client 생성
-		client = new MqttClient("tcp://192.168.3.242:1883", "subscriber");
+		client = new MqttClient("tcp://192.168.3.250:1883", "subscriber");
 
 		// 토픽 통신의 결과를 수신할 콜백 객체 세팅
 		// MqttCallback은 interface
@@ -90,7 +90,7 @@ public class MyMqttClient {
 
 	// 메세지 수신
 	public void subscribe() throws MqttException {
-		client.subscribe("/blackBox/#");
+		client.subscribe("/blackBox/rover1");
 	}
 
 	// 연결 끊기
